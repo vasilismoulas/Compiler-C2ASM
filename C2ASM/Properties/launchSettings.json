@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "C2ASM": {
+      "commandName": "Project",
+      "commandLineArgs": "source_code.txt\r\n",
+      "workingDirectory": "C:\\Users\\vasil\\OneDrive\\Υπολογιστής\\C2ASM\\C2ASM\\TestBench"
+    }
+  }
+}

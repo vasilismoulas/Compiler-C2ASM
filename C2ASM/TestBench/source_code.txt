@@ -1,0 +1,7 @@
+
+
+void a (int a){
+
+int h = 3;
+
+}
