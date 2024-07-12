@@ -5,17 +5,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="testlexer.g4" />
-    <None Remove="testparser.g4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Antlr4 Include="testlexer.g4" />
-    <Antlr4 Include="testparser.g4" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="obj\Debug\net6.0\testlexer.cs" />
