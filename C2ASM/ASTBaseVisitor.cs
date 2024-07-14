@@ -82,8 +82,43 @@ namespace C2ASM
         }
 
 
-
         public virtual Result VisitFunctionDefinition(CASTFunctionDefinition node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+            return default(Result);
+        }
+
+        public virtual Result VisitFunctionDeclaration(CASTFunctionDeclaration node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+            return default(Result);
+        }
+
+        public virtual Result VisitFUNCTIONBODY(CASTFunctionBody node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+            return default(Result);
+        }
+
+        public virtual Result VisitTYPESPECIFIER(CASTTypespecifier node, VParam param = default(VParam))
+        {
+
+            return default(Result);
+        }
+
+        public virtual Result VisitFormalArgs(CASTFormalArgs node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+            return default(Result);
+        }
+
+        public virtual Result VisitDATADECLARATION(CASTDatadeclaration node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+            return default(Result);
+        }
+
+        public virtual Result VisitDATAVALUE(CASTDatavalue node, VParam param = default(VParam))
         {
             VisitChildren(node, param);
             return default(Result);

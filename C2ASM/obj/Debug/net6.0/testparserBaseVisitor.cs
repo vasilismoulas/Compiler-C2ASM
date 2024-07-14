@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/vasil/OneDrive/Υπολογιστής/C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
+// Generated from C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -45,8 +45,7 @@ public partial class testparserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitCompileUnit([NotNull] testparser.CompileUnitContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>custom_FunctionDeclaration</c>
-	/// labeled alternative in <see cref="testparser.globalstatement"/>.
+	/// Visit a parse tree produced by <see cref="testparser.globalstatement"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -54,7 +53,7 @@ public partial class testparserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitCustom_FunctionDeclaration([NotNull] testparser.Custom_FunctionDeclarationContext context) { return VisitChildren(context); }
+	public virtual Result VisitGlobalstatement([NotNull] testparser.GlobalstatementContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="testparser.functionDeclaration"/>.
 	/// <para>

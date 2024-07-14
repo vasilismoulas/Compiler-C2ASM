@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/vasil/OneDrive/Υπολογιστής/C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
+// Generated from C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -183,37 +183,29 @@ public partial class testparser : Parser {
 	}
 
 	public partial class GlobalstatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public FunctionDeclarationContext functionDeclaration() {
+			return GetRuleContext<FunctionDeclarationContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode QM() { return GetToken(testparser.QM, 0); }
 		public GlobalstatementContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
 		public override int RuleIndex { get { return RULE_globalstatement; } }
-	 
-		public GlobalstatementContext() { }
-		public virtual void CopyFrom(GlobalstatementContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class Custom_FunctionDeclarationContext : GlobalstatementContext {
-		[System.Diagnostics.DebuggerNonUserCode] public FunctionDeclarationContext functionDeclaration() {
-			return GetRuleContext<FunctionDeclarationContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode QM() { return GetToken(testparser.QM, 0); }
-		public Custom_FunctionDeclarationContext(GlobalstatementContext context) { CopyFrom(context); }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			ItestparserListener typedListener = listener as ItestparserListener;
-			if (typedListener != null) typedListener.EnterCustom_FunctionDeclaration(this);
+			if (typedListener != null) typedListener.EnterGlobalstatement(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			ItestparserListener typedListener = listener as ItestparserListener;
-			if (typedListener != null) typedListener.ExitCustom_FunctionDeclaration(this);
+			if (typedListener != null) typedListener.ExitGlobalstatement(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ItestparserVisitor<TResult> typedVisitor = visitor as ItestparserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitCustom_FunctionDeclaration(this);
+			if (typedVisitor != null) return typedVisitor.VisitGlobalstatement(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
@@ -223,7 +215,6 @@ public partial class testparser : Parser {
 		GlobalstatementContext _localctx = new GlobalstatementContext(Context, State);
 		EnterRule(_localctx, 2, RULE_globalstatement);
 		try {
-			_localctx = new Custom_FunctionDeclarationContext(_localctx);
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 40;

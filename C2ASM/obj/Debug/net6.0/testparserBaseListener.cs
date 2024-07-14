@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/vasil/OneDrive/Υπολογιστής/C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
+// Generated from C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -48,19 +48,17 @@ public partial class testparserBaseListener : ItestparserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitCompileUnit([NotNull] testparser.CompileUnitContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by the <c>custom_FunctionDeclaration</c>
-	/// labeled alternative in <see cref="testparser.globalstatement"/>.
+	/// Enter a parse tree produced by <see cref="testparser.globalstatement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterCustom_FunctionDeclaration([NotNull] testparser.Custom_FunctionDeclarationContext context) { }
+	public virtual void EnterGlobalstatement([NotNull] testparser.GlobalstatementContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by the <c>custom_FunctionDeclaration</c>
-	/// labeled alternative in <see cref="testparser.globalstatement"/>.
+	/// Exit a parse tree produced by <see cref="testparser.globalstatement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitCustom_FunctionDeclaration([NotNull] testparser.Custom_FunctionDeclarationContext context) { }
+	public virtual void ExitGlobalstatement([NotNull] testparser.GlobalstatementContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="testparser.functionDeclaration"/>.
 	/// <para>The default implementation does nothing.</para>

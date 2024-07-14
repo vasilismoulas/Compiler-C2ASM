@@ -6,10 +6,10 @@ options { tokenVocab = testlexer; }
 compileUnit : (functionDefinition|globalstatement)+
 			;
 
-globalstatement : functionDeclaration QM                                     #custom_FunctionDeclaration
+globalstatement : functionDeclaration QM                                     
                 ;
 
-functionDeclaration : funprefix formalargs? RP  
+functionDeclaration : funprefix formalargs? RP		
                     ;
 
 functionDefinition :  funprefix formalargs? RP '{' functionbody '}'	 #custom_FunctionDefinition		

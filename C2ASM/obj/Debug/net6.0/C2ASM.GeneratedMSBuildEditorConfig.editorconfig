@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = C2ASM
-build_property.ProjectDir = C:\Users\vasil\OneDrive\Υπολογιστής\C2ASM\C2ASM\
+build_property.ProjectDir = C:\Users\silve\source\comp-2-repos\Compiler-C2ASM\C2ASM\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

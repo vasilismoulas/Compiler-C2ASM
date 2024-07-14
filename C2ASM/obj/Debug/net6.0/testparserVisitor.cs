@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/vasil/OneDrive/Υπολογιστής/C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
+// Generated from C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -38,12 +38,11 @@ public interface ItestparserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitCompileUnit([NotNull] testparser.CompileUnitContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>custom_FunctionDeclaration</c>
-	/// labeled alternative in <see cref="testparser.globalstatement"/>.
+	/// Visit a parse tree produced by <see cref="testparser.globalstatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitCustom_FunctionDeclaration([NotNull] testparser.Custom_FunctionDeclarationContext context);
+	Result VisitGlobalstatement([NotNull] testparser.GlobalstatementContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="testparser.functionDeclaration"/>.
 	/// </summary>

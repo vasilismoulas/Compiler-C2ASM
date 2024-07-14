@@ -189,15 +189,15 @@ namespace C2ASM
         }
 
         public override int VisitFormalArgs(CASTFormalArgs node, object param) {
-            ExtractSubgraphs(node, contextType.CT_DATADECLATARION);
-            base.VisitFunctionDefinition(node);
+            ExtractSubgraphs(node, contextType.CT_DATADECLARATION);
+            base.VisitFormalArgs(node);
 
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
 
             return 0;
         }
 
-        public override int VisitFunctionDeclaration(CASTFUnctionDeclaration node, object param) {
+        public override int VisitFunctionDeclaration(CASTFunctionDeclaration node, object param) {
             ExtractSubgraphs(node, contextType.CT_FUNCTIONDECLARATION_FUNPREFIX);
             ExtractSubgraphs(node, contextType.CT_FUNCTIONDECLARATION_FARGUMENTS);
             base.VisitFunctionDeclaration(node);

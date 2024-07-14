@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace C2ASM
-{    
+{
     //I have to sort the nodeTypes and contextTypes entries in the same order so we don't face any problem in ASTElements Addchild() function 
     public enum nodeType   //This enumeration refers to the terminal nodes or the ones that are being structured by contexts 
     {
@@ -14,6 +14,9 @@ namespace C2ASM
         NT_GLOBALSTATEMENT,
         NT_FUNPREFIX,
         NT_FUNCTIOΝDEFINITION,
+        NT_FUNCTIONDECLARATION,
+        NT_FUNCTIONBODY,
+        NT_FARGUMENTS,
         NT_STATEMENT,
         NT_IFSTATEMENT,
         NT_WHILESTATEMENT,
@@ -87,6 +90,11 @@ namespace C2ASM
         //CT_DATADECLARATION_RIGHT,
         CT_DATAVALUE_NUMBER,
         CT_DATAVALUE_CHAR,
+        CT_TYPESPECIFIER_VOID_TYPE,
+        CT_TYPESPECIFIER_FLOAT_TYPE,
+        CT_TYPESPECIFIER_DOUBLE_TYPE,
+        CT_TYPESPECIFIER_INT_TYPE,
+        CT_TYPESPECIFIER_CHAR_TYPE,
         CT_EXPRESSION_NUMBER,
         CT_EXPRESSION_IDENTIFIER,
         CT_EXPRESSION_DIVISION_LEFT,
@@ -122,7 +130,8 @@ namespace C2ASM
         CT_STATEMENT_RETURN,
         CT_EXPRESSION_PARENTHESIS,
         CT_EXPRESSION_FCALLNAME,
-        CT_EXPRESSION_FCALLARGS,
+        CT_EXPRESSION_FCALLARGS
+
 
     }
 
