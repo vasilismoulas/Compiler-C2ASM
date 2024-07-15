@@ -47,15 +47,15 @@ statementList : (statement)+
 datadeclaration: typespecifier IDENTIFIER ('=' datavalue)?
                ;
 
-datavalue : NUMBER  
-		  | CHAR
+datavalue : NUMBER		#datavalue_Number
+		  | CHAR		#datavalue_Char
 		  ;
 
-typespecifier : INT_TYPE	 
-			  | DOUBLE_TYPE  
-			  | FLOAT_TYPE   
-			  | CHAR_TYPE    
-			  | VOID_TYPE    
+typespecifier : INT_TYPE		#typespecifier_IntType
+			  | DOUBLE_TYPE     #typespecifier_DoubleType
+			  | FLOAT_TYPE      #typespecifier_FloatType
+			  | CHAR_TYPE       #typespecifier_CharType
+			  | VOID_TYPE       #typespecifier_VoidType
 			  ;
 
 

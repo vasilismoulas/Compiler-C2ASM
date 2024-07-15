@@ -235,18 +235,18 @@ namespace C2ASM
             return 0;
         }
 
-        public override int VisitTypespecifier(testparser.TypespecifierContext context)
-        {
-            //Preorder
-            string nodename = "\"DATATYPE" + m_nodeCounter++ + "\"";
-            wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
-            m_parentsName.Push(nodename);
-            base.VisitTypespecifier(context);
-            //Postorder
-            m_parentsName.Pop();
+        //public override int VisitTypespecifier(testparser.TypespecifierContext context)
+        //{
+        //    //Preorder
+        //    string nodename = "\"DATATYPE" + m_nodeCounter++ + "\"";
+        //    wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
+        //    m_parentsName.Push(nodename);
+        //    base.VisitTypespecifier(context);
+        //    //Postorder
+        //    m_parentsName.Pop();
 
-            return 0;
-        }
+        //    return 0;
+        //}
 
         public override int VisitFunctionbody(testparser.FunctionbodyContext context)
         {

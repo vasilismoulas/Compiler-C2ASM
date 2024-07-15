@@ -79,19 +79,68 @@ namespace C2ASM
         }
 
         // ???
-        public override int VisitTypespecifier(testparser.TypespecifierContext context) {
+        public override int VisitTypespecifier_IntType(testparser.Typespecifier_IntTypeContext context) {
             ASTComposite m_parent = m_parents.Peek();
             CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
+
             this.VisitTerminalInContext(context, context.INT_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_INT_TYPE);
-            this.VisitTerminalInContext(context, context.DOUBLE_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_DOUBLE_TYPE);
-            this.VisitTerminalInContext(context, context.FLOAT_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_FLOAT_TYPE);
-            this.VisitTerminalInContext(context, context.CHAR_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_CHAR_TYPE);
-            this.VisitTerminalInContext(context, context.VOID_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_VOID_TYPE);
+
             m_parents.Pop();
             return 0;
         }
+
+        public override int VisitTypespecifier_DoubleType(testparser.Typespecifier_DoubleTypeContext context)
+        {
+            ASTComposite m_parent = m_parents.Peek();
+            CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
+            m_parent.AddChild(newnode, m_parentContext.Peek());
+            m_parents.Push(newnode);
+
+            this.VisitTerminalInContext(context, context.DOUBLE_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_DOUBLE_TYPE);
+
+            m_parents.Pop();
+            return 0;
+        }
+
+        public override int VisitTypespecifier_FloatType(testparser.Typespecifier_FloatTypeContext context)
+        {
+            ASTComposite m_parent = m_parents.Peek();
+            CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
+            m_parent.AddChild(newnode, m_parentContext.Peek());
+            m_parents.Push(newnode);
+            this.VisitTerminalInContext(context, context.FLOAT_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_FLOAT_TYPE);
+            m_parents.Pop();
+            return 0;
+        }
+
+        public override int VisitTypespecifier_CharType(testparser.Typespecifier_CharTypeContext context)
+        {
+            ASTComposite m_parent = m_parents.Peek();
+            CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
+            m_parent.AddChild(newnode, m_parentContext.Peek());
+            m_parents.Push(newnode);
+
+            this.VisitTerminalInContext(context, context.CHAR_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_CHAR_TYPE);
+
+            m_parents.Pop();
+            return 0;
+        }
+
+        public override int VisitTypespecifier_VoidType(testparser.Typespecifier_VoidTypeContext context)
+        {
+            ASTComposite m_parent = m_parents.Peek();
+            CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
+            m_parent.AddChild(newnode, m_parentContext.Peek());
+            m_parents.Push(newnode);
+
+            this.VisitTerminalInContext(context, context.VOID_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_VOID_TYPE);
+
+            m_parents.Pop();
+            return 0;
+        }
+
 
         public override int VisitFormalargs(testparser.FormalargsContext context) {
             ASTComposite m_parent = m_parents.Peek();
@@ -118,13 +167,25 @@ namespace C2ASM
             return 0;
         }
 
-        public override int VisitDatavalue(testparser.DatavalueContext context) {
+        public override int VisitDatavalue_Number(testparser.Datavalue_NumberContext context) {
             ASTComposite m_parent = m_parents.Peek();
             CASTDatavalue newnode = new CASTDatavalue(context.GetText(), m_parents.Peek(), 1);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
 
             this.VisitTerminalInContext(context, context.NUMBER().Symbol, m_parentContext, contextType.CT_DATAVALUE_NUMBER);
+
+            m_parents.Pop();
+            return 0;
+        }
+
+        public override int VisitDatavalue_Char(testparser.Datavalue_CharContext context)
+        {
+            ASTComposite m_parent = m_parents.Peek();
+            CASTDatavalue newnode = new CASTDatavalue(context.GetText(), m_parents.Peek(), 1);
+            m_parent.AddChild(newnode, m_parentContext.Peek());
+            m_parents.Push(newnode);
+
             this.VisitTerminalInContext(context, context.CHAR().Symbol, m_parentContext, contextType.CT_DATAVALUE_CHAR);
 
             m_parents.Pop();

@@ -227,25 +227,89 @@ public interface ItestparserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDatadeclaration([NotNull] testparser.DatadeclarationContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="testparser.datavalue"/>.
+	/// Enter a parse tree produced by the <c>datavalue_Number</c>
+	/// labeled alternative in <see cref="testparser.datavalue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterDatavalue([NotNull] testparser.DatavalueContext context);
+	void EnterDatavalue_Number([NotNull] testparser.Datavalue_NumberContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="testparser.datavalue"/>.
+	/// Exit a parse tree produced by the <c>datavalue_Number</c>
+	/// labeled alternative in <see cref="testparser.datavalue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitDatavalue([NotNull] testparser.DatavalueContext context);
+	void ExitDatavalue_Number([NotNull] testparser.Datavalue_NumberContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="testparser.typespecifier"/>.
+	/// Enter a parse tree produced by the <c>datavalue_Char</c>
+	/// labeled alternative in <see cref="testparser.datavalue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterTypespecifier([NotNull] testparser.TypespecifierContext context);
+	void EnterDatavalue_Char([NotNull] testparser.Datavalue_CharContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="testparser.typespecifier"/>.
+	/// Exit a parse tree produced by the <c>datavalue_Char</c>
+	/// labeled alternative in <see cref="testparser.datavalue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitTypespecifier([NotNull] testparser.TypespecifierContext context);
+	void ExitDatavalue_Char([NotNull] testparser.Datavalue_CharContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>typespecifier_IntType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTypespecifier_IntType([NotNull] testparser.Typespecifier_IntTypeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>typespecifier_IntType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTypespecifier_IntType([NotNull] testparser.Typespecifier_IntTypeContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>typespecifier_DoubleType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTypespecifier_DoubleType([NotNull] testparser.Typespecifier_DoubleTypeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>typespecifier_DoubleType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTypespecifier_DoubleType([NotNull] testparser.Typespecifier_DoubleTypeContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>typespecifier_FloatType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTypespecifier_FloatType([NotNull] testparser.Typespecifier_FloatTypeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>typespecifier_FloatType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTypespecifier_FloatType([NotNull] testparser.Typespecifier_FloatTypeContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>typespecifier_CharType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTypespecifier_CharType([NotNull] testparser.Typespecifier_CharTypeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>typespecifier_CharType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTypespecifier_CharType([NotNull] testparser.Typespecifier_CharTypeContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>typespecifier_VoidType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTypespecifier_VoidType([NotNull] testparser.Typespecifier_VoidTypeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>typespecifier_VoidType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTypespecifier_VoidType([NotNull] testparser.Typespecifier_VoidTypeContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>expr_PLUSMINUS</c>
 	/// labeled alternative in <see cref="testparser.expr"/>.
