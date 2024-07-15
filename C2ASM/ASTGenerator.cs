@@ -13,15 +13,22 @@ namespace C2ASM
     {
         private ASTComposite m_root;
 
+        private ASTSymbolTable m_symbolTable;
+
         Stack<ASTComposite> m_parents = new Stack<ASTComposite>();
 
         Stack<contextType> m_parentContext = new Stack<contextType>();
 
         public ASTComposite M_Root => m_root;
 
+        public ASTGenerator(testparser parser) 
+        {
+            this.m_symbolTable = parser.symtab;
+        }
 
         public override int VisitCompileUnit(testparser.CompileUnitContext context)
         {
+            ASTSymbolTable symtab  = context.symtab;
             CASTCompileUnit newnode = new CASTCompileUnit(context.GetText(),  null);
             m_root = newnode;
             m_parents.Push(newnode);

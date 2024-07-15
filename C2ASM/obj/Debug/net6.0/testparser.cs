@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/vasil/OneDrive/Υπολογιστής/C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
+// Generated from C:/Users/vasil/OneDrive/Έγγραφα/test/Compiler-C2ASM/C2ASM/testparser.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -91,6 +91,7 @@ public partial class testparser : Parser {
 		}
 	}
 
+	public C2ASM.ASTSymbolTable symtab;
 		public testparser(ITokenStream input) : this(input, Console.Out, Console.Error) { }
 
 		public testparser(ITokenStream input, TextWriter output, TextWriter errorOutput)
@@ -100,6 +101,7 @@ public partial class testparser : Parser {
 	}
 
 	public partial class CompileUnitContext : ParserRuleContext {
+		public C2ASM.ASTSymbolTable symtab;
 		[System.Diagnostics.DebuggerNonUserCode] public FunctionDefinitionContext[] functionDefinition() {
 			return GetRuleContexts<FunctionDefinitionContext>();
 		}
@@ -112,9 +114,11 @@ public partial class testparser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public GlobalstatementContext globalstatement(int i) {
 			return GetRuleContext<GlobalstatementContext>(i);
 		}
-		public CompileUnitContext(ParserRuleContext parent, int invokingState)
+		public CompileUnitContext(ParserRuleContext parent, int invokingState) : base(parent, invokingState) { }
+		public CompileUnitContext(ParserRuleContext parent, int invokingState, C2ASM.ASTSymbolTable symtab)
 			: base(parent, invokingState)
 		{
+			this.symtab = symtab;
 		}
 		public override int RuleIndex { get { return RULE_compileUnit; } }
 		[System.Diagnostics.DebuggerNonUserCode]
@@ -136,8 +140,8 @@ public partial class testparser : Parser {
 	}
 
 	[RuleVersion(0)]
-	public CompileUnitContext compileUnit() {
-		CompileUnitContext _localctx = new CompileUnitContext(Context, State);
+	public CompileUnitContext compileUnit(C2ASM.ASTSymbolTable symtab) {
+		CompileUnitContext _localctx = new CompileUnitContext(Context, State, symtab);
 		EnterRule(_localctx, 0, RULE_compileUnit);
 		int _la;
 		try {

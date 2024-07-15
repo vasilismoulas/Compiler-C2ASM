@@ -24,22 +24,24 @@ namespace C2ASM
 
             testparser parser = new testparser(cts);
 
-            IParseTree tree = parser.compileUnit();
+            ASTSymbolTable symtab = new ASTSymbolTable();
+
+            IParseTree tree = parser.compileUnit(symtab);
 
             TestVisitor visitor = new TestVisitor();
 
             visitor.Visit(tree);
 
-            ASTGenerator astGenerator = new ASTGenerator();
+            Console.WriteLine(tree.ToStringTree(parser)); //print LISP-style tree
+
+            ASTGenerator astGenerator = new ASTGenerator(parser);
             astGenerator.Visit(tree);
 
             ASTPrinter astPrinter = new ASTPrinter("ASyntaxTree.dot");
             astPrinter.Visit(astGenerator.M_Root);
 
 
-            //for (int i = 0;i<cts.GetNumberOfOnChannelTokens();i++) {
-            //Console.WriteLine(parser.);
-            //}
+            
         }
     }
 }

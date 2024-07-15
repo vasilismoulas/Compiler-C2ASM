@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace C2ASM
 {
-	public class ASTSymbolTable : Scope
+	public class ASTSymbolTable : IScope
 	{
         // Creating a HashMap with keys of type string and values of type int
         Dictionary<string, ASTElement> symbols;
@@ -23,7 +23,7 @@ namespace C2ASM
             return "global";
         }
 
-        public Scope getEnclosingScope()
+        public IScope getEnclosingScope()
         {
             return null;
         }

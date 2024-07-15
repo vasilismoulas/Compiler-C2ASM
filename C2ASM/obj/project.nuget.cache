@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Bv2QNDnXF2oP3Fql/gxRqVHoPGCP9Y/+NGhLkYgn4WOY3384hp5CA4sOCvpCsA3HWW5jjiRZtwDyf4fbD4c1vw==",
+  "dgSpecHash": "KpRFUbfnwTIbUaVUfSA8zdp0hIawf7OzQSsqFTySjMZuwdIoI5MlI/BOekoL/1rnPIKkYpvxKZvDfvBLY12Fjw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vasil\\OneDrive\\Υπολογιστής\\C2ASM\\C2ASM\\C2ASM.csproj",
+  "projectFilePath": "C:\\Users\\vasil\\OneDrive\\Έγγραφα\\test\\Compiler-C2ASM\\C2ASM\\C2ASM.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vasil\\.nuget\\packages\\antlr4.runtime.standard\\4.13.1\\antlr4.runtime.standard.4.13.1.nupkg.sha512",
     "C:\\Users\\vasil\\.nuget\\packages\\antlr4buildtasks\\12.8.0\\antlr4buildtasks.12.8.0.nupkg.sha512",

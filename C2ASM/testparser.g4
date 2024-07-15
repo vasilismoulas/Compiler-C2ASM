@@ -3,13 +3,18 @@
 options { tokenVocab = testlexer; }
 
 /*Parser Rules*/
-compileUnit : (functionDefinition|globalstatement)+
-			;
+@members {public C2ASM.ASTSymbolTable symtab;}
 
-globalstatement : functionDeclaration QM                                     #custom_FunctionDeclaration
+@init {this.symtab = symtab;}
+
+compileUnit[C2ASM.ASTSymbolTable symtab] : (functionDefinition|globalstatement)+
+			                             ;
+
+
+globalstatement : functionDeclaration QM                             #custom_FunctionDeclaration       
                 ;
 
-functionDeclaration : funprefix formalargs? RP  
+functionDeclaration : funprefix formalargs? RP                       
                     ;
 
 functionDefinition :  funprefix formalargs? RP '{' functionbody '}'	 #custom_FunctionDefinition		
