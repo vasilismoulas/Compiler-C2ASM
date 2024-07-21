@@ -487,13 +487,73 @@ namespace C2ASM
 
     public class CASTTypespecifier: ASTComposite
     {
-        public CASTTypespecifier(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_GLOBALSTATEMENT, parent, numContexts) { }
+        public CASTTypespecifier(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
 
         public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
         {
             return visitor.VisitTYPESPECIFIER(this, param);
         }
     }
+
+    public class CASTTypespecifierInt : ASTComposite
+    {
+        public CASTTypespecifierInt(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERINT(this, param);
+        }
+    }
+
+    public class CASTTypespecifierDouble : ASTComposite
+    {
+        public CASTTypespecifierDouble(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERDOUBLE(this, param);
+        }
+    }
+
+    public class CASTTypespecifierFloat : ASTComposite
+    {
+        public CASTTypespecifierFloat(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERFLOAT(this, param);
+        }
+    }
+
+    public class CASTTypespecifierChar : ASTComposite
+    {
+        public CASTTypespecifierChar(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERCHAR(this, param);
+        }
+    }
+
+    public class CASTTypespecifierVoid : ASTComposite
+    {
+        public CASTTypespecifierVoid(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERVOID(this, param);
+        }
+    }
+
+    //public class CASTTypespecifier_INT : ASTComposite
+    //{
+    //    public CASTTypespecifier_INT(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_INT_TYPE, parent, numContexts) { }
+
+    //    public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+    //    {
+    //        return visitor.VisitTYPESPECIFIER(this, param);
+    //    }
+    //}
 
     public class CASTStatement : ASTComposite
     {

@@ -17,10 +17,82 @@ digraph {
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_EXPRESSION_IDENTIFIER_3_(a)";
+		"NT_FUNCTIONBODY_6";
+		label=CT_FUNCTIONDEFINITION_BODY;
+	}
+	subgraph cluster3{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_TYPESPECIFIER_3";
+		label=CT_FUNPREFIX_TYPESPECIFIER;
+	}
+	subgraph cluster4{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_5_(foo)";
 		label=CT_FUNPREFIX_IDENTIFIER;
 	}
-"NT_FUNPREFIX_2"->"NT_EXPRESSION_IDENTIFIER_3_(a)"
+	subgraph cluster5{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_INT_TYPE_4_(0)";
+		label=CT_TYPESPECIFIER_INT_TYPE;
+	}
+"NT_TYPESPECIFIER_3"->"NT_INT_TYPE_4_(0)"
+"NT_FUNPREFIX_2"->"NT_TYPESPECIFIER_3"
+"NT_FUNPREFIX_2"->"NT_EXPRESSION_IDENTIFIER_5_(foo)"
 "NT_FUNCTIOΝDEFINITION_1"->"NT_FUNPREFIX_2"
+	subgraph cluster6{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_DATADECLARATION_7";
+		label=CT_FUNCTIONBODY_STATEMENT;
+	}
+	subgraph cluster7{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_TYPESPECIFIER_8";
+		label=CT_DATADECLARATION_TYPESPECIFIER;
+	}
+	subgraph cluster8{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_10_(x)";
+		label=CT_DATADECLARATION_IDENTIFIER;
+	}
+	subgraph cluster9{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_DATAVALUE_11";
+		label=CT_DATADECLARATION_DATAVALUE;
+	}
+	subgraph cluster10{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_INT_TYPE_9_(0)";
+		label=CT_TYPESPECIFIER_INT_TYPE;
+	}
+"NT_TYPESPECIFIER_8"->"NT_INT_TYPE_9_(0)"
+"NT_DATADECLARATION_7"->"NT_TYPESPECIFIER_8"
+"NT_DATADECLARATION_7"->"NT_EXPRESSION_IDENTIFIER_10_(x)"
+	subgraph cluster11{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_NUMBER_12_(5)";
+		label=CT_DATAVALUE_NUMBER;
+	}
+"NT_DATAVALUE_11"->"NT_EXPRESSION_NUMBER_12_(5)"
+"NT_DATADECLARATION_7"->"NT_DATAVALUE_11"
+"NT_FUNCTIONBODY_6"->"NT_DATADECLARATION_7"
+"NT_FUNCTIOΝDEFINITION_1"->"NT_FUNCTIONBODY_6"
 "NT_COMPILEUNIT_0"->"NT_FUNCTIOΝDEFINITION_1"
 }

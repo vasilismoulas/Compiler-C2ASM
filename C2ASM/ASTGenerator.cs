@@ -41,7 +41,7 @@ namespace C2ASM
         }
 
         public override int VisitFunctionDeclaration(testparser.FunctionDeclarationContext context) {
-            CASTFunctionDeclaration newnode = new CASTFunctionDeclaration(context.GetText(), m_parents.Peek(), 1);
+            CASTFunctionDeclaration newnode = new CASTFunctionDeclaration(context.GetText(), m_parents.Peek(), 2);
             m_root = newnode;
             m_parents.Push(newnode);
             this.VisitElementInContext(context.funprefix(), m_parentContext, contextType.CT_FUNCTIONDECLARATION_FUNPREFIX);
@@ -55,7 +55,7 @@ namespace C2ASM
         public override int VisitCustom_FunctionDefinition(testparser.Custom_FunctionDefinitionContext context)
         {
             ASTComposite m_parent = m_parents.Peek();
-            CASTFunctionDefinition newnode = new CASTFunctionDefinition(context.GetText(), m_parents.Peek(), 1);
+            CASTFunctionDefinition newnode = new CASTFunctionDefinition(context.GetText(), m_parents.Peek(), 4);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
             this.VisitElementInContext(context.funprefix(), m_parentContext,contextType.CT_FUNCTIONDEFINITION_FUNPREFIX);
@@ -69,7 +69,7 @@ namespace C2ASM
         public override int VisitFunprefix(testparser.FunprefixContext context)
         {
             ASTComposite m_parent = m_parents.Peek();
-            CASTFunprefix newnode = new CASTFunprefix(context.GetText(), m_parents.Peek(), 1);
+            CASTFunprefix newnode = new CASTFunprefix(context.GetText(), m_parents.Peek(), 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
             this.VisitElementInContext(context.typespecifier(), m_parentContext, contextType.CT_FUNPREFIX_TYPESPECIFIER);
@@ -79,9 +79,22 @@ namespace C2ASM
         }
 
         // ???
-        public override int VisitTypespecifier_IntType(testparser.Typespecifier_IntTypeContext context) {
+        //public override int VisitTypespecifier_IntType(testparser.Typespecifier_IntTypeContext context) {
+        //    ASTComposite m_parent = m_parents.Peek();
+        //    CASTTypespecifierINT newnode = new CASTTypespecifierINT(context.GetText(), m_parents.Peek(), 1);
+        //    m_parent.AddChild(newnode, m_parentContext.Peek());
+        //    m_parents.Push(newnode);
+
+        //    this.VisitTerminalInContext(context, context.INT_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_INT_TYPE);
+
+        //    m_parents.Pop();
+        //    return 0;
+        //}
+
+        public override int VisitTypespecifier_IntType(testparser.Typespecifier_IntTypeContext context)
+        {
             ASTComposite m_parent = m_parents.Peek();
-            CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
+            CASTTypespecifierInt newnode = new CASTTypespecifierInt(context.GetText(), m_parents.Peek(), 1);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
 
@@ -94,7 +107,7 @@ namespace C2ASM
         public override int VisitTypespecifier_DoubleType(testparser.Typespecifier_DoubleTypeContext context)
         {
             ASTComposite m_parent = m_parents.Peek();
-            CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
+            CASTTypespecifierDouble newnode = new CASTTypespecifierDouble(context.GetText(), m_parents.Peek(), 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
 
@@ -107,7 +120,7 @@ namespace C2ASM
         public override int VisitTypespecifier_FloatType(testparser.Typespecifier_FloatTypeContext context)
         {
             ASTComposite m_parent = m_parents.Peek();
-            CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
+            CASTTypespecifierFloat newnode = new CASTTypespecifierFloat(context.GetText(), m_parents.Peek(), 3);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
             this.VisitTerminalInContext(context, context.FLOAT_TYPE().Symbol, m_parentContext, contextType.CT_TYPESPECIFIER_FLOAT_TYPE);
@@ -118,7 +131,7 @@ namespace C2ASM
         public override int VisitTypespecifier_CharType(testparser.Typespecifier_CharTypeContext context)
         {
             ASTComposite m_parent = m_parents.Peek();
-            CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
+            CASTTypespecifierChar newnode = new CASTTypespecifierChar(context.GetText(), m_parents.Peek(), 4);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
 
@@ -131,7 +144,7 @@ namespace C2ASM
         public override int VisitTypespecifier_VoidType(testparser.Typespecifier_VoidTypeContext context)
         {
             ASTComposite m_parent = m_parents.Peek();
-            CASTTypespecifier newnode = new CASTTypespecifier(context.GetText(), m_parents.Peek(), 1);
+            CASTTypespecifierVoid newnode = new CASTTypespecifierVoid(context.GetText(), m_parents.Peek(), 5);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
 
@@ -147,18 +160,18 @@ namespace C2ASM
             CASTFormalArgs newnode = new CASTFormalArgs(context.GetText(), m_parents.Peek(), 1);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
-            this.VisitElementsInContext(context.datadeclaration(), m_parentContext, contextType.CT_DATADECLARATION);
+            this.VisitElementsInContext(context.datadeclaration(), m_parentContext, contextType.CT_FARGUMENTS_DATADECLARATION);
             m_parents.Pop();
             return 0;
         }
 
         public override int VisitDatadeclaration(testparser.DatadeclarationContext context) {
             ASTComposite m_parent = m_parents.Peek();
-            CASTDatadeclaration newnode = new CASTDatadeclaration(context.GetText(), m_parents.Peek(), 1);
+            CASTDatadeclaration newnode = new CASTDatadeclaration(context.GetText(), m_parents.Peek(), 3);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
 
-            this.VisitElementInContext(context.typespecifier(), m_parentContext, contextType.CT_DATADECLARATION_DATATYPE);
+            this.VisitElementInContext(context.typespecifier(), m_parentContext, contextType.CT_DATADECLARATION_TYPESPECIFIER);
             this.VisitTerminalInContext(context, context.IDENTIFIER().Symbol, m_parentContext, contextType.CT_DATADECLARATION_IDENTIFIER);
             if (context.datavalue() != null)
                 this.VisitElementInContext(context.datavalue(), m_parentContext, contextType.CT_DATADECLARATION_DATAVALUE);
@@ -169,7 +182,7 @@ namespace C2ASM
 
         public override int VisitDatavalue_Number(testparser.Datavalue_NumberContext context) {
             ASTComposite m_parent = m_parents.Peek();
-            CASTDatavalue newnode = new CASTDatavalue(context.GetText(), m_parents.Peek(), 1);
+            CASTDatavalue newnode = new CASTDatavalue(context.GetText(), m_parents.Peek(), 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
 
@@ -197,7 +210,8 @@ namespace C2ASM
             CASTFunctionBody newnode = new CASTFunctionBody(context.GetText(), m_parents.Peek(), 1);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
-            this.VisitElementsInContext(context.statement(), m_parentContext, contextType.CT_STATEMENT);
+            if (context.statement() != null)
+                this.VisitElementInContext(context.statement(), m_parentContext, contextType.CT_FUNCTIONBODY_STATEMENT);
             m_parents.Pop();
             return 0;
         }
@@ -459,7 +473,7 @@ namespace C2ASM
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
 
-            this.VisitElementsInContext(context.statement(), m_parentContext, contextType.CT_STATEMENT);
+            this.VisitElementsInContext(context.statement(), m_parentContext, contextType.CT_STATEMENTLIST_STATEMENT);
 
             m_parents.Pop();
             return 0;
@@ -472,7 +486,7 @@ namespace C2ASM
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
 
-            this.VisitElementInContext(context.statementList(), m_parentContext, contextType.CT_COMPOUNDSTATEMENT);
+            this.VisitElementInContext(context.statementList(), m_parentContext, contextType.CT_COMPOUNDSTATEMENT_STATEMENTLIST);
 
             m_parents.Pop();
             return 0;
@@ -539,7 +553,7 @@ namespace C2ASM
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_STATEMENT_EXPRESSION);
             
             m_parents.Pop();
-            return 0;
+            //return 0;
             return base.VisitStatement_ExpressionStatement(context);
         }
 

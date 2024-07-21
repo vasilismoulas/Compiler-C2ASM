@@ -106,6 +106,50 @@ namespace C2ASM
             return default(Result);
         }
 
+        public virtual Result VisitTYPESPECIFIERINT(CASTTypespecifierInt node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+            return default(Result);
+        }
+
+        public virtual Result VisitTYPESPECIFIERDOUBLE(CASTTypespecifierDouble node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+
+            return default(Result);
+        }
+
+        public virtual Result VisitTYPESPECIFIERFLOAT(CASTTypespecifierFloat node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+
+            return default(Result);
+        }
+
+        public virtual Result VisitTYPESPECIFIERCHAR(CASTTypespecifierChar node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+
+            return default(Result);
+        }
+
+        public virtual Result VisitTYPESPECIFIERVOID(CASTTypespecifierVoid node, VParam param = default(VParam))
+        {
+            VisitChildren(node, param);
+
+            return default(Result);
+        }
+
+
+
+        //public virtual Result VisitTYPESPECIFIER_INT(CASTTypespecifier_INT node, VParam param = default(VParam))
+        //{
+
+        //    return default(Result);
+        //}
+
+
+
         public virtual Result VisitFormalArgs(CASTFormalArgs node, VParam param = default(VParam))
         {
             VisitChildren(node, param);

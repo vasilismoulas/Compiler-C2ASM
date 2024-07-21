@@ -18,7 +18,7 @@ functionDefinition :  funprefix formalargs? RP '{' functionbody '}'	 #custom_Fun
 funprefix : typespecifier IDENTIFIER LP
           ;
 
-functionbody : (statement)+ 
+functionbody : statement?
 			 ;
 
 

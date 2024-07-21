@@ -3,36 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\testparser.g4||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\testparser.g4||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\testbench\\asyntaxtree.gif||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\testbench\\asyntaxtree.gif||{58961B49-13E0-48C0-9258-13CBC4D40279}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\astelement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\astelement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\astgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\astgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\testvisitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\testvisitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\testbench\\syntaxtree.gif||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\testbench\\syntaxtree.gif||{58961B49-13E0-48C0-9258-13CBC4D40279}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\astprinter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\astprinter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\astelementconcrete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\astelementconcrete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\astgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\astgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\obj\\debug\\net6.0\\testparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\obj\\debug\\net6.0\\testparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\testbench\\source_code.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\testbench\\source_code.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\astbasevisitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\astbasevisitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\astelement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\astelement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\testlexer.g4||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\testlexer.g4||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\astelementconcrete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\astelementconcrete.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\testparser.g4||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\testparser.g4||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|c:\\users\\silve\\source\\comp-2-repos\\compiler-c2asm\\c2asm\\testvisitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{012B4830-9E8C-4FE4-A824-632FFFE6642F}|C2ASM\\C2ASM.csproj|solutionrelative:c2asm\\testvisitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,69 +54,110 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TestVisitor.cs",
-              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestVisitor.cs",
-              "RelativeDocumentMoniker": "C2ASM\\TestVisitor.cs",
-              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestVisitor.cs",
-              "RelativeToolTip": "C2ASM\\TestVisitor.cs",
-              "ViewState": "AQIAALgAAAAAAAAAAAArwO8AAAAYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T10:43:18.001Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "testparser.cs",
-              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\obj\\Debug\\net6.0\\testparser.cs",
-              "RelativeDocumentMoniker": "C2ASM\\obj\\Debug\\net6.0\\testparser.cs",
-              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\obj\\Debug\\net6.0\\testparser.cs",
-              "RelativeToolTip": "C2ASM\\obj\\Debug\\net6.0\\testparser.cs",
-              "ViewState": "AQIAAGUEAAAAAAAAAAAmwG8EAAAWAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-14T09:46:59.112Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ASyntaxTree.gif",
+              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestBench\\ASyntaxTree.gif",
+              "RelativeDocumentMoniker": "C2ASM\\TestBench\\ASyntaxTree.gif",
+              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestBench\\ASyntaxTree.gif",
+              "RelativeToolTip": "C2ASM\\TestBench\\ASyntaxTree.gif",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-07-21T10:05:51.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SyntaxTree.gif",
+              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestBench\\SyntaxTree.gif",
+              "RelativeDocumentMoniker": "C2ASM\\TestBench\\SyntaxTree.gif",
+              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestBench\\SyntaxTree.gif",
+              "RelativeToolTip": "C2ASM\\TestBench\\SyntaxTree.gif",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-07-21T10:01:28.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "testlexer.g4",
+              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\testlexer.g4",
+              "RelativeDocumentMoniker": "C2ASM\\testlexer.g4",
+              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\testlexer.g4",
+              "RelativeToolTip": "C2ASM\\testlexer.g4",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-07-21T09:59:20.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "testparser.g4",
               "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\testparser.g4",
               "RelativeDocumentMoniker": "C2ASM\\testparser.g4",
               "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\testparser.g4",
               "RelativeToolTip": "C2ASM\\testparser.g4",
-              "ViewState": "AQIAACoAAAAAAAAAAAAAAC8AAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-07-14T08:55:17.236Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
+              "Title": "ASTElement.cs",
+              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTElement.cs",
+              "RelativeDocumentMoniker": "C2ASM\\ASTElement.cs",
+              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTElement.cs",
+              "RelativeToolTip": "C2ASM\\ASTElement.cs",
+              "ViewState": "AQIAAMoAAAAAAAAAAAAjwNAAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-13T09:25:29.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "ASTGenerator.cs",
               "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTGenerator.cs",
               "RelativeDocumentMoniker": "C2ASM\\ASTGenerator.cs",
               "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTGenerator.cs",
               "RelativeToolTip": "C2ASM\\ASTGenerator.cs",
-              "ViewState": "AQIAABYBAAAAAAAAAAAgwCEBAAAcAAAA",
+              "ViewState": "AQIAALAAAAAAAAAAAAAnwL0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-14T08:46:49.989Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
+              "Title": "ASTElementConcrete.cs",
+              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTElementConcrete.cs",
+              "RelativeDocumentMoniker": "C2ASM\\ASTElementConcrete.cs",
+              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTElementConcrete.cs",
+              "RelativeToolTip": "C2ASM\\ASTElementConcrete.cs",
+              "ViewState": "AQIAAOwAAAAAAAAAAAAawO8AAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-14T08:41:59.188Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ASTPrinter.cs",
               "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTPrinter.cs",
               "RelativeDocumentMoniker": "C2ASM\\ASTPrinter.cs",
               "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTPrinter.cs",
               "RelativeToolTip": "C2ASM\\ASTPrinter.cs",
-              "ViewState": "AQIAAO0AAAAAAAAAAAAUwMEAAAAAAAAA",
+              "ViewState": "AQIAAN4AAAAAAAAAAIA2wOkAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-14T08:41:23.235Z",
               "EditorCaption": ""
@@ -112,39 +165,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "ASTElementConcrete.cs",
-              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTElementConcrete.cs",
-              "RelativeDocumentMoniker": "C2ASM\\ASTElementConcrete.cs",
-              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTElementConcrete.cs",
-              "RelativeToolTip": "C2ASM\\ASTElementConcrete.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAOAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-14T08:41:59.188Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "ASTBaseVisitor.cs",
               "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTBaseVisitor.cs",
               "RelativeDocumentMoniker": "C2ASM\\ASTBaseVisitor.cs",
               "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTBaseVisitor.cs",
               "RelativeToolTip": "C2ASM\\ASTBaseVisitor.cs",
-              "ViewState": "AQIAAFMAAAAAAAAAAAAgwCwAAAAAAAAA",
+              "ViewState": "AQIAAIAAAAAAAAAAAIA8wIcAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-14T09:08:37.345Z"
+              "WhenOpened": "2024-07-14T09:08:37.345Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ASTElement.cs",
-              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTElement.cs",
-              "RelativeDocumentMoniker": "C2ASM\\ASTElement.cs",
-              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\ASTElement.cs",
-              "RelativeToolTip": "C2ASM\\ASTElement.cs",
-              "ViewState": "AQIAAKUAAAAAAAAAAAD4v8oAAAAAAAAA",
+              "DocumentIndex": 4,
+              "Title": "source_code.txt",
+              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestBench\\source_code.txt",
+              "RelativeDocumentMoniker": "C2ASM\\TestBench\\source_code.txt",
+              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestBench\\source_code.txt",
+              "RelativeToolTip": "C2ASM\\TestBench\\source_code.txt",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2024-07-18T10:52:07.608Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TestVisitor.cs",
+              "DocumentMoniker": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestVisitor.cs",
+              "RelativeDocumentMoniker": "C2ASM\\TestVisitor.cs",
+              "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestVisitor.cs",
+              "RelativeToolTip": "C2ASM\\TestVisitor.cs",
+              "ViewState": "AQIAALgAAAAAAAAAAAArwL4AAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T09:25:29.746Z",
+              "WhenOpened": "2024-07-15T10:43:18.001Z",
               "EditorCaption": ""
             }
           ]
