@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using C2ASM.Scopes;
 
 namespace C2ASM
 {
+    // EDITED FOR SCOPE
     public class CASTIDENTIFIER : ASTTerminal
     {
-        public CASTIDENTIFIER(string idText, ASTElement parent) : base(idText, nodeType.NT_EXPRESSION_IDENTIFIER,
-           parent)
+        public CASTIDENTIFIER(string idText, ASTElement parent, Scope currentscope) : base(idText, nodeType.NT_EXPRESSION_IDENTIFIER,
+           parent, currentscope)
         {
             m_nodeName = GenerateNodeName();
         }

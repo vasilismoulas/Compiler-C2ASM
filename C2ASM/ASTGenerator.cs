@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using C2ASM.Scopes;
 //using ANTLR_Startup_Project;
 using Antlr4.Runtime.Tree;
 
@@ -19,6 +20,9 @@ namespace C2ASM
 
         Stack<contextType> m_parentContext = new Stack<contextType>();
 
+        // **Scope**
+        Stack<Scope> m_parents_scope = new Stack<Scope>();
+
         public ASTComposite M_Root => m_root;
 
         public ASTGenerator(testparser parser) 
@@ -26,15 +30,21 @@ namespace C2ASM
             this.m_symbolTable = parser.symtab;
         }
 
+        // In Each Visit function invocation we add the corresponding ast element inside the symbol table
         public override int VisitCompileUnit(testparser.CompileUnitContext context)
         {
-            ASTSymbolTable symtab  = context.symtab;
+            //ASTSymbolTable symtab  = context.symtab;
             CASTCompileUnit newnode = new CASTCompileUnit(context.GetText(),  null);
             m_root = newnode;
+            Scope currentScope = new GlobalScope();// push scope
+            m_parents_scope.Push(currentScope);
+            m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
+
             m_parents.Push(newnode);
             this.VisitElementsInContext(context.functionDefinition(), m_parentContext, contextType.CT_COMPILEUNIT_FUNCTIONDEFINITION);
             this.VisitElementsInContext(context.globalstatement(), m_parentContext, contextType.CT_COMPILEUNIT_GLOBALSTATEMENT);
             m_parents.Pop();
+            m_parents_scope.Pop();
             return 0;
         }
 
@@ -42,6 +52,7 @@ namespace C2ASM
         public override int VisitCustom_FunctionDefinition(testparser.Custom_FunctionDefinitionContext context)
         {
             ASTComposite m_parent = m_parents.Peek();
+            Scope currentScope = m_parents_scope.Peek();
             CASTFunctionDefinition newnode = new CASTFunctionDefinition(context.GetText(), m_parents.Peek(), 1);
             m_parent.AddChild(newnode, m_parentContext.Peek());
             m_parents.Push(newnode);
@@ -394,7 +405,7 @@ namespace C2ASM
                     m_parent.AddChild(newnode1, m_parentContext.Peek());
                     break;
                 case testlexer.IDENTIFIER:
-                    CASTIDENTIFIER newnode2 = new CASTIDENTIFIER(node.Symbol.Text, m_parents.Peek());
+                    CASTIDENTIFIER newnode2 = new CASTIDENTIFIER(node.Symbol.Text, m_parents.Peek(), m_parents_scope.Peek());
                     m_parent.AddChild(newnode2, m_parentContext.Peek());
                     break;
                 case testlexer.CHAR:

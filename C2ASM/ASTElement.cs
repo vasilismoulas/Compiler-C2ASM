@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using C2ASM.Scopes;
+
 
 namespace C2ASM
 {    
@@ -127,8 +129,10 @@ namespace C2ASM
         private static int ms_serialCounter = 0;
         private nodeType m_nodeType;
         private ASTElement m_parent;
+        private Scope m_scope;
         protected string m_nodeName;
         protected string m_text;
+
 
         public nodeType MNodeType => m_nodeType;
 
@@ -149,13 +153,20 @@ namespace C2ASM
 
         public string M_Text => m_text;
 
-        protected ASTElement(string text, nodeType type, ASTElement parent)
+        protected ASTElement(string text, nodeType type, ASTElement parent, Scope currentscope)
         {
             m_nodeType = type;
             m_parent = parent;
             m_serial = ms_serialCounter++;
             m_text = text;
+            m_scope = currentscope;
         }
+
+        public Scope GetElementScope()
+        {
+            return m_scope;
+        }
+
     }
     public abstract class ASTComposite : ASTElement
     {
@@ -163,7 +174,7 @@ namespace C2ASM
 
         public List<ASTElement>[] MChildren => m_children;
 
-        protected ASTComposite(string text, nodeType type, ASTElement parent, int numContexts) : base(text, type, parent)
+        protected ASTComposite(string text, nodeType type, ASTElement parent, Scope currentscope, int numContexts) : base(text, type, parent, currentscope)
         {
             m_children = new List<ASTElement>[numContexts];
             for (int i = 0; i < numContexts; i++)
@@ -207,7 +218,7 @@ namespace C2ASM
         private string m_text;
         public string M_Text => base.m_text;
 
-        protected ASTTerminal(string text, nodeType type, ASTElement parent) : base(text, type, parent)
+        protected ASTTerminal(string text, nodeType type, ASTElement parent, Scope currentscope) : base(text, type, parent, currentscope)
         {
             m_text = text;
         }

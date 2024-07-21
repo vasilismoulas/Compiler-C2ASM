@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace C2ASM
 {
-    public interface IScope
+    public interface IScope // Elements scope management by SymbolTable 
     {
         public String getScopeName(); // do I have a name?
         public IScope getEnclosingScope(); // am I nested in another?
