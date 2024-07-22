@@ -3,18 +3,13 @@
 options { tokenVocab = testlexer; }
 
 /*Parser Rules*/
-@members {public C2ASM.ASTSymbolTable symtab;}
+compileUnit : (functionDefinition|globalstatement)+
+			;
 
-@init {this.symtab = symtab;}
-
-compileUnit[C2ASM.ASTSymbolTable symtab] : (functionDefinition|globalstatement)+
-			                             ;
-
-
-globalstatement : functionDeclaration QM                             #custom_FunctionDeclaration       
+globalstatement : functionDeclaration QM                                     
                 ;
 
-functionDeclaration : funprefix formalargs? RP                       
+functionDeclaration : funprefix formalargs? RP		
                     ;
 
 functionDefinition :  funprefix formalargs? RP '{' functionbody '}'	 #custom_FunctionDefinition		
@@ -23,7 +18,7 @@ functionDefinition :  funprefix formalargs? RP '{' functionbody '}'	 #custom_Fun
 funprefix : typespecifier IDENTIFIER LP
           ;
 
-functionbody : (statement)+ 
+functionbody : statement?
 			 ;
 
 
@@ -52,15 +47,15 @@ statementList : (statement)+
 datadeclaration: typespecifier IDENTIFIER ('=' datavalue)?
                ;
 
-datavalue : NUMBER  
-		  | CHAR
+datavalue : NUMBER		#datavalue_Number
+		  | CHAR		#datavalue_Char
 		  ;
 
-typespecifier : INT_TYPE	 
-			  | DOUBLE_TYPE  
-			  | FLOAT_TYPE   
-			  | CHAR_TYPE    
-			  | VOID_TYPE    
+typespecifier : INT_TYPE		#typespecifier_IntType
+			  | DOUBLE_TYPE     #typespecifier_DoubleType
+			  | FLOAT_TYPE      #typespecifier_FloatType
+			  | CHAR_TYPE       #typespecifier_CharType
+			  | VOID_TYPE       #typespecifier_VoidType
 			  ;
 
 
