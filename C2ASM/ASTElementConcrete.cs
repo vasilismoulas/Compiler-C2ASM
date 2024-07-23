@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using C2ASM.Scopes;
 
 namespace C2ASM
 {
-    // EDITED FOR SCOPE
     public class CASTIDENTIFIER : ASTTerminal
     {
-        public CASTIDENTIFIER(string idText, ASTElement parent, Scope currentscope) : base(idText, nodeType.NT_EXPRESSION_IDENTIFIER,
-           parent, currentscope)
+        public CASTIDENTIFIER(string idText, ASTElement parent) : base(idText, nodeType.NT_EXPRESSION_IDENTIFIER,
+           parent)
         {
             m_nodeName = GenerateNodeName();
         }
@@ -189,6 +187,47 @@ namespace C2ASM
         }
     }
 
+    public class CASTFunctionDeclaration : ASTComposite
+    {
+        public CASTFunctionDeclaration(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_FUNCTIONDECLARATION, parent, numContexts) { }
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitFunctionDeclaration(this, param);
+        }
+
+        public string GetDeclarationName()
+        {
+            CASTIDENTIFIER id = GetChild(contextType.CT_FUNCTIONDECLARATION_FUNPREFIX, 0) as CASTIDENTIFIER;
+            return id.M_Text;
+        }
+
+        public string[] GetDeclarationArgs()
+        {
+            IEnumerable<CASTIDENTIFIER> args = m_children[GetContextIndex(contextType.CT_FUNCTIONDECLARATION_FARGUMENTS)].Select(a => a as CASTIDENTIFIER);
+
+            return args.Select(a => a.M_Text).ToArray();
+        }
+    }
+
+    public class CASTFormalArgs : ASTComposite
+    {
+        public CASTFormalArgs(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_FARGUMENTS, parent, numContexts) { }
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitFormalArgs(this, param);
+        }
+    }
+
+    
+    public class CASTDatadeclaration : ASTComposite
+    {
+        public CASTDatadeclaration(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_DATADECLARATION, parent, numContexts) { }
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitDATADECLARATION(this, param);
+        }
+    }
+
     public class CASTExpressionFCALL : ASTComposite
     {
         public CASTExpressionFCALL(string text, ASTElement parent, int numContexts) : base(text, nodeType.NT_EXPRESSION_FCALL, parent, numContexts) { }
@@ -207,6 +246,15 @@ namespace C2ASM
         }
     }
 
+    public class CASTDatavalue : ASTComposite
+    {
+        public CASTDatavalue(string text, ASTElement parent, int numContexts) : base(text, nodeType.NT_DATAVALUE, parent, numContexts) { }
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitDATAVALUE(this, param);
+        }
+    }
+
     public class CASTExpressionMultiplication : ASTComposite
     {
         public CASTExpressionMultiplication(string text, ASTElement parent, int numContexts) : base(text, nodeType.NT_EXPRESSION_MULTIPLICATION, parent, numContexts) { }
@@ -222,6 +270,15 @@ namespace C2ASM
         public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
         {
             return visitor.VisitDivision(this, param);
+        }
+    }
+
+    public class CASTFunctionBody : ASTComposite
+    {
+        public CASTFunctionBody(string text, ASTElement parent, int numContexts) : base(text, nodeType.NT_FUNCTIONBODY, parent, numContexts) { }
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitFUNCTIONBODY(this, param);
         }
     }
 
@@ -420,13 +477,83 @@ namespace C2ASM
 
     public class CASTGlobalStatement : ASTComposite
     {
-        public CASTGlobalStatement(String text, nodeType type, ASTElement parent, int numContexts) : base(text, type, parent, numContexts) { }
+        public CASTGlobalStatement(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_GLOBALSTATEMENT, parent, numContexts) { }
 
         public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
         {
             return visitor.VisitGLOBALSTATEMENT(this, param);
         }
     }
+
+    public class CASTTypespecifier: ASTComposite
+    {
+        public CASTTypespecifier(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIER(this, param);
+        }
+    }
+
+    public class CASTTypespecifierInt : ASTComposite
+    {
+        public CASTTypespecifierInt(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERINT(this, param);
+        }
+    }
+
+    public class CASTTypespecifierDouble : ASTComposite
+    {
+        public CASTTypespecifierDouble(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERDOUBLE(this, param);
+        }
+    }
+
+    public class CASTTypespecifierFloat : ASTComposite
+    {
+        public CASTTypespecifierFloat(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERFLOAT(this, param);
+        }
+    }
+
+    public class CASTTypespecifierChar : ASTComposite
+    {
+        public CASTTypespecifierChar(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERCHAR(this, param);
+        }
+    }
+
+    public class CASTTypespecifierVoid : ASTComposite
+    {
+        public CASTTypespecifierVoid(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_TYPESPECIFIER, parent, numContexts) { }
+
+        public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+        {
+            return visitor.VisitTYPESPECIFIERVOID(this, param);
+        }
+    }
+
+    //public class CASTTypespecifier_INT : ASTComposite
+    //{
+    //    public CASTTypespecifier_INT(String text, ASTElement parent, int numContexts) : base(text, nodeType.NT_INT_TYPE, parent, numContexts) { }
+
+    //    public override Result Accept<Result, VParam>(ASTBaseVisitor<Result, VParam> visitor, VParam param)
+    //    {
+    //        return visitor.VisitTYPESPECIFIER(this, param);
+    //    }
+    //}
 
     public class CASTStatement : ASTComposite
     {
@@ -448,7 +575,9 @@ namespace C2ASM
         }
     }
 
-
     
+
+
+
 
 }
