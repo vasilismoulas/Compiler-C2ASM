@@ -3,7 +3,7 @@ digraph {
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_FUNCTIOΝDEFINITION_1";
+		"NT_FUNCTIOΝDEFINITION_1";"NT_FUNCTIOΝDEFINITION_18";
 		label=CT_COMPILEUNIT_FUNCTIONDEFINITION;
 	}
 	subgraph cluster1{
@@ -17,10 +17,155 @@ digraph {
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_EXPRESSION_IDENTIFIER_3_(a)";
+		"NT_FARGUMENTS_6";
+		label=CT_FUNCTIONDEFINITION_FARGUMENTS;
+	}
+	subgraph cluster3{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_FUNCTIONBODY_11";
+		label=CT_FUNCTIONDEFINITION_BODY;
+	}
+	subgraph cluster4{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_TYPESPECIFIER_3";
+		label=CT_FUNPREFIX_TYPESPECIFIER;
+	}
+	subgraph cluster5{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_5_(a)";
 		label=CT_FUNPREFIX_IDENTIFIER;
 	}
-"NT_FUNPREFIX_2"->"NT_EXPRESSION_IDENTIFIER_3_(a)"
+	subgraph cluster6{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_INT_TYPE_4_(0)";
+		label=CT_TYPESPECIFIER_INT_TYPE;
+	}
+"NT_TYPESPECIFIER_3"->"NT_INT_TYPE_4_(0)"
+"NT_FUNPREFIX_2"->"NT_TYPESPECIFIER_3"
+"NT_FUNPREFIX_2"->"NT_EXPRESSION_IDENTIFIER_5_(a)"
 "NT_FUNCTIOΝDEFINITION_1"->"NT_FUNPREFIX_2"
+	subgraph cluster7{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_DATADECLARATION_7";
+		label=CT_FARGUMENTS_DATADECLARATION;
+	}
+	subgraph cluster8{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_TYPESPECIFIER_8";
+		label=CT_DATADECLARATION_TYPESPECIFIER;
+	}
+	subgraph cluster9{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_10_(a)";
+		label=CT_DATADECLARATION_IDENTIFIER;
+	}
+	subgraph cluster10{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_INT_TYPE_9_(0)";
+		label=CT_TYPESPECIFIER_INT_TYPE;
+	}
+"NT_TYPESPECIFIER_8"->"NT_INT_TYPE_9_(0)"
+"NT_DATADECLARATION_7"->"NT_TYPESPECIFIER_8"
+"NT_DATADECLARATION_7"->"NT_EXPRESSION_IDENTIFIER_10_(a)"
+"NT_FARGUMENTS_6"->"NT_DATADECLARATION_7"
+"NT_FUNCTIOΝDEFINITION_1"->"NT_FARGUMENTS_6"
+	subgraph cluster11{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_DATADECLARATION_12";
+		label=CT_FUNCTIONBODY_STATEMENT;
+	}
+	subgraph cluster12{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_TYPESPECIFIER_13";
+		label=CT_DATADECLARATION_TYPESPECIFIER;
+	}
+	subgraph cluster13{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_15_(h)";
+		label=CT_DATADECLARATION_IDENTIFIER;
+	}
+	subgraph cluster14{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_DATAVALUE_16";
+		label=CT_DATADECLARATION_DATAVALUE;
+	}
+	subgraph cluster15{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_INT_TYPE_14_(0)";
+		label=CT_TYPESPECIFIER_INT_TYPE;
+	}
+"NT_TYPESPECIFIER_13"->"NT_INT_TYPE_14_(0)"
+"NT_DATADECLARATION_12"->"NT_TYPESPECIFIER_13"
+"NT_DATADECLARATION_12"->"NT_EXPRESSION_IDENTIFIER_15_(h)"
+	subgraph cluster16{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_NUMBER_17_(3)";
+		label=CT_DATAVALUE_NUMBER;
+	}
+"NT_DATAVALUE_16"->"NT_EXPRESSION_NUMBER_17_(3)"
+"NT_DATADECLARATION_12"->"NT_DATAVALUE_16"
+"NT_FUNCTIONBODY_11"->"NT_DATADECLARATION_12"
+"NT_FUNCTIOΝDEFINITION_1"->"NT_FUNCTIONBODY_11"
 "NT_COMPILEUNIT_0"->"NT_FUNCTIOΝDEFINITION_1"
+	subgraph cluster17{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_FUNPREFIX_19";
+		label=CT_FUNCTIONDEFINITION_FUNPREFIX;
+	}
+	subgraph cluster18{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_TYPESPECIFIER_20";
+		label=CT_FUNPREFIX_TYPESPECIFIER;
+	}
+	subgraph cluster19{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_22_(a)";
+		label=CT_FUNPREFIX_IDENTIFIER;
+	}
+	subgraph cluster20{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_INT_TYPE_21_(0)";
+		label=CT_TYPESPECIFIER_INT_TYPE;
+	}
+"NT_TYPESPECIFIER_20"->"NT_INT_TYPE_21_(0)"
+"NT_FUNPREFIX_19"->"NT_TYPESPECIFIER_20"
+"NT_FUNPREFIX_19"->"NT_EXPRESSION_IDENTIFIER_22_(a)"
+"NT_FUNCTIOΝDEFINITION_18"->"NT_FUNPREFIX_19"
+"NT_COMPILEUNIT_0"->"NT_FUNCTIOΝDEFINITION_18"
 }

@@ -22,17 +22,17 @@ namespace C2ASM
 
             CommonTokenStream cts = new CommonTokenStream(lexer);
 
-            testparser parser = new testparser(cts);
-
             ASTSymbolTable symtab = new ASTSymbolTable();
 
-            IParseTree tree = parser.compileUnit(symtab);
+            testparser parser = new testparser(cts, symtab);
+
+            IParseTree tree = parser.compileUnit();
 
             TestVisitor visitor = new TestVisitor();
 
             visitor.Visit(tree);
 
-            Console.WriteLine(tree.ToStringTree(parser)); //print LISP-style tree
+            Console.WriteLine("Syntax Tree: " + tree.ToStringTree(parser)); //print LISP-style tree
 
             ASTGenerator astGenerator = new ASTGenerator(parser);
             astGenerator.Visit(tree);
@@ -40,8 +40,39 @@ namespace C2ASM
             ASTPrinter astPrinter = new ASTPrinter("ASyntaxTree.dot");
             astPrinter.Visit(astGenerator.M_Root);
 
+            Console.WriteLine("Symbol Table entries: " + symtab);
 
-            
+            Console.WriteLine("end ------- ");
+
+            Console.WriteLine("Symbol Table entries Scope information: " + symtab.getScopeName("NT_FUNPREFIX_2"));
+
+            Console.WriteLine("end ------- ");
+
+            //TypeChecking
+
+
+            //Code Generation
+
+        }
+
+        public static string RemoveSerialNumb(string str, char c)
+        {
+            int firstIndex = str.IndexOf(c);
+            if (firstIndex == -1)
+            {
+                // The character does not exist in the string
+                return str;
+            }
+
+            int secondIndex = str.IndexOf(c, firstIndex + 1);
+            if (secondIndex == -1)
+            {
+                // The character does not occur a second time
+                return str;
+            }
+
+            // Return the substring up to the second occurrence of the character
+            return str.Substring(0, secondIndex);
         }
     }
 }

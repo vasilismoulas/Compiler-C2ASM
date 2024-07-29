@@ -191,9 +191,9 @@ namespace C2ASM
             m_scope = currentscope;
         }
 
-        public Scope GetElementScope()
+        public String GetElementScope()
         {
-            return m_scope;
+            return m_scope.scope;
         }
 
     }
@@ -232,7 +232,8 @@ namespace C2ASM
         internal ASTElement GetChild(contextType ct, int index)
         {
             int i = GetContextIndex(ct);
-            return m_children[i][index];
+            Console.WriteLine(m_children);
+;           return m_children[i][index];
         }
 
         internal ASTElement[] GetContextChildren(contextType ct)

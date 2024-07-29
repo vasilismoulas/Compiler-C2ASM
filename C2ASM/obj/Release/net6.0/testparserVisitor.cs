@@ -38,12 +38,11 @@ public interface ItestparserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitCompileUnit([NotNull] testparser.CompileUnitContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>custom_FunctionDeclaration</c>
-	/// labeled alternative in <see cref="testparser.globalstatement"/>.
+	/// Visit a parse tree produced by <see cref="testparser.globalstatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitCustom_FunctionDeclaration([NotNull] testparser.Custom_FunctionDeclarationContext context);
+	Result VisitGlobalstatement([NotNull] testparser.GlobalstatementContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="testparser.functionDeclaration"/>.
 	/// </summary>
@@ -149,17 +148,54 @@ public interface ItestparserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitDatadeclaration([NotNull] testparser.DatadeclarationContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="testparser.datavalue"/>.
+	/// Visit a parse tree produced by the <c>datavalue_Number</c>
+	/// labeled alternative in <see cref="testparser.datavalue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitDatavalue([NotNull] testparser.DatavalueContext context);
+	Result VisitDatavalue_Number([NotNull] testparser.Datavalue_NumberContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="testparser.typespecifier"/>.
+	/// Visit a parse tree produced by the <c>datavalue_Char</c>
+	/// labeled alternative in <see cref="testparser.datavalue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitTypespecifier([NotNull] testparser.TypespecifierContext context);
+	Result VisitDatavalue_Char([NotNull] testparser.Datavalue_CharContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_IntType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTypespecifier_IntType([NotNull] testparser.Typespecifier_IntTypeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_DoubleType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTypespecifier_DoubleType([NotNull] testparser.Typespecifier_DoubleTypeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_FloatType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTypespecifier_FloatType([NotNull] testparser.Typespecifier_FloatTypeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_CharType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTypespecifier_CharType([NotNull] testparser.Typespecifier_CharTypeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_VoidType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTypespecifier_VoidType([NotNull] testparser.Typespecifier_VoidTypeContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>expr_PLUSMINUS</c>
 	/// labeled alternative in <see cref="testparser.expr"/>.
