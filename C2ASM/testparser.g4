@@ -3,44 +3,22 @@
 options { tokenVocab = testlexer; }
 
 /*Parser Rules*/
-        /* Should be changed to (statement)+ */
-        /* Should be changed to (functionbody)? */
-
- @members{ public C2ASM.ASTSymbolTable symtab;
-
-   // Constructor that takes only input and symtab
-    public testparser(ITokenStream input, C2ASM.ASTSymbolTable symtab)
-        : this(input, symtab, Console.Out, Console.Error)
-    {
-    }
-
-    // Constructor that takes input, symtab, and output streams
-    public testparser(ITokenStream input, C2ASM.ASTSymbolTable symtab, TextWriter output, TextWriter errorOutput)
-        : base(input, output, errorOutput)
-    {
-        this.symtab = symtab;
-		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
-    }
-} 
-
-/* @init {this.symtab = symtab;} */
-
 compileUnit : (functionDefinition|globalstatement)+
 			;
 
-globalstatement : functionDeclaration QM
+globalstatement : functionDeclaration QM                                     
                 ;
 
 functionDeclaration : funprefix formalargs? RP		
                     ;
 
-functionDefinition :  funprefix formalargs? RP '{' functionbody? '}'	 #custom_FunctionDefinition		
-				   ;                                                 
+functionDefinition :  funprefix formalargs? RP '{' functionbody '}'	 #custom_FunctionDefinition		
+				   ;
 
 funprefix : typespecifier IDENTIFIER LP
           ;
 
-functionbody : (statement)+              
+functionbody : statement?
 			 ;
 
 

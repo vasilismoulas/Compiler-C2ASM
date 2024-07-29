@@ -10,8 +10,7 @@ using System.Xml.Linq;
 
 namespace C2ASM
 {
-    internal class TestVisitor : testparserBaseVisitor<int>
-    {
+    internal class TestVisitor : testparserBaseVisitor<int> {
         private StreamWriter wstream = new StreamWriter("SyntaxTree.dot");
         private Stack<string> m_parentsName = new Stack<string>();
         private int m_nodeCounter = 0;
@@ -54,10 +53,10 @@ namespace C2ASM
         public override int VisitTerminal(ITerminalNode node)
         {
             string nodename;
-            switch (node.Symbol.Type)
+            switch(node.Symbol.Type)
             {
                 case testlexer.IDENTIFIER:
-                    nodename = "\"IDENTIFIER_" + m_nodeCounter++ + $"_{node.Symbol.Text}" + "\"";
+                    nodename = "\"IDENTIFIER_" + m_nodeCounter++ +$"_{node.Symbol.Text}" + "\"";
                     wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
                     break;
 
@@ -130,8 +129,8 @@ namespace C2ASM
             base.VisitExpr_MULDIV(context);
 
             //Postorder
-            m_parentsName.Pop()
-; return 0;
+            m_parentsName.Pop() 
+;            return 0;
         }
 
         public override int VisitExpr_PLUSMINUS(testparser.Expr_PLUSMINUSContext context)
@@ -147,7 +146,7 @@ namespace C2ASM
                     break;
 
                 case testlexer.PLUS:
-                    nodename = "\"Addition_" + m_nodeCounter++ + "\"";
+                    nodename = "\"Addition_" + m_nodeCounter++ +  "\"";
                     wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
                     break;
 
@@ -164,7 +163,7 @@ namespace C2ASM
             m_parentsName.Pop();
 
             return 0;
-
+            
         }
 
         public override int VisitExpr_ASSIGN(testparser.Expr_ASSIGNContext context)
@@ -176,10 +175,10 @@ namespace C2ASM
 
             base.VisitExpr_ASSIGN(context);
             //Postorder
-            m_parentsName.Pop();
+            m_parentsName.Pop(); 
             return 0;
 
-
+            
         }
 
         public override int VisitExpr_PAREN(testparser.Expr_PARENContext context)
@@ -208,8 +207,8 @@ namespace C2ASM
             return 0;
         }
 
-
-        public override int VisitCustom_FunctionDefinition(testparser.Custom_FunctionDefinitionContext context)
+        
+         public override int VisitCustom_FunctionDefinition(testparser.Custom_FunctionDefinitionContext context)
         {
             //Preorder
             string nodename = "\"FUNCTIONDEFINITION" + m_nodeCounter++ + "\"";
@@ -236,63 +235,16 @@ namespace C2ASM
             return 0;
         }
 
-        public override int VisitTypespecifier_IntType(testparser.Typespecifier_IntTypeContext context)
+        public override int VisitTypespecifier(testparser.TypespecifierContext context)
         {
             //Preorder
-            string nodename = "\"TYPESPECIFIER_INT_TYPE" + m_nodeCounter++ + "\"";
+            string nodename = "\"DATATYPE" + m_nodeCounter++ + "\"";
             wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
             m_parentsName.Push(nodename);
-            base.VisitTypespecifier_IntType(context);
+            base.VisitTypespecifier(context);
             //Postorder
             m_parentsName.Pop();
-            return 0;
-        }
 
-        public override int VisitTypespecifier_DoubleType(testparser.Typespecifier_DoubleTypeContext context)
-        {
-            //Preorder
-            string nodename = "\"TYPESPECIFIER_DOUBLE_TYPE" + m_nodeCounter++ + "\"";
-            wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
-            m_parentsName.Push(nodename);
-            base.VisitTypespecifier_DoubleType(context);
-            //Postorder
-            m_parentsName.Pop();
-            return 0;
-        }
-
-        public override int VisitTypespecifier_FloatType(testparser.Typespecifier_FloatTypeContext context)
-        {
-            //Preorder
-            string nodename = "\"TYPESPECIFIER_FLOAT_TYPE" + m_nodeCounter++ + "\"";
-            wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
-            m_parentsName.Push(nodename);
-            base.VisitTypespecifier_FloatType(context);
-            //Postorder
-            m_parentsName.Pop();
-            return 0;
-        }
-
-        public override int VisitTypespecifier_CharType(testparser.Typespecifier_CharTypeContext context)
-        { 
-            //Preorder
-            string nodename = "\"TYPESPECIFIER_CHAR_TYPE" + m_nodeCounter++ + "\"";
-            wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
-            m_parentsName.Push(nodename);
-            base.VisitTypespecifier_CharType(context);
-            //Postorder
-            m_parentsName.Pop();
-            return 0;
-        }
-
-        public override int VisitTypespecifier_VoidType(testparser.Typespecifier_VoidTypeContext context)
-        {
-            //Preorder
-            string nodename = "\"TYPESPECIFIER_VOID_TYPE" + m_nodeCounter++ + "\"";
-            wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
-            m_parentsName.Push(nodename);
-            base.VisitTypespecifier_VoidType(context);
-            //Postorder
-            m_parentsName.Pop();
             return 0;
         }
 
@@ -324,15 +276,15 @@ namespace C2ASM
 
         //public override int VisitStatement_ExpressionStatement(testparser.Statement_ExpressionStatementContext context)
         //{
-        //Preorder
+            //Preorder
         //    string nodename = "\"STATEMENT_" + m_nodeCounter++ + "\"";
         //    wstream.WriteLine($"{m_parentsName.Peek()}->{nodename};");
         //    m_parentsName.Push(nodename);
         //    base.VisitStatement_ExpressionStatement(context);
-        //Postorder
+            //Postorder
         //    m_parentsName.Pop();
 
-        //    return 0;
+         //    return 0;
         //}
 
 

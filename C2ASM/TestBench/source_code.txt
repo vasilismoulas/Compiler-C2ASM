@@ -1,12 +1,7 @@
 
 
-int a (int a){
+void a (int a){
 
 int h = 3;
-
-}
-
-int a(){
-
 
 }

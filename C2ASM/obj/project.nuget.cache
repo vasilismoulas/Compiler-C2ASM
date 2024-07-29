@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uIBVWDs8p6OaIhA/yRYfRES7C0nAXXyoiVhIPsduScHtuo8Syt0IJ/hI+JKzqDF0kPyryaYwYIvzXKGLQxjvTQ==",
+  "dgSpecHash": "KpRFUbfnwTIbUaVUfSA8zdp0hIawf7OzQSsqFTySjMZuwdIoI5MlI/BOekoL/1rnPIKkYpvxKZvDfvBLY12Fjw==",
   "success": true,
   "projectFilePath": "C:\\Users\\vasil\\OneDrive\\Έγγραφα\\test\\Compiler-C2ASM\\C2ASM\\C2ASM.csproj",
   "expectedPackageFiles": [
@@ -70,15 +70,7 @@
     "C:\\Users\\vasil\\.nuget\\packages\\system.text.encoding.codepages\\7.0.0\\system.text.encoding.codepages.7.0.0.nupkg.sha512",
     "C:\\Users\\vasil\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\vasil\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
-    "C:\\Users\\vasil\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512",
-    "C:\\Users\\vasil\\.nuget\\packages\\xunit\\2.9.0\\xunit.2.9.0.nupkg.sha512",
-    "C:\\Users\\vasil\\.nuget\\packages\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
-    "C:\\Users\\vasil\\.nuget\\packages\\xunit.analyzers\\1.15.0\\xunit.analyzers.1.15.0.nupkg.sha512",
-    "C:\\Users\\vasil\\.nuget\\packages\\xunit.assert\\2.9.0\\xunit.assert.2.9.0.nupkg.sha512",
-    "C:\\Users\\vasil\\.nuget\\packages\\xunit.core\\2.9.0\\xunit.core.2.9.0.nupkg.sha512",
-    "C:\\Users\\vasil\\.nuget\\packages\\xunit.extensibility.core\\2.9.0\\xunit.extensibility.core.2.9.0.nupkg.sha512",
-    "C:\\Users\\vasil\\.nuget\\packages\\xunit.extensibility.execution\\2.9.0\\xunit.extensibility.execution.2.9.0.nupkg.sha512",
-    "C:\\Users\\vasil\\.nuget\\packages\\xunit.runner.visualstudio\\2.8.2\\xunit.runner.visualstudio.2.8.2.nupkg.sha512"
+    "C:\\Users\\vasil\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
   ],
   "logs": []
 }
