@@ -191,9 +191,9 @@ namespace C2ASM
             m_scope = currentscope;
         }
 
-        public Scope GetElementScope()
+        public String GetElementScope()
         {
-            return m_scope;
+            return m_scope.scope;
         }
 
     }
@@ -217,7 +217,7 @@ namespace C2ASM
         {
             int index;
             index = (int)ct - (int)MNodeType;
-            Console.WriteLine(ct+"  "+ MNodeType);
+            Console.WriteLine(ct + "  " + MNodeType);
             return index;
         }
 
@@ -225,14 +225,15 @@ namespace C2ASM
         {
             int index = GetContextIndex(ct);
             m_children[index].Add(child);
-            Console.WriteLine(index+"   "+m_children[index] +"    "+ child);
+            Console.WriteLine(index + "   " + m_children[index] + "    " + child);
 
         }
 
         internal ASTElement GetChild(contextType ct, int index)
         {
             int i = GetContextIndex(ct);
-            return m_children[i][index];
+            Console.WriteLine(m_children);
+            ; return m_children[i][index];
         }
 
         internal ASTElement[] GetContextChildren(contextType ct)

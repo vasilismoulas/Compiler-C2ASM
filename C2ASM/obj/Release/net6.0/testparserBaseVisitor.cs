@@ -45,8 +45,7 @@ public partial class testparserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitCompileUnit([NotNull] testparser.CompileUnitContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>custom_FunctionDeclaration</c>
-	/// labeled alternative in <see cref="testparser.globalstatement"/>.
+	/// Visit a parse tree produced by <see cref="testparser.globalstatement"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -54,7 +53,7 @@ public partial class testparserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitCustom_FunctionDeclaration([NotNull] testparser.Custom_FunctionDeclarationContext context) { return VisitChildren(context); }
+	public virtual Result VisitGlobalstatement([NotNull] testparser.GlobalstatementContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="testparser.functionDeclaration"/>.
 	/// <para>
@@ -224,7 +223,8 @@ public partial class testparserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// <return>The visitor result.</return>
 	public virtual Result VisitDatadeclaration([NotNull] testparser.DatadeclarationContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="testparser.datavalue"/>.
+	/// Visit a parse tree produced by the <c>datavalue_Number</c>
+	/// labeled alternative in <see cref="testparser.datavalue"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -232,9 +232,10 @@ public partial class testparserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitDatavalue([NotNull] testparser.DatavalueContext context) { return VisitChildren(context); }
+	public virtual Result VisitDatavalue_Number([NotNull] testparser.Datavalue_NumberContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="testparser.typespecifier"/>.
+	/// Visit a parse tree produced by the <c>datavalue_Char</c>
+	/// labeled alternative in <see cref="testparser.datavalue"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -242,7 +243,62 @@ public partial class testparserBaseVisitor<Result> : AbstractParseTreeVisitor<Re
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitTypespecifier([NotNull] testparser.TypespecifierContext context) { return VisitChildren(context); }
+	public virtual Result VisitDatavalue_Char([NotNull] testparser.Datavalue_CharContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_IntType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitTypespecifier_IntType([NotNull] testparser.Typespecifier_IntTypeContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_DoubleType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitTypespecifier_DoubleType([NotNull] testparser.Typespecifier_DoubleTypeContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_FloatType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitTypespecifier_FloatType([NotNull] testparser.Typespecifier_FloatTypeContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_CharType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitTypespecifier_CharType([NotNull] testparser.Typespecifier_CharTypeContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>typespecifier_VoidType</c>
+	/// labeled alternative in <see cref="testparser.typespecifier"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitTypespecifier_VoidType([NotNull] testparser.Typespecifier_VoidTypeContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>expr_PLUSMINUS</c>
 	/// labeled alternative in <see cref="testparser.expr"/>.
