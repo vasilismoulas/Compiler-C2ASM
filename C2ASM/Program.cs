@@ -49,7 +49,8 @@ namespace C2ASM
             Console.WriteLine("end ------- ");
 
             //TypeChecking
-
+            TypeChecker typechecker = new TypeChecker(parser);
+            typechecker.Visit(astGenerator.M_Root);
 
             //Code Generation
 
@@ -74,5 +75,7 @@ namespace C2ASM
             // Return the substring up to the second occurrence of the character
             return str.Substring(0, secondIndex);
         }
+
+
     }
 }
