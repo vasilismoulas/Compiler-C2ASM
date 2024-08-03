@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace C2ASM.Scopes
 {
-    public abstract class Scope // Abstract Factory
+    public abstract class Scope 
     {
         public string scope { get; }
     }
@@ -26,6 +26,7 @@ namespace C2ASM.Scopes
     public class LocalScope : Scope
     {
         public string scope { get; }
+        public ASTElement element { get; }
 
         public LocalScope(string scope)
         {
