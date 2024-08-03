@@ -159,6 +159,8 @@ namespace C2ASM
         private nodeType m_nodeType;
         private ASTElement m_parent;
         private Scope m_scope;
+        //private Type m_type;
+        public Type m_type { get; set; }
         protected string m_nodeName;
         protected string m_text;
 
@@ -182,6 +184,8 @@ namespace C2ASM
 
         public string M_Text => m_text;
 
+        //public Type M_Type => m_type;
+
         protected ASTElement(string text, nodeType type, ASTElement parent, Scope currentscope)
         {
             m_nodeType = type;
@@ -191,9 +195,14 @@ namespace C2ASM
             m_scope = currentscope;
         }
 
-        public String GetElementScope()
+        public String GetElementScopeName()
         {
             return m_scope.scope;
+        }
+
+        public Scope GetElementScope()
+        {
+            return m_scope;
         }
 
     }

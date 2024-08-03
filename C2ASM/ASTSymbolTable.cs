@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using C2ASM;
+using C2ASM.Scopes;
 
 namespace C2ASM
 {
@@ -40,14 +41,26 @@ namespace C2ASM
                 symbols.Add(sym.MNodeName.Trim(new Char[] { '"' }), sym);
         }
 
-        public bool IsDefined(string name) // Needs to be fixed(i'll use a LINQ query for this one)
+
+        // ** I also have to check if there are in the same scope with the newnode element ** 
+        public bool IsDefined(ASTElement newnode, string elementName, Scope scope) // Needs to be fixed(i'll use a LINQ query for this one)
         {
             // Retrieve dictionary values where the keys contain the substring "name"
             // name.Length-2 (e.g.: NT_FUNPREFIX_19) cause we want the last part (serial number) cutted out
-            var values = symbols.Where(kvp => kvp.Key.Contains(Program.RemoveSerialNumb(name, '_')))
-                                .Select(kvp => kvp.Value);
+            var elements = symbols.Where(kvp => kvp.Key.Contains(Program.RemoveSerialNumb(newnode.MNodeName, '_')))
+                                  .Select(kvp => kvp.Value);
 
-            return symbols.ContainsKey(name);
+            // If elements with the corresponding node-name exist then there is a high chance that they'll have there children's instance saved
+            foreach(ASTElement element in elements)
+            {
+                if(element.MNodeName == elementName)
+                {
+                    return true;
+                } 
+            }
+
+
+            return symbols.ContainsKey(newnode.MNodeName);
         }
 
         public ASTElement resolve(String name) // symbol "lookup" by providing symbosl name 

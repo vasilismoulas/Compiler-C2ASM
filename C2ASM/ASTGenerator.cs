@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using C2ASM.Scopes;
+using C2ASM.Helpers;
 using Antlr4.Runtime.Tree;
 
 
@@ -67,8 +68,14 @@ namespace C2ASM
 
         public override int VisitFunctionDeclaration(testparser.FunctionDeclarationContext context)
         {
+            // Extracting the return type from the context
+            Type element_type = TypeMapper.GetTypeFromString(context.funprefix().typespecifier().GetText());
+
             CASTFunctionDeclaration newnode = new CASTFunctionDeclaration(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
             m_root = newnode;
+
+            // set Type
+            newnode.m_type = element_type;
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
@@ -88,20 +95,23 @@ namespace C2ASM
 
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
+            // Retrieve the function name from the funprefix context
+            var functionName = context.funprefix().IDENTIFIER().GetText();
+
             // Define the function in the symbol table, checking for duplicates
-            if (m_symbolTable.IsDefined(newnode.MNodeName))
+            if (m_symbolTable.IsDefined(newnode, functionName, newnode.GetElementScope()))
             {
                 throw new Exception($"Duplicate function name: {newnode.MNodeName} already defined.");
             }
 
-            m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
+            m_symbolTable.define(newnode);         // add symbol(inside SymbolTable)
 
             m_parents.Push(newnode);
 
             this.VisitElementInContext(context.funprefix(), m_parentContext, contextType.CT_FUNCTIONDEFINITION_FUNPREFIX);
 
             // Retrieve the function name from the funprefix context
-            var functionName = context.funprefix().IDENTIFIER().GetText();
+            //var functionName = context.funprefix().IDENTIFIER().GetText();
             Scope currentscope = new LocalScope(functionName);
             //Scope currentscope = new LocalScope(newnode.GetFunctionName());
             m_parents_scope.Push(currentscope);
