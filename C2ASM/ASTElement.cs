@@ -159,6 +159,7 @@ namespace C2ASM
         private nodeType m_nodeType;
         private ASTElement m_parent;
         private Scope m_scope;
+        private List<ASTElement> m_childrenlist;
         //private Type m_type;
         public Type m_type { get; set; }
         protected string m_nodeName;
@@ -166,6 +167,7 @@ namespace C2ASM
 
 
         public nodeType MNodeType => m_nodeType;
+        public List<ASTElement> MChildren => m_childrenlist;
 
         public virtual string GenerateNodeName()
         {
@@ -193,11 +195,17 @@ namespace C2ASM
             m_serial = ms_serialCounter++;
             m_text = text;
             m_scope = currentscope;
+            m_childrenlist = null;
         }
 
         public String GetElementScopeName()
         {
             return m_scope.scope;
+        }
+
+        public List<ASTElement> GetChildrenList()
+        {
+            return m_childrenlist;
         }
 
         public Scope GetElementScope()
@@ -220,6 +228,8 @@ namespace C2ASM
                 m_children[i] = new List<ASTElement>();
             }
             m_nodeName = GenerateNodeName();
+            base.GetChildrenList() = (List < ASTElement >) MChildren.MemberwiseClone(); // Check this later (We need shallow copy)
+            
         }
 
         internal int GetContextIndex(contextType ct)

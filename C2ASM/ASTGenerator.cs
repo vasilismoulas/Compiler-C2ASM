@@ -56,7 +56,7 @@ namespace C2ASM
         public override int VisitGlobalstatement(testparser.GlobalstatementContext context)
         {
             CASTGlobalStatement newnode = new CASTGlobalStatement(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 1);
-            m_root = newnode;
+            //m_root = newnode;
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
@@ -72,7 +72,7 @@ namespace C2ASM
             Type element_type = TypeMapper.GetTypeFromString(context.funprefix().typespecifier().GetText());
 
             CASTFunctionDeclaration newnode = new CASTFunctionDeclaration(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
-            m_root = newnode;
+            //m_root = newnode;
 
             // set Type
             newnode.m_type = element_type;
@@ -90,8 +90,14 @@ namespace C2ASM
         // ** Function Definitions**
         public override int VisitCustom_FunctionDefinition(testparser.Custom_FunctionDefinitionContext context)
         {
+            // Extracting the return type from the context
+            Type element_type = TypeMapper.GetTypeFromString(context.funprefix().typespecifier().GetText());
+
             ASTComposite m_parent = m_parents.Peek();
             CASTFunctionDefinition newnode = new CASTFunctionDefinition(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 4);
+
+            // set Type
+            newnode.m_type = element_type;
 
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
@@ -228,6 +234,7 @@ namespace C2ASM
 
         public override int VisitFormalargs(testparser.FormalargsContext context)
         {
+
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
             CASTFormalArgs newnode = new CASTFormalArgs(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 1);
@@ -243,14 +250,23 @@ namespace C2ASM
 
         public override int VisitDatadeclaration(testparser.DatadeclarationContext context)
         {
+            // Extracting the return type from the context
+            Type element_type = TypeMapper.GetTypeFromString(context.typespecifier().GetText());
+
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
+
+
+
             CASTDatadeclaration newnode = new CASTDatadeclaration(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 3);
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
             m_parents.Push(newnode);
+
+            // set Type
+            newnode.m_type = element_type;
 
             this.VisitElementInContext(context.typespecifier(), m_parentContext, contextType.CT_DATADECLARATION_TYPESPECIFIER);
             this.VisitTerminalInContext(context, context.IDENTIFIER().Symbol, m_parentContext, contextType.CT_DATADECLARATION_IDENTIFIER);
@@ -413,6 +429,10 @@ namespace C2ASM
 
         public override int VisitExpr_MINUS(testparser.Expr_MINUSContext context)
         {
+            // Extracting the return type from the context
+            Type element_type = TypeMapper.GetTypeFromString(context.funprefix().typespecifier().GetText());
+
+
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
             CASTExpressionMinus newnode = new CASTExpressionMinus(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 1);
@@ -424,6 +444,8 @@ namespace C2ASM
 
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_EXPRESSION_MINUS);
 
+
+            // type check must be implemented here since from this point on all nodes are generated and ready to be type checked.
             m_parents.Pop();
             return 0;
         }
@@ -441,6 +463,13 @@ namespace C2ASM
 
             this.VisitTerminalInContext(context, context.IDENTIFIER().Symbol, m_parentContext, contextType.CT_EXPRESSION_ASSIGN_LVALUE);
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_EXPRESSION_ASSIGN_EXPRESSION);
+
+            // Get type from left part (from symbol table maybe)
+            typeMine(context);
+            // Get type from right part 
+            typeMine(context);
+            // Compare types (typecheck)
+
             m_parents.Pop();
             return 0;
         }
