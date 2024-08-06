@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using C2ASM.Scopes;
+using C2ASM.Helpers;
 using Antlr4.Runtime.Tree;
 
 
@@ -67,8 +68,14 @@ namespace C2ASM
 
         public override int VisitFunctionDeclaration(testparser.FunctionDeclarationContext context)
         {
+            // Extracting the return type from the context
+            Type element_type = TypeMapper.GetTypeFromString(context.funprefix().typespecifier().GetText());
+
             CASTFunctionDeclaration newnode = new CASTFunctionDeclaration(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
             m_root = newnode;
+
+            // set Type
+            newnode.m_type = element_type;
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
@@ -83,25 +90,42 @@ namespace C2ASM
         // ** Function Definitions**
         public override int VisitCustom_FunctionDefinition(testparser.Custom_FunctionDefinitionContext context)
         {
+            Type element_type = TypeMapper.GetTypeFromString(context.funprefix().typespecifier().GetText());
+
             ASTComposite m_parent = m_parents.Peek();
+
+            var test = context.GetText();
+
             CASTFunctionDefinition newnode = new CASTFunctionDefinition(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 4);
+
+            // set Type
+            newnode.m_type = element_type;
+
+            // set Context
+            //newnode.m_context = context;
+
+            // set text name
+            newnode.m_name_text = context.funprefix().IDENTIFIER().GetText();
 
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
+            // Retrieve the function name from the funprefix context
+            var functionName = context.funprefix().IDENTIFIER().GetText();
+
             // Define the function in the symbol table, checking for duplicates
-            if (m_symbolTable.IsDefined(newnode.MNodeName))
+            if (m_symbolTable.IsDefined(newnode, functionName, newnode.GetElementScope()))
             {
                 throw new Exception($"Duplicate function name: {newnode.MNodeName} already defined.");
             }
 
-            m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
+            m_symbolTable.define(newnode);         // add symbol(inside SymbolTable)
 
             m_parents.Push(newnode);
 
             this.VisitElementInContext(context.funprefix(), m_parentContext, contextType.CT_FUNCTIONDEFINITION_FUNPREFIX);
 
             // Retrieve the function name from the funprefix context
-            var functionName = context.funprefix().IDENTIFIER().GetText();
+            //var functionName = context.funprefix().IDENTIFIER().GetText();
             Scope currentscope = new LocalScope(functionName);
             //Scope currentscope = new LocalScope(newnode.GetFunctionName());
             m_parents_scope.Push(currentscope);
@@ -136,8 +160,14 @@ namespace C2ASM
         {
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
+
+            Type element_type = TypeMapper.GetTypeFromString(context.GetText());
+
             CASTTypespecifierInt newnode = new CASTTypespecifierInt(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 1);
             m_parent.AddChild(newnode, m_parentContext.Peek());
+
+            // set Type
+            newnode.m_type = element_type;
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
@@ -153,8 +183,14 @@ namespace C2ASM
         {
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
+
+            Type element_type = TypeMapper.GetTypeFromString(context.GetText());
+
             CASTTypespecifierDouble newnode = new CASTTypespecifierDouble(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
+
+            // set Type
+            newnode.m_type = element_type;
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
@@ -170,8 +206,15 @@ namespace C2ASM
         {
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
+
+            Type element_type = TypeMapper.GetTypeFromString(context.GetText());
+
             CASTTypespecifierFloat newnode = new CASTTypespecifierFloat(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 3);
             m_parent.AddChild(newnode, m_parentContext.Peek());
+
+            // set Type
+            newnode.m_type = element_type;
+
             m_parents.Push(newnode);
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
