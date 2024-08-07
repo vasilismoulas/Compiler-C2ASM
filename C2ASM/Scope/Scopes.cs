@@ -15,10 +15,12 @@ namespace C2ASM.Scopes
     public class GlobalScope : Scope
     {
         public string scope { get; }
+        public List<ASTElement> m_children { get; set; }
 
         public GlobalScope()
         {
             this.scope = "global";
+            this.m_children = null;
         }
   
     }
@@ -26,10 +28,12 @@ namespace C2ASM.Scopes
     public class LocalScope : Scope
     {
         public string scope { get; }
+        public List<ASTElement> m_children { get; set; }
 
         public LocalScope(string scope)
         {
             this.scope = scope;
+            this.m_children = null;
         }
         
     }
