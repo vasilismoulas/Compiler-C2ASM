@@ -1,6 +1,6 @@
 
 
-void a (int a){
+int a (int a){
 
 int h = 3;
 

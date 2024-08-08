@@ -269,4 +269,25 @@ namespace C2ASM
         }
 
     }
+
+    class ASTElementSameScope : EqualityComparer<ASTElement>
+    {
+        public override bool Equals(ASTElement node1, ASTElement node2)
+        {
+            if (node1 == null && node2 == null)
+                return true;
+            else if (node1 == null || node2 == null)
+                return false;
+
+            return (node1.m_name_text == node2.m_name_text && node1.GetElementScopeName() == node2.GetElementScopeName());
+        }
+
+        public override int GetHashCode(ASTElement node)
+        {
+            int hCode = 0;
+            return hCode.GetHashCode();
+        }
+    }
 }
+
+

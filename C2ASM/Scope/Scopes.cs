@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace C2ASM.Scopes
 {
-    public abstract class Scope // Abstract Factory
+    public abstract class Scope // Factory
     {
         public string scope { get; }
     }
@@ -15,7 +15,7 @@ namespace C2ASM.Scopes
     public class GlobalScope : Scope
     {
         public string scope { get; }
-        public List<ASTElement> m_children { get; set; }
+        public List<ASTElement>[] m_children { get; set; }
 
         public GlobalScope()
         {
@@ -25,10 +25,10 @@ namespace C2ASM.Scopes
   
     }
 
-    public class LocalScope : Scope
+    public class LocalScope : Scope // Ranges from funcitons to compound statements : (e.g.: { ... } )
     {
         public string scope { get; }
-        public List<ASTElement> m_children { get; set; }
+        public List<ASTElement>[] m_children { get; set; }
 
         public LocalScope(string scope)
         {

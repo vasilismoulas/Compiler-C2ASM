@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using C2ASM;
+using C2ASM.Helpers;
 using C2ASM.Scopes;
 
 namespace C2ASM
@@ -47,14 +48,12 @@ namespace C2ASM
         {
             // Retrieve dictionary values where the keys contain the substring "name"
             // name.Length-2 (e.g.: NT_FUNPREFIX_19) cause we want the last part (serial number) cutted out
-            var elements = symbols.Where(kvp => kvp.Key.Contains(Program.RemoveSerialNumb(newnode.MNodeName.Trim(new Char[] { '"' }), '_')))
+            var elements = symbols.Where(kvp => kvp.Key.Contains(TextPreprocessor.RemoveSerialNumb(newnode.MNodeName.Trim(new Char[] { '"' }), '_')))
                                   .Select(kvp => kvp.Value);
 
             // If elements with the corresponding node-name exist then there is a high chance that they'll have there children's instance saved
             foreach (ASTElement element in elements)
             {
-                Console.WriteLine(element.m_name_text);
-
                 if (element.m_name_text == elementName && element.GetElementScopeName() == scope.scope)
                 {
                     return true;

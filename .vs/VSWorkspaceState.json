@@ -2,10 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\C2ASM",
-    "\\C2ASM\\obj",
-    "\\C2ASM\\obj\\Debug",
-    "\\C2ASM\\obj\\Debug\\net6.0"
+    "\\C2ASM\\Helpers",
+    "\\C2ASM\\Scope",
+    "\\C2ASM\\TestBench",
+    "\\C2ASM\\UT"
   ],
-  "SelectedNode": "\\C2ASM\\ASTElementConcrete.cs",
+  "SelectedNode": "\\C2ASM\\ASTGenerator.cs",
   "PreviewInSolutionExplorer": false
 }

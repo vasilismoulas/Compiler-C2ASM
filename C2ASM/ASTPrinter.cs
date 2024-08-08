@@ -21,7 +21,7 @@ namespace C2ASM
             m_ostream = new StreamWriter(dotFileName);
             m_dotName = dotFileName;
         }
-         /// ###########################################################################|
+        /// ###########################################################################|
         /// ExtractSubgraphs ##########################################################|
         /// ###########################################################################|
         /// Αυτή η μέδοδος χωρίζει τα παιδιά σε περιοχές, ανάλογα με τον γωνέα τους ###|
@@ -92,11 +92,8 @@ namespace C2ASM
         public override int VisitFCALL(CASTExpressionFCALL node, object param = default(object)) {
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_FCALLNAME);
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_FCALLARGS);
-
             base.VisitFCALL(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -108,14 +105,10 @@ namespace C2ASM
 
         public override int VisitAddition(CASTExpressionAddition node, object param)
         {
-
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_ADDITION_LEFT);
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_ADDITION_RIGHT);
-
             base.VisitAddition(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -123,11 +116,8 @@ namespace C2ASM
         {
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_SUBTRACTION_LEFT);
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_SUBTRACTION_RIGHT);
-
             base.VisitSubtraction(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -135,11 +125,8 @@ namespace C2ASM
         {
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_MULTIPLICATION_LEFT);
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_MULTIPLICATION_RIGHT);
-
             base.VisitMultiplication(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -147,11 +134,8 @@ namespace C2ASM
         {
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_DIVISION_LEFT);
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_DIVISION_RIGHT);
-
             base.VisitDivision(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -159,18 +143,13 @@ namespace C2ASM
         {
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_ASSIGN_LVALUE);
             ExtractSubgraphs(node, contextType.CT_EXPRESSION_ASSIGN_EXPRESSION);
-
             base.VisitASSIGN(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
         public override int VisitSTATEMENT(CASTStatement node, object param)
         {
-
             ExtractSubgraphs(node, contextType.CT_STATEMENT);
-
             base.VisitSTATEMENT(node);
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
             return 0; 
@@ -182,18 +161,14 @@ namespace C2ASM
             ExtractSubgraphs(node, contextType.CT_FUNCTIONDEFINITION_FARGUMENTS);
             ExtractSubgraphs(node, contextType.CT_FUNCTIONDEFINITION_BODY);
             base.VisitFunctionDefinition(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitFormalArgs(CASTFormalArgs node, object param) {
             ExtractSubgraphs(node, contextType.CT_FARGUMENTS_DATADECLARATION);
             base.VisitFormalArgs(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -202,11 +177,8 @@ namespace C2ASM
             ExtractSubgraphs(node, contextType.CT_DATADECLARATION_TYPESPECIFIER);
             ExtractSubgraphs(node, contextType.CT_DATADECLARATION_IDENTIFIER);
             ExtractSubgraphs(node, contextType.CT_DATADECLARATION_DATAVALUE);
-
             base.VisitDATADECLARATION(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -214,9 +186,7 @@ namespace C2ASM
             ExtractSubgraphs(node, contextType.CT_FUNCTIONDECLARATION_FUNPREFIX);
             ExtractSubgraphs(node, contextType.CT_FUNCTIONDECLARATION_FARGUMENTS);
             base.VisitFunctionDeclaration(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -224,9 +194,7 @@ namespace C2ASM
         {
             ExtractSubgraphs(node, contextType.CT_FUNCTIONBODY_STATEMENT);
             base.VisitFUNCTIONBODY(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -235,111 +203,82 @@ namespace C2ASM
             ExtractSubgraphs(node, contextType.CT_FUNPREFIX_TYPESPECIFIER);
             ExtractSubgraphs(node, contextType.CT_FUNPREFIX_IDENTIFIER);
             base.VisitFunprefix(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitTYPESPECIFIERINT(CASTTypespecifierInt node, object param)
         {
             ExtractSubgraphs(node, contextType.CT_TYPESPECIFIER_INT_TYPE);
-
             base.VisitTYPESPECIFIERINT(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitTYPESPECIFIERDOUBLE(CASTTypespecifierDouble node, object param)
         {
             ExtractSubgraphs(node, contextType.CT_TYPESPECIFIER_DOUBLE_TYPE);
-
             base.VisitTYPESPECIFIERDOUBLE(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitTYPESPECIFIERFLOAT(CASTTypespecifierFloat node, object param)
         {
             ExtractSubgraphs(node, contextType.CT_TYPESPECIFIER_FLOAT_TYPE);
-
             base.VisitTYPESPECIFIERFLOAT(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitTYPESPECIFIERCHAR(CASTTypespecifierChar node, object param)
         {
             ExtractSubgraphs(node, contextType.CT_TYPESPECIFIER_CHAR_TYPE);
-
-
             base.VisitTYPESPECIFIERCHAR(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitTYPESPECIFIERVOID(CASTTypespecifierVoid node, object param)
         {
             ExtractSubgraphs(node, contextType.CT_TYPESPECIFIER_VOID_TYPE);
-
-
             base.VisitTYPESPECIFIERVOID(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitINT_TYPE(CASTINT_TYPE node, object param)
         {
             base.VisitINT_TYPE(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitDOUBLE_TYPE(CASTDOUBLE_TYPE node, object param)
         {
             base.VisitDOUBLE_TYPE(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitFLOAT_TYPE(CASTFLOAT_TYPE node, object param)
         {
             base.VisitFLOAT_TYPE(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitCHAR_TYPE(CASTCHAR_TYPE node, object param)
         {
             base.VisitCHAR_TYPE(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
         public override int VisitVOID_TYPE(CASTVOID_TYPE node, object param)
         {
             base.VisitVOID_TYPE(node);
-
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
-
             return 0;
         }
 
@@ -347,7 +286,6 @@ namespace C2ASM
         {
             ExtractSubgraphs(node, contextType.CT_DATAVALUE_NUMBER);
             ExtractSubgraphs(node, contextType.CT_DATAVALUE_CHAR);
-
             base.VisitDATAVALUE(node);
             m_ostream.WriteLine("{0}->{1}", node.MParent.MNodeName, node.MNodeName);
             return 0;

@@ -16,6 +16,8 @@ namespace C2ASM
 
         private ASTSymbolTable m_symbolTable;
 
+        private testparser m_parser;
+
         Stack<ASTComposite> m_parents = new Stack<ASTComposite>();
 
         Stack<contextType> m_parentContext = new Stack<contextType>();
@@ -27,11 +29,7 @@ namespace C2ASM
 
         public ASTGenerator(testparser parser)
         {
-            if (parser.symtab == null)
-            {
-                Console.WriteLine("symbol table doesn't exist");
-                Environment.Exit(1);
-            }
+            m_parser = parser;
             m_symbolTable = parser.symtab;
         }
 
@@ -112,10 +110,17 @@ namespace C2ASM
             // Retrieve the function name from the funprefix context
             var functionName = context.funprefix().IDENTIFIER().GetText();
 
+            // is mandatory for a "main" function to be present in C
+            if (m_parser.main_function == false && functionName == "main")
+            {
+                m_parser.main_function = true;
+            }
+
+            // Collisions/Conflicts checking
             // Define the function in the symbol table, checking for duplicates
             if (m_symbolTable.IsDefined(newnode, functionName, newnode.GetElementScope()))
             {
-                throw new Exception($"Duplicate function name: {newnode.MNodeName} already defined.");
+                throw new Exception($"error: redefinition of: {newnode.MNodeName}.\nERROR!");
             }
 
             m_symbolTable.define(newnode);         // add symbol(inside SymbolTable)
@@ -134,6 +139,10 @@ namespace C2ASM
                 this.VisitElementInContext(context.formalargs(), m_parentContext, contextType.CT_FUNCTIONDEFINITION_FARGUMENTS);
             if (context.functionbody() != null)
                 this.VisitElementInContext(context.functionbody(), m_parentContext, contextType.CT_FUNCTIONDEFINITION_BODY);
+
+            //Type-Checking
+
+
             m_parents.Pop();
             m_parents_scope.Pop();
             return 0;
@@ -280,6 +289,16 @@ namespace C2ASM
             Scope currentscope = m_parents_scope.Peek();
             CASTDatadeclaration newnode = new CASTDatadeclaration(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 3);
             m_parent.AddChild(newnode, m_parentContext.Peek());
+
+            // Retrieve the variable name from the funprefix context
+            var variableName = context.IDENTIFIER().GetText();
+
+            // Collisions/Conflicts checking
+            // Define the function in the symbol table, checking for duplicates
+            if (m_symbolTable.IsDefined(newnode, variableName, newnode.GetElementScope()))
+            {
+                throw new Exception($"error: redefinition of: {newnode.MNodeName}.\nERROR!");
+            }
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 

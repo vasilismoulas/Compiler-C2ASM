@@ -91,9 +91,13 @@ public partial class testparser : Parser {
 		}
 	}
 
-	 public C2ASM.ASTSymbolTable symtab;
+	 
+	    public C2ASM.ASTSymbolTable symtab;
 
-	   // Constructor that takes only input and symtab
+	    // is there a function anmed 'main' ?
+	    public bool main_function = false;
+
+	    // Constructor that takes only input and symtab
 	    public testparser(ITokenStream input, C2ASM.ASTSymbolTable symtab)
 	        : this(input, symtab, Console.Out, Console.Error)
 	    {
