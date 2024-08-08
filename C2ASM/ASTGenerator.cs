@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using C2ASM.Scopes;
 using C2ASM.Helpers;
 using Antlr4.Runtime.Tree;
+using C2ASM.TypeCheck;
+using System.Text.Json.Serialization;
 
 
 namespace C2ASM
@@ -20,6 +22,8 @@ namespace C2ASM
 
         Stack<contextType> m_parentContext = new Stack<contextType>();
 
+        private testparser parser;
+
         // **Scope**
         Stack<Scope> m_parents_scope = new Stack<Scope>();
 
@@ -33,6 +37,7 @@ namespace C2ASM
                 Environment.Exit(1);
             }
             m_symbolTable = parser.symtab;
+            this.parser = parser;
         }
 
         // In Each Visit function invocation we add the corresponding ast element inside the symbol table
@@ -430,7 +435,7 @@ namespace C2ASM
         public override int VisitExpr_MINUS(testparser.Expr_MINUSContext context)
         {
             // Extracting the return type from the context
-            Type element_type = TypeMapper.GetTypeFromString(context.funprefix().typespecifier().GetText());
+           // Type element_type = TypeMapper.GetTypeFromString(context.expr().typespecifier().GetText());
 
 
             ASTComposite m_parent = m_parents.Peek();
@@ -465,10 +470,17 @@ namespace C2ASM
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_EXPRESSION_ASSIGN_EXPRESSION);
 
             // Get type from left part (from symbol table maybe)
-            typeMine(context);
+            Type identifierType = TypeMiner.TypeMine(newnode.GetChildrenList()[0][0], parser);
             // Get type from right part 
-            typeMine(context);
+            Type exprType = TypeMiner.TypeMine(newnode.GetChildrenList()[1][0], parser);
             // Compare types (typecheck)
+            if(identifierType == exprType)
+            {
+                Console.WriteLine("debug: true");
+            } else
+            {
+                Console.WriteLine("debug: false");
+            }
 
             m_parents.Pop();
             return 0;

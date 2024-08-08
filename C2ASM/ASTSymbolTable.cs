@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace C2ASM
         {
             if (symbols.TryGetValue(name, out ASTElement sym))
             {
-                return sym.GetElementScope();
+                return sym.GetElementScope().scope;
             }
             return "Symbol not found.";
         }
@@ -47,23 +48,35 @@ namespace C2ASM
         {
             // Retrieve dictionary values where the keys contain the substring "name"
             // name.Length-2 (e.g.: NT_FUNPREFIX_19) cause we want the last part (serial number) cutted out
-            var elements = symbols.Where(kvp => kvp.Key.Contains(Program.RemoveSerialNumb(newnode.MNodeName, '_')))
+            var elements = symbols.Where(kvp => kvp.Key.Contains(Program.RemoveSerialNumb(newnode.MNodeName.Trim(new Char[] { '"' }), '_')))
                                   .Select(kvp => kvp.Value);
 
             // If elements with the corresponding node-name exist then there is a high chance that they'll have there children's instance saved
-            foreach(ASTElement element in elements)
+            foreach (ASTElement element in elements)
             {
-                if(element.MNodeName == elementName)
+                if (element.m_name_text == elementName && element.GetElementScopeName() == scope.scope)
                 {
                     return true;
-                } 
+                }
             }
 
-
-            return symbols.ContainsKey(newnode.MNodeName);
+            return false;
         }
 
-        public ASTElement resolve(String name) // symbol "lookup" by providing symbosl name 
+        public ASTElement GetElement(ASTElement newnode, string elementName, Scope scope)
+        {
+            if(IsDefined(newnode, elementName, scope))
+            {
+               return symbols.Where(kvp => kvp.Value.GetElementScope() == scope && kvp.Value.m_name_text == elementName)
+                                  .Select(kvp => kvp.Value)
+                                  .ToList()[0];     // To return only the first ASTElement (There will always be only 1 or none).
+            } else
+            {
+                return null;
+            }
+        }
+
+        public ASTElement resolve(String name) // symbol "lookup" by providing symbols name 
         {
             if (symbols.ContainsKey(name))
                 return symbols["name"];

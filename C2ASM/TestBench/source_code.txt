@@ -1,7 +1,7 @@
 
 
-void a (int a){
+void a (int b){
+	int h;
 
-int h = 3;
-
+	h = 'k' + 4;
 }

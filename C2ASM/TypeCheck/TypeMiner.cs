@@ -6,30 +6,37 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C2ASM.TypeChecker
+namespace C2ASM.TypeCheck
 {
     internal static class TypeMiner
     {
-        public static Type TypeMine(ASTElement context)
+
+        public static Type TypeMine(ASTElement context, testparser parser)
         {
             Type currentType = null;
             Type previousType = null;
 
-            List<ASTElement> childrenList = context.GetChildrenList();
+            List<ASTElement>[] childrenList = context.GetChildrenList();
             if (childrenList == null)
             {
                 int nodeType = (int) context.MNodeType;
                 switch (nodeType)
                 {
                     case (int) C2ASM.nodeType.NT_EXPRESSION_IDENTIFIER:
-                        // wait (lookup)
-                    break;
+                        var returnvalue = parser.symtab.GetElement(context, context.MNodeName, context.GetElementScope());
+                        if(returnvalue != null)
+                        {
+                            return returnvalue.m_type;
+                        } else
+                        {
+                            return null;
+                        }
                     case (int)C2ASM.nodeType.NT_EXPRESSION_NUMBER:
                         var number = context.M_Text;
                         object resultNumber;
 
                         if ((resultNumber = Int32.Parse(number))!= null) { // int type
-                            return typeof(int);
+                            return typeof(int);         // NOTE: kim C# autoboxing
                         } else if ((resultNumber = Double.Parse(number)) != null) { // double type
                             return typeof(double);
                         } else if ((resultNumber = Int32.Parse(number)) != null) { // float type
@@ -44,9 +51,10 @@ namespace C2ASM.TypeChecker
                 }
             } else
             {
-                foreach (ASTElement child in childrenList)
+                foreach (List<ASTElement> childNode in childrenList)
                 {
-                    currentType = TypeMine(child);
+                    ASTElement child = childNode[0];
+                    currentType = TypeMine(child, parser); 
                     if (previousType != currentType && currentType != null)
                     {
                         currentType = previousType;

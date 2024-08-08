@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using C2ASM.Scopes;
+using Antlr4.Runtime;
 
 
 namespace C2ASM
@@ -159,15 +160,17 @@ namespace C2ASM
         private nodeType m_nodeType;
         private ASTElement m_parent;
         private Scope m_scope;
-        private List<ASTElement> m_childrenlist;
         //private Type m_type;
         public Type m_type { get; set; }
+        //public ParserRuleContext m_context { get; set; }
         protected string m_nodeName;
         protected string m_text;
+        List<ASTElement>[] children_list = null;
+
+        public string m_name_text { get; set; }
 
 
         public nodeType MNodeType => m_nodeType;
-        public List<ASTElement> MChildren => m_childrenlist;
 
         public virtual string GenerateNodeName()
         {
@@ -186,6 +189,8 @@ namespace C2ASM
 
         public string M_Text => m_text;
 
+        public List<ASTElement>[] MChildrenList => children_list;
+
         //public Type M_Type => m_type;
 
         protected ASTElement(string text, nodeType type, ASTElement parent, Scope currentscope)
@@ -195,17 +200,25 @@ namespace C2ASM
             m_serial = ms_serialCounter++;
             m_text = text;
             m_scope = currentscope;
-            m_childrenlist = null;
+            m_type = null;
+            m_name_text = null;
+            children_list = null;
+            //m_context = null; // i'll have to intergrate it inside the formal arguments of the constructor.
+        }
+
+        public List<ASTElement>[] GetChildrenList()
+        {
+            return children_list;
+        }
+
+        protected void SetChildrenList(List<ASTElement>[] children_list)
+        {
+            this.children_list= children_list;
         }
 
         public String GetElementScopeName()
         {
             return m_scope.scope;
-        }
-
-        public List<ASTElement> GetChildrenList()
-        {
-            return m_childrenlist;
         }
 
         public Scope GetElementScope()
@@ -228,8 +241,7 @@ namespace C2ASM
                 m_children[i] = new List<ASTElement>();
             }
             m_nodeName = GenerateNodeName();
-            base.GetChildrenList() = (List < ASTElement >) MChildren.MemberwiseClone(); // Check this later (We need shallow copy)
-            
+            base.SetChildrenList(m_children);
         }
 
         internal int GetContextIndex(contextType ct)
