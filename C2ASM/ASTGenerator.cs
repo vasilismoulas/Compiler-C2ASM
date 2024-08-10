@@ -255,23 +255,35 @@ namespace C2ASM
 
         public override int VisitDatadeclaration(testparser.DatadeclarationContext context)
         {
-            // Extracting the return type from the context
             Type element_type = TypeMapper.GetTypeFromString(context.typespecifier().GetText());
 
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
-
-
-
             CASTDatadeclaration newnode = new CASTDatadeclaration(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 3);
             m_parent.AddChild(newnode, m_parentContext.Peek());
+
+            // set Type
+            newnode.m_type = element_type;
+
+            // set Context
+            // newnode.m_context = context;
+
+            // set text name
+            newnode.m_name_text = context.IDENTIFIER().GetText();
+
+            // Retrieve the variable name from the funprefix context
+            var variableName = context.IDENTIFIER().GetText();
+
+            // Collisions/Conflicts checking
+            // Define the function in the symbol table, checking for duplicates
+            if (m_symbolTable.IsDefined(newnode, variableName, newnode.GetElementScope()))
+            {
+                throw new Exception($"error: redefinition of: {newnode.MNodeName}.\nERROR!");
+            }
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
             m_parents.Push(newnode);
-
-            // set Type
-            newnode.m_type = element_type;
 
             this.VisitElementInContext(context.typespecifier(), m_parentContext, contextType.CT_DATADECLARATION_TYPESPECIFIER);
             this.VisitTerminalInContext(context, context.IDENTIFIER().Symbol, m_parentContext, contextType.CT_DATADECLARATION_IDENTIFIER);
@@ -461,7 +473,13 @@ namespace C2ASM
             Scope currentscope = m_parents_scope.Peek();
             CASTExpressionAssign newnode = new CASTExpressionAssign(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
-
+            ASTElement symbolElement = m_symbolTable.GetElement(newnode, context.IDENTIFIER().GetText(), currentscope);
+            if (symbolElement != null) {
+                newnode.m_type = symbolElement.m_type;
+            } else
+            {
+                throw new Exception($"error: {newnode.MNodeName} is not declared.\nERROR!");
+            }
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
             m_parents.Push(newnode);

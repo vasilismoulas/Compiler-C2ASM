@@ -45,10 +45,10 @@ digraph {
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_VOID_TYPE_4;
-		label=CT_TYPESPECIFIER_VOID_TYPE;
+		"NT_INT_TYPE_4_(0)";
+		label=CT_TYPESPECIFIER_INT_TYPE;
 	}
-"NT_TYPESPECIFIER_3"->"NT_VOID_TYPE_4
+"NT_TYPESPECIFIER_3"->"NT_INT_TYPE_4_(0)"
 "NT_FUNPREFIX_2"->"NT_TYPESPECIFIER_3"
 "NT_FUNPREFIX_2"->"NT_EXPRESSION_IDENTIFIER_5_(a)"
 "NT_FUNCTIOΝDEFINITION_1"->"NT_FUNPREFIX_2"
@@ -89,7 +89,7 @@ digraph {
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_DATADECLARATION_12";"NT_EXPRESSION_CHAR_16";"NT_EXPRESSION_ASSIGN_22";
+		"NT_DATADECLARATION_12";"NT_EXPRESSION_CHAR_15";"NT_EXPRESSION_ASSIGN_19";
 		label=CT_FUNCTIONBODY_STATEMENT;
 	}
 	subgraph cluster12{
@@ -103,92 +103,54 @@ digraph {
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_EXPRESSION_IDENTIFIER_15_(h)";
+		"NT_EXPRESSION_IDENTIFIER_14_(h)";
 		label=CT_DATADECLARATION_IDENTIFIER;
 	}
+"NT_DATADECLARATION_12"->"NT_TYPESPECIFIER_13"
+"NT_DATADECLARATION_12"->"NT_EXPRESSION_IDENTIFIER_14_(h)"
+"NT_FUNCTIONBODY_11"->"NT_DATADECLARATION_12"
 	subgraph cluster14{
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_INT_TYPE_14_(0)";
-		label=CT_TYPESPECIFIER_INT_TYPE;
+		"NT_EXPRESSION_ASSIGN_16";
+		label=CT_STATEMENT_EXPRESSION;
 	}
-"NT_TYPESPECIFIER_13"->"NT_INT_TYPE_14_(0)"
-"NT_DATADECLARATION_12"->"NT_TYPESPECIFIER_13"
-"NT_DATADECLARATION_12"->"NT_EXPRESSION_IDENTIFIER_15_(h)"
-"NT_FUNCTIONBODY_11"->"NT_DATADECLARATION_12"
 	subgraph cluster15{
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_EXPRESSION_ASSIGN_17";
-		label=CT_STATEMENT_EXPRESSION;
+		"NT_EXPRESSION_IDENTIFIER_17_(h)";
+		label=CT_EXPRESSION_ASSIGN_LVALUE;
 	}
 	subgraph cluster16{
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_EXPRESSION_IDENTIFIER_18_(h)";
-		label=CT_EXPRESSION_ASSIGN_LVALUE;
+		"NT_EXPRESSION_NUMBER_18_(5)";
+		label=CT_EXPRESSION_ASSIGN_EXPRESSION;
 	}
+"NT_EXPRESSION_ASSIGN_16"->"NT_EXPRESSION_IDENTIFIER_17_(h)"
+"NT_EXPRESSION_ASSIGN_16"->"NT_EXPRESSION_NUMBER_18_(5)"
+"NT_EXPRESSION_CHAR_15"->"NT_EXPRESSION_ASSIGN_16"
+"NT_FUNCTIONBODY_11"->"NT_EXPRESSION_CHAR_15"
 	subgraph cluster17{
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_EXPRESSION_ADDITION_19";
-		label=CT_EXPRESSION_ASSIGN_EXPRESSION;
+		"NT_EXPRESSION_IDENTIFIER_20_(h)";
+		label=CT_EXPRESSION_ASSIGN_LVALUE;
 	}
-"NT_EXPRESSION_ASSIGN_17"->"NT_EXPRESSION_IDENTIFIER_18_(h)"
 	subgraph cluster18{
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_EXPRESSION_CHAR_20_('k')";
-		label=CT_EXPRESSION_ADDITION_LEFT;
-	}
-	subgraph cluster19{
-		node [style=filled,color=white];
-		style=filled;
-		color=lightgrey;
-		"NT_EXPRESSION_NUMBER_21_(4)";
-		label=CT_EXPRESSION_ADDITION_RIGHT;
-	}
-"NT_EXPRESSION_ADDITION_19"->"NT_EXPRESSION_NUMBER_21_(4)"
-"NT_EXPRESSION_ASSIGN_17"->"NT_EXPRESSION_ADDITION_19"
-"NT_EXPRESSION_CHAR_16"->"NT_EXPRESSION_ASSIGN_17"
-"NT_FUNCTIONBODY_11"->"NT_EXPRESSION_CHAR_16"
-	subgraph cluster20{
-		node [style=filled,color=white];
-		style=filled;
-		color=lightgrey;
-		"NT_EXPRESSION_IDENTIFIER_23_(h)";
-		label=CT_EXPRESSION_ASSIGN_LVALUE;
-	}
-	subgraph cluster21{
-		node [style=filled,color=white];
-		style=filled;
-		color=lightgrey;
-		"NT_EXPRESSION_ADDITION_24";
+		"NT_EXPRESSION_NUMBER_21_(5)";
 		label=CT_EXPRESSION_ASSIGN_EXPRESSION;
 	}
-"NT_EXPRESSION_ASSIGN_22"->"NT_EXPRESSION_IDENTIFIER_23_(h)"
-	subgraph cluster22{
-		node [style=filled,color=white];
-		style=filled;
-		color=lightgrey;
-		"NT_EXPRESSION_CHAR_25_('k')";
-		label=CT_EXPRESSION_ADDITION_LEFT;
-	}
-	subgraph cluster23{
-		node [style=filled,color=white];
-		style=filled;
-		color=lightgrey;
-		"NT_EXPRESSION_NUMBER_26_(4)";
-		label=CT_EXPRESSION_ADDITION_RIGHT;
-	}
-"NT_EXPRESSION_ADDITION_24"->"NT_EXPRESSION_NUMBER_26_(4)"
-"NT_EXPRESSION_ASSIGN_22"->"NT_EXPRESSION_ADDITION_24"
-"NT_FUNCTIONBODY_11"->"NT_EXPRESSION_ASSIGN_22"
+"NT_EXPRESSION_ASSIGN_19"->"NT_EXPRESSION_IDENTIFIER_20_(h)"
+"NT_EXPRESSION_ASSIGN_19"->"NT_EXPRESSION_NUMBER_21_(5)"
+"NT_FUNCTIONBODY_11"->"NT_EXPRESSION_ASSIGN_19"
 "NT_FUNCTIOΝDEFINITION_1"->"NT_FUNCTIONBODY_11"
 "NT_COMPILEUNIT_0"->"NT_FUNCTIOΝDEFINITION_1"
 }

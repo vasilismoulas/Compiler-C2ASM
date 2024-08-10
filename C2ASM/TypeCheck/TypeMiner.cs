@@ -23,7 +23,7 @@ namespace C2ASM.TypeCheck
                 switch (nodeType)
                 {
                     case (int) C2ASM.nodeType.NT_EXPRESSION_IDENTIFIER:
-                        var returnvalue = parser.symtab.GetElement(context, context.MNodeName, context.GetElementScope());
+                        ASTElement returnvalue = parser.symtab.GetElement(context, context.M_Text.Replace("\"", ""), context.GetElementScope());
                         if(returnvalue != null)
                         {
                             return returnvalue.m_type;
@@ -51,14 +51,18 @@ namespace C2ASM.TypeCheck
                 }
             } else
             {
+                bool firstIteration = true;
                 foreach (List<ASTElement> childNode in childrenList)
                 {
+
                     ASTElement child = childNode[0];
-                    currentType = TypeMine(child, parser); 
-                    if (previousType != currentType && currentType != null)
+                    currentType = TypeMine(child, parser);
+                    if (firstIteration)
                     {
-                        currentType = previousType;
-                    } else
+                        firstIteration = false;
+                        previousType = currentType;
+                    }
+                    else if (previousType == null || currentType == null || currentType != previousType)
                     {
                         currentType = null;
                         break;
