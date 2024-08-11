@@ -106,7 +106,8 @@ namespace C2ASM
             //    listener.error(text(lhs) + ", " +
             //    text(rhs) + " have incompatible types in " +
             //    text((CymbolAST)lhs.getParent()));
-            //}
+            //}\
+
 
             base.VisitASSIGN(node);
 

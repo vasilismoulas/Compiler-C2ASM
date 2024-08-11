@@ -65,9 +65,16 @@ namespace C2ASM
 
         public ASTElement GetElement(ASTElement newnode, string elementName, Scope scope)
         {
+            
+
             ASTElement element = symbols.Where(kvp => kvp.Value.GetElementScope() == scope && kvp.Value.m_name_text == elementName)
                                 .Select(kvp => kvp.Value)
                                 .ToList()[0];     // To return only the first ASTElement (There will always be only 1 or none).
+
+            //ASTElement debugDefinition = symbols.Where(kvp => kvp.Value.GetElementScope() == new GlobalScope() && kvp.Value.m_name_text == "h")
+               //     .Select(kvp => kvp.Value)
+               //     .ToList()[0];
+
             return element;
         }
 

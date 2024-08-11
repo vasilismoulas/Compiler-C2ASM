@@ -5,3 +5,7 @@ int a (int b){
 
 	h = 'h';
 }
+
+int c(int d){
+	a(d);
+}

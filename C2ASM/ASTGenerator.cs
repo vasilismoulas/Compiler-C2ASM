@@ -492,14 +492,10 @@ namespace C2ASM
             // Get type from right part 
             Type exprType = TypeMiner.TypeMine(newnode.GetChildrenList()[1][0], parser);
             // Compare types (typecheck)
-            if(identifierType == exprType)
+            if (identifierType != exprType)
             {
-                Console.WriteLine("debug: true");
-            } else
-            {
-                Console.WriteLine("debug: false");
+                throw new ArgumentException($"error: {newnode.MNodeName} doesn't have the corrept types as input.\nERROR!");
             }
-
             m_parents.Pop();
             return 0;
         }
@@ -511,12 +507,35 @@ namespace C2ASM
             CASTExpressionFCALL newnode = new CASTExpressionFCALL(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
+
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
             m_parents.Push(newnode);
 
             this.VisitTerminalInContext(context, context.IDENTIFIER().Symbol, m_parentContext, contextType.CT_EXPRESSION_FCALLNAME);
             this.VisitElementInContext(context.args(), m_parentContext, contextType.CT_EXPRESSION_FCALLARGS);
+
+            // Getting Function Call Arguments 
+            List<ASTElement>[] callChildren = newnode.GetChildrenList();
+            List<ASTElement>[] callArguments = callChildren[1].First().GetChildrenList();
+
+            // Getting Function Declaration Arguments
+            ASTElement declaration = parser.symtab.GetElement(newnode, context.IDENTIFIER().GetText().Replace("\"", "").Replace("\'", ""), new GlobalScope()); // Function Declaration
+            List<ASTElement>[] declarationChildren = declaration.GetChildrenList();
+            List<ASTElement>[] declarationArguments = declarationChildren[1].First().GetChildrenList();
+
+            for (int i = 0; i < callArguments.Count(); i++)
+            {
+                Type callArgumentType = TypeMiner.TypeMine(callArguments[i][0], parser);
+                Type declarationArgumentType = TypeMiner.TypeMine(declarationArguments[i][0], parser);
+
+                if (callArgumentType != declarationArgumentType)
+                {
+                    throw new ArgumentException($"error: {newnode.MNodeName} invalid argument type.\nERROR!");
+                }
+            }
+
+
             m_parents.Pop();
             return 0;
         }
