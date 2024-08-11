@@ -89,7 +89,7 @@ digraph {
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_DATADECLARATION_12";
+		"NT_DATADECLARATION_12";"NT_DATADECLARATION_18";
 		label=CT_FUNCTIONBODY_STATEMENT;
 	}
 	subgraph cluster12{
@@ -133,6 +133,47 @@ digraph {
 "NT_DATAVALUE_16"->"NT_EXPRESSION_NUMBER_17_(3)"
 "NT_DATADECLARATION_12"->"NT_DATAVALUE_16"
 "NT_FUNCTIONBODY_11"->"NT_DATADECLARATION_12"
+	subgraph cluster17{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_TYPESPECIFIER_19";
+		label=CT_DATADECLARATION_TYPESPECIFIER;
+	}
+	subgraph cluster18{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_21_(h)";
+		label=CT_DATADECLARATION_IDENTIFIER;
+	}
+	subgraph cluster19{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_DATAVALUE_22";
+		label=CT_DATADECLARATION_DATAVALUE;
+	}
+	subgraph cluster20{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_INT_TYPE_20_(0)";
+		label=CT_TYPESPECIFIER_INT_TYPE;
+	}
+"NT_TYPESPECIFIER_19"->"NT_INT_TYPE_20_(0)"
+"NT_DATADECLARATION_18"->"NT_TYPESPECIFIER_19"
+"NT_DATADECLARATION_18"->"NT_EXPRESSION_IDENTIFIER_21_(h)"
+	subgraph cluster21{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_NUMBER_23_(0)";
+		label=CT_DATAVALUE_NUMBER;
+	}
+"NT_DATAVALUE_22"->"NT_EXPRESSION_NUMBER_23_(0)"
+"NT_DATADECLARATION_18"->"NT_DATAVALUE_22"
+"NT_FUNCTIONBODY_11"->"NT_DATADECLARATION_18"
 "NT_FUNCTIOΝDEFINITION_1"->"NT_FUNCTIONBODY_11"
 "NT_COMPILEUNIT_0"->"NT_FUNCTIOΝDEFINITION_1"
 }

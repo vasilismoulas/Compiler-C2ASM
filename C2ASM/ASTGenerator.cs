@@ -285,10 +285,21 @@ namespace C2ASM
 
         public override int VisitDatadeclaration(testparser.DatadeclarationContext context)
         {
+            Type element_type = TypeMapper.GetTypeFromString(context.typespecifier().GetText());
+
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
             CASTDatadeclaration newnode = new CASTDatadeclaration(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 3);
             m_parent.AddChild(newnode, m_parentContext.Peek());
+
+            // set Type
+            newnode.m_type = element_type;
+
+            // set Context
+            // newnode.m_context = context;
+
+            // set text name
+            newnode.m_name_text = context.IDENTIFIER().GetText();
 
             // Retrieve the variable name from the funprefix context
             var variableName = context.IDENTIFIER().GetText();
@@ -486,6 +497,9 @@ namespace C2ASM
             Scope currentscope = m_parents_scope.Peek();
             CASTExpressionAssign newnode = new CASTExpressionAssign(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
+
+            var variable_name = context.IDENTIFIER();
+
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
@@ -715,9 +729,15 @@ namespace C2ASM
 
             m_parents.Push(newnode);
 
+            // statements within the brackets of ifstatement are inside innerscope
+            Scope innerscope = new LocalScope(newnode.MNodeName);
+            //Scope currentscope = new LocalScope(newnode.GetFunctionName());
+            m_parents_scope.Push(innerscope);
+
             this.VisitElementInContext(context.statementList(), m_parentContext, contextType.CT_COMPOUNDSTATEMENT_STATEMENTLIST);
 
             m_parents.Pop();
+            m_parents_scope.Pop();
             return 0;
         }
 
@@ -736,36 +756,50 @@ namespace C2ASM
         public override int VisitWhilestatement(testparser.WhilestatementContext context)
         {
             ASTComposite m_parent = m_parents.Peek();
-            Scope currentscope = m_parents_scope.Peek();
-            CASTWhileStatement newnode = new CASTWhileStatement(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
+            Scope outerscope = m_parents_scope.Peek();
+            CASTWhileStatement newnode = new CASTWhileStatement(context.GetText(), m_parents.Peek(), outerscope, 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
             m_parents.Push(newnode);
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_WHILESTATEMENT_CONDITION);
+
+            // statements within the brackets of ifstatement are inside innerscope
+            Scope innerscope = new LocalScope(newnode.MNodeName);
+            //Scope currentscope = new LocalScope(newnode.GetFunctionName());
+            m_parents_scope.Push(innerscope);
             this.VisitElementInContext(context.statement(), m_parentContext, contextType.CT_WHILESTATEMENT_BODY);
 
             m_parents.Pop();
+            m_parents_scope.Pop();
             return 0;
         }
 
         public override int VisitIfstatement(testparser.IfstatementContext context)
         {
             ASTComposite m_parent = m_parents.Peek();
-            Scope currentscope = m_parents_scope.Peek();
-            CASTIfStatement newnode = new CASTIfStatement(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 3);
+            Scope outerscope = m_parents_scope.Peek();
+            CASTIfStatement newnode = new CASTIfStatement(context.GetText(), m_parents.Peek(), outerscope, 3);
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
             m_parents.Push(newnode);
 
+            
+            // expr(aka condition) is inside the outerscope
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_IFSTATEMENT_CONDITION);
+
+                // statements within the brackets of ifstatement are inside innerscope
+                Scope innerscope = new LocalScope(newnode.MNodeName);
+                //Scope currentscope = new LocalScope(newnode.GetFunctionName());
+            m_parents_scope.Push(innerscope);
             this.VisitElementInContext(context.statement(0), m_parentContext, contextType.CT_IFSTATEMENT_IFCLAUSE);
             if (context.statement(1) != null)
                 this.VisitElementInContext(context.statement(1), m_parentContext, contextType.CT_IFSTATEMENT_ELSECLAUSE);
             m_parents.Pop();
+            m_parents_scope.Pop();
             return 0;
         }
 

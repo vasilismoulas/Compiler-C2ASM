@@ -2,6 +2,7 @@
 
 int a (int a){
 
-int h = 3;
+int a = 3;
+
 
 }

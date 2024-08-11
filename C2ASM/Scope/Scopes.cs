@@ -16,6 +16,7 @@ namespace C2ASM.Scopes
     {
         public string scope { get; }
         public List<ASTElement>[] m_children { get; set; }
+        public ASTElement[] m_contents { get; set; }
 
         public GlobalScope()
         {
@@ -29,6 +30,7 @@ namespace C2ASM.Scopes
     {
         public string scope { get; }
         public List<ASTElement>[] m_children { get; set; }
+        public ASTElement[] m_contents { get; set; }
 
         public LocalScope(string scope)
         {
