@@ -8,6 +8,7 @@ using C2ASM.Helpers;
 using Antlr4.Runtime.Tree;
 using C2ASM.TypeCheck;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 
 namespace C2ASM
@@ -102,7 +103,11 @@ namespace C2ASM
             CASTFunctionDefinition newnode = new CASTFunctionDefinition(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 4);
 
             // set Type
+
             newnode.m_type = element_type;
+
+            // set text name
+            newnode.m_name_text = context.funprefix().IDENTIFIER().GetText();
 
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
@@ -517,17 +522,17 @@ namespace C2ASM
 
             // Getting Function Call Arguments 
             List<ASTElement>[] callChildren = newnode.GetChildrenList();
-            List<ASTElement>[] callArguments = callChildren[1].First().GetChildrenList();
+            List<ASTElement> callArguments = callChildren[1];
 
             // Getting Function Declaration Arguments
             ASTElement declaration = parser.symtab.GetElement(newnode, context.IDENTIFIER().GetText().Replace("\"", "").Replace("\'", ""), new GlobalScope()); // Function Declaration
-            List<ASTElement>[] declarationChildren = declaration.GetChildrenList();
-            List<ASTElement>[] declarationArguments = declarationChildren[1].First().GetChildrenList();
+            List<ASTElement>[] declarationChildren = declaration.GetChildrenList()[2].First().GetChildrenList();
+            List<ASTElement> declarationArguments = declarationChildren[0];
 
             for (int i = 0; i < callArguments.Count(); i++)
             {
-                Type callArgumentType = TypeMiner.TypeMine(callArguments[i][0], parser);
-                Type declarationArgumentType = TypeMiner.TypeMine(declarationArguments[i][0], parser);
+                Type callArgumentType = TypeMiner.TypeMine(callArguments[i], parser);
+                Type declarationArgumentType = TypeMiner.TypeMine(declarationArguments[i], parser);
 
                 if (callArgumentType != declarationArgumentType)
                 {
@@ -540,9 +545,7 @@ namespace C2ASM
             return 0;
         }
 
-        //public override int VisitArgs(testparser.ArgsContext context) {
-        //    ASTComposite m_parent = m_parents.Peek();
-        //    CASTArgs newnode = new CASTArgs(context.GetText(), m_parents.Peek(), 2);
+        //public override int        //    CASTArgs newnode = new CASTArgs(context.GetText(), m_parents.Peek(), 2);
         //    m_parent.AddChild(newnode, m_parentContext.Peek());
         //    m_parents.Push(newnode);
 
@@ -810,6 +813,27 @@ namespace C2ASM
 
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_STATEMENT_RETURN);
 
+
+            // get element me to symbol table (na vroume th function pou einai twra)
+            ASTElement functionDefinition = parser.symtab.GetElement(newnode, newnode.GetElementScope(), "NT_FUNCTIOΝDEFINITION"); // Function Declaration
+
+            // typecheck to funcitondefinition
+            ASTElement definitionChild= functionDefinition.GetChildrenList().First()[0].GetChildrenList().First()[0];
+            Type functionType = TypeMiner.TypeMine(definitionChild, parser);
+
+            // if child == 0, return void, else typemine as usual
+            Type returnType = typeof(void);
+            if (newnode.GetChildrenList().Count() != 0)
+            {
+                returnType = TypeMiner.TypeMine(newnode, parser);
+            }
+
+            // compare types
+            if (returnType != functionType)
+            {
+                throw new ArgumentException($"error: {newnode.MNodeName} invalid return type.\nERROR!");
+            }
+
             m_parents.Pop();
             return 0;
         }
@@ -875,6 +899,11 @@ namespace C2ASM
                     CASTFLOAT_TYPE newnode8 = new CASTFLOAT_TYPE(node.Symbol.Text, m_parents.Peek(), m_parents_scope.Peek());
                     m_parent.AddChild(newnode8, m_parentContext.Peek());
                     m_symbolTable.define(newnode8);         // push symbol(inside SymbolTable)
+                    break;
+                case testlexer.CHAR_TYPE:
+                    CASTCHAR_TYPE newnode9 = new CASTCHAR_TYPE(node.Symbol.Text, m_parents.Peek(), m_parents_scope.Peek());
+                    m_parent.AddChild(newnode9, m_parentContext.Peek());
+                    m_symbolTable.define(newnode9);         // push symbol(inside SymbolTable)
                     break;
                 default:
                     break;

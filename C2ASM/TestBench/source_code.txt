@@ -1,11 +1,14 @@
 
 
-int a (int b){
-	char h;
+int a (int b, char dele){
+	char hh;
 
-	h = 'h';
+	hh = 'h';
+	return;
 }
 
 int c(int d){
-	a(d);
+int j;
+char ff;
+	a(d,ff);
 }

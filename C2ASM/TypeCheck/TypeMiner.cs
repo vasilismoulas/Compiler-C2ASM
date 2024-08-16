@@ -48,13 +48,23 @@ namespace C2ASM.TypeCheck
                         return typeof(char);
                     case (int)C2ASM.nodeType.NT_VOID_TYPE:
                         return typeof(void);
+                    case (int)C2ASM.nodeType.NT_INT_TYPE:
+                        return typeof(int);
+                    case (int)C2ASM.nodeType.NT_DOUBLE_TYPE:
+                        return typeof(double);
+                    case (int)C2ASM.nodeType.NT_FLOAT_TYPE:
+                        return typeof(float);
+                    case (int)C2ASM.nodeType.NT_CHAR_TYPE:
+                        return typeof(char);
                 }
             } else
             {
                 bool firstIteration = true;
                 foreach (List<ASTElement> childNode in childrenList)
                 {
-
+                    if (childNode.Count == 0) {
+                        continue;
+                    }
                     ASTElement child = childNode[0];
                     currentType = TypeMine(child, parser);
                     if (firstIteration)
