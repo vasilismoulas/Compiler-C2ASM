@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using C2ASM.Scopes;
 using C2ASM.Helpers;
 using Antlr4.Runtime.Tree;
+using C2ASM.TypeCheck;
+using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 
 namespace C2ASM
@@ -22,6 +25,8 @@ namespace C2ASM
 
         Stack<contextType> m_parentContext = new Stack<contextType>();
 
+        private testparser parser;
+
         // **Scope**
         Stack<Scope> m_parents_scope = new Stack<Scope>();
 
@@ -31,6 +36,7 @@ namespace C2ASM
         {
             m_parser = parser;
             m_symbolTable = parser.symtab;
+            this.parser = parser;
         }
 
         // In Each Visit function invocation we add the corresponding ast element inside the symbol table
@@ -54,7 +60,7 @@ namespace C2ASM
         public override int VisitGlobalstatement(testparser.GlobalstatementContext context)
         {
             CASTGlobalStatement newnode = new CASTGlobalStatement(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 1);
-            m_root = newnode;
+            //m_root = newnode;
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
@@ -70,7 +76,7 @@ namespace C2ASM
             Type element_type = TypeMapper.GetTypeFromString(context.funprefix().typespecifier().GetText());
 
             CASTFunctionDeclaration newnode = new CASTFunctionDeclaration(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
-            m_root = newnode;
+            //m_root = newnode;
 
             // set Type
             newnode.m_type = element_type;
@@ -88,6 +94,7 @@ namespace C2ASM
         // ** Function Definitions**
         public override int VisitCustom_FunctionDefinition(testparser.Custom_FunctionDefinitionContext context)
         {
+            // Extracting the return type from the context
             Type element_type = TypeMapper.GetTypeFromString(context.funprefix().typespecifier().GetText());
 
             ASTComposite m_parent = m_parents.Peek();
@@ -97,10 +104,8 @@ namespace C2ASM
             CASTFunctionDefinition newnode = new CASTFunctionDefinition(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 4);
 
             // set Type
-            newnode.m_type = element_type;
 
-            // set Context
-            //newnode.m_context = context;
+            newnode.m_type = element_type;
 
             // set text name
             newnode.m_name_text = context.funprefix().IDENTIFIER().GetText();
@@ -270,6 +275,7 @@ namespace C2ASM
 
         public override int VisitFormalargs(testparser.FormalargsContext context)
         {
+
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
             CASTFormalArgs newnode = new CASTFormalArgs(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 1);
@@ -476,6 +482,10 @@ namespace C2ASM
 
         public override int VisitExpr_MINUS(testparser.Expr_MINUSContext context)
         {
+            // Extracting the return type from the context
+           // Type element_type = TypeMapper.GetTypeFromString(context.expr().typespecifier().GetText());
+
+
             ASTComposite m_parent = m_parents.Peek();
             Scope currentscope = m_parents_scope.Peek();
             CASTExpressionMinus newnode = new CASTExpressionMinus(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 1);
@@ -487,6 +497,8 @@ namespace C2ASM
 
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_EXPRESSION_MINUS);
 
+
+            // type check must be implemented here since from this point on all nodes are generated and ready to be type checked.
             m_parents.Pop();
             return 0;
         }
@@ -498,8 +510,15 @@ namespace C2ASM
             CASTExpressionAssign newnode = new CASTExpressionAssign(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
-            var variable_name = context.IDENTIFIER();
+            ASTElement symbolElement = m_symbolTable.GetElement(newnode, context.IDENTIFIER().GetText(), currentscope);
+            if (symbolElement != null) {
+                newnode.m_type = symbolElement.m_type;
+            } else
+            {
+                throw new Exception($"error: {newnode.MNodeName} is not declared.\nERROR!");
+            }
 
+            var variable_name = context.IDENTIFIER();
 
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
@@ -507,6 +526,16 @@ namespace C2ASM
 
             this.VisitTerminalInContext(context, context.IDENTIFIER().Symbol, m_parentContext, contextType.CT_EXPRESSION_ASSIGN_LVALUE);
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_EXPRESSION_ASSIGN_EXPRESSION);
+
+            // Get type from left part (from symbol table maybe)
+            Type identifierType = TypeMiner.TypeMine(newnode.GetChildrenList()[0][0], parser);
+            // Get type from right part 
+            Type exprType = TypeMiner.TypeMine(newnode.GetChildrenList()[1][0], parser);
+            // Compare types (typecheck)
+            if (identifierType != exprType)
+            {
+                throw new ArgumentException($"error: {newnode.MNodeName} doesn't have the corrept types as input.\nERROR!");
+            }
             m_parents.Pop();
             return 0;
         }
@@ -518,19 +547,40 @@ namespace C2ASM
             CASTExpressionFCALL newnode = new CASTExpressionFCALL(context.GetText(), m_parents.Peek(), m_parents_scope.Peek(), 2);
             m_parent.AddChild(newnode, m_parentContext.Peek());
 
+
             m_symbolTable.define(newnode);         // push symbol(inside SymbolTable)
 
             m_parents.Push(newnode);
 
             this.VisitTerminalInContext(context, context.IDENTIFIER().Symbol, m_parentContext, contextType.CT_EXPRESSION_FCALLNAME);
             this.VisitElementInContext(context.args(), m_parentContext, contextType.CT_EXPRESSION_FCALLARGS);
+
+            // Getting Function Call Arguments 
+            List<ASTElement>[] callChildren = newnode.GetChildrenList();
+            List<ASTElement> callArguments = callChildren[1];
+
+            // Getting Function Declaration Arguments
+            ASTElement declaration = parser.symtab.GetElement(newnode, context.IDENTIFIER().GetText().Replace("\"", "").Replace("\'", ""), new GlobalScope()); // Function Declaration
+            List<ASTElement>[] declarationChildren = declaration.GetChildrenList()[2].First().GetChildrenList();
+            List<ASTElement> declarationArguments = declarationChildren[0];
+
+            for (int i = 0; i < callArguments.Count(); i++)
+            {
+                Type callArgumentType = TypeMiner.TypeMine(callArguments[i], parser);
+                Type declarationArgumentType = TypeMiner.TypeMine(declarationArguments[i], parser);
+
+                if (callArgumentType != declarationArgumentType)
+                {
+                    throw new ArgumentException($"error: {newnode.MNodeName} invalid argument type.\nERROR!");
+                }
+            }
+
+
             m_parents.Pop();
             return 0;
         }
 
-        //public override int VisitArgs(testparser.ArgsContext context) {
-        //    ASTComposite m_parent = m_parents.Peek();
-        //    CASTArgs newnode = new CASTArgs(context.GetText(), m_parents.Peek(), 2);
+        //public override int        //    CASTArgs newnode = new CASTArgs(context.GetText(), m_parents.Peek(), 2);
         //    m_parent.AddChild(newnode, m_parentContext.Peek());
         //    m_parents.Push(newnode);
 
@@ -818,6 +868,27 @@ namespace C2ASM
 
             this.VisitElementInContext(context.expr(), m_parentContext, contextType.CT_STATEMENT_RETURN);
 
+
+            // get element me to symbol table (na vroume th function pou einai twra)
+            ASTElement functionDefinition = parser.symtab.GetElement(newnode, newnode.GetElementScope(), "NT_FUNCTIOΝDEFINITION"); // Function Declaration
+
+            // typecheck to funcitondefinition
+            ASTElement definitionChild= functionDefinition.GetChildrenList().First()[0].GetChildrenList().First()[0];
+            Type functionType = TypeMiner.TypeMine(definitionChild, parser);
+
+            // if child == 0, return void, else typemine as usual
+            Type returnType = typeof(void);
+            if (newnode.GetChildrenList().Count() != 0)
+            {
+                returnType = TypeMiner.TypeMine(newnode, parser);
+            }
+
+            // compare types
+            if (returnType != functionType)
+            {
+                throw new ArgumentException($"error: {newnode.MNodeName} invalid return type.\nERROR!");
+            }
+
             m_parents.Pop();
             return 0;
         }
@@ -883,6 +954,11 @@ namespace C2ASM
                     CASTFLOAT_TYPE newnode8 = new CASTFLOAT_TYPE(node.Symbol.Text, m_parents.Peek(), m_parents_scope.Peek());
                     m_parent.AddChild(newnode8, m_parentContext.Peek());
                     m_symbolTable.define(newnode8);         // push symbol(inside SymbolTable)
+                    break;
+                case testlexer.CHAR_TYPE:
+                    CASTCHAR_TYPE newnode9 = new CASTCHAR_TYPE(node.Symbol.Text, m_parents.Peek(), m_parents_scope.Peek());
+                    m_parent.AddChild(newnode9, m_parentContext.Peek());
+                    m_symbolTable.define(newnode9);         // push symbol(inside SymbolTable)
                     break;
                 default:
                     break;

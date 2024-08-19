@@ -42,25 +42,25 @@ namespace C2ASM
         NT_EXPRESSION_NUMBER = 31,
         NT_EXPRESSION_IDENTIFIER = 32,
         NT_EXPRESSION_CHAR = 33,
-        NT_EXPRESSION_FCALL = 34,
-        NT_EXPRESSION_MULTIPLICATION = 36,
-        NT_EXPRESSION_DIVISION = 38,
-        NT_EXPRESSION_ADDITION = 40,
-        NT_EXPRESSION_SUBSTRACTION = 42,
-        NT_EXPRESSION_PLUS = 44,
-        NT_EXPRESSION_MINUS = 45,
-        NT_EXPRESSION_PARENTHESIS = 46,
-        NT_EXPRESSION_ASSIGN = 47,
-        NT_EXPRESSION_NOT = 49,
-        NT_EXPRESSION_AND = 51,
-        NT_EXPRESSION_OR = 53,
-        NT_EXPRESSION_GT = 55,
-        NT_EXPRESSION_GTE = 57,
-        NT_EXPRESSION_LT = 59,
-        NT_EXPRESSION_LTE = 61,
-        NT_EXPRESSION_EQUAL = 63,
-        NT_EXPRESSION_NEQUAL = 65,
-        NT_FARGUMENTS = 56
+        NT_EXPRESSION_FCALL = 36,
+        NT_EXPRESSION_MULTIPLICATION = 38,
+        NT_EXPRESSION_DIVISION = 40,
+        NT_EXPRESSION_ADDITION = 42,
+        NT_EXPRESSION_SUBSTRACTION = 44,
+        NT_EXPRESSION_PLUS = 46,
+        NT_EXPRESSION_MINUS = 47,
+        NT_EXPRESSION_PARENTHESIS = 48,
+        NT_EXPRESSION_ASSIGN = 49,
+        NT_EXPRESSION_NOT = 51,
+        NT_EXPRESSION_AND = 53,
+        NT_EXPRESSION_OR = 55,
+        NT_EXPRESSION_GT = 57,
+        NT_EXPRESSION_GTE = 59,
+        NT_EXPRESSION_LT = 61,
+        NT_EXPRESSION_LTE = 63,
+        NT_EXPRESSION_EQUAL = 65,
+        NT_EXPRESSION_NEQUAL = 67,
+        NT_FARGUMENTS = 68,
 
     };
 
@@ -113,6 +113,8 @@ namespace C2ASM
 
         CT_EXPRESSION_NUMBER,
         CT_EXPRESSION_IDENTIFIER,
+        CT_EXPRESSION_FCALLNAME,
+        CT_EXPRESSION_FCALLARGS,
         CT_EXPRESSION_MULTIPLICATION_LEFT,
         CT_EXPRESSION_MULTIPLICATION_RIGHT,
         CT_EXPRESSION_DIVISION_LEFT,
@@ -130,12 +132,12 @@ namespace C2ASM
         CT_EXPRESSION_AND_LEFT,
         CT_EXPRESSION_AND_RIGHT,
         CT_EXPRESSION_OR_LEFT,
+
         CT_EXPRESSION_OR_RIGHT,
         CT_EXPRESSION_GT_LEFT,
 
         CT_EXPRESSION_GT_RIGHT,
 
-        CT_FARGUMENTS_DATADECLARATION,
 
         CT_EXPRESSION_GTE_LEFT,
 
@@ -149,8 +151,9 @@ namespace C2ASM
         CT_EXPRESSION_EQUAL_RIGHT,
         CT_EXPRESSION_NEQUAL_LEFT,
         CT_EXPRESSION_NEQUAL_RIGHT,
-        CT_EXPRESSION_FCALLNAME,
-        CT_EXPRESSION_FCALLARGS,
+        CT_FARGUMENTS_DATADECLARATION
+
+
     }
 
     public abstract class ASTElement
@@ -165,6 +168,8 @@ namespace C2ASM
         //public ParserRuleContext m_context { get; set; }
         protected string m_nodeName;
         protected string m_text;
+        List<ASTElement>[] children_list = null;
+
         public string m_name_text { get; set; }
 
 
@@ -187,6 +192,8 @@ namespace C2ASM
 
         public string M_Text => m_text;
 
+        public List<ASTElement>[] MChildrenList => children_list;
+
         //public Type M_Type => m_type;
 
         protected ASTElement(string text, nodeType type, ASTElement parent, Scope currentscope)
@@ -198,7 +205,18 @@ namespace C2ASM
             m_scope = currentscope;
             m_type = null;
             m_name_text = null;
+            children_list = null;
             //m_context = null; // i'll have to intergrate it inside the formal arguments of the constructor.
+        }
+
+        public List<ASTElement>[] GetChildrenList()
+        {
+            return children_list;
+        }
+
+        protected void SetChildrenList(List<ASTElement>[] children_list)
+        {
+            this.children_list = children_list;
         }
 
         public String GetElementScopeName()
@@ -226,6 +244,7 @@ namespace C2ASM
                 m_children[i] = new List<ASTElement>();
             }
             m_nodeName = GenerateNodeName();
+            base.SetChildrenList(m_children);
         }
 
         internal int GetContextIndex(contextType ct)
@@ -269,25 +288,4 @@ namespace C2ASM
         }
 
     }
-
-    class ASTElementSameScope : EqualityComparer<ASTElement>
-    {
-        public override bool Equals(ASTElement node1, ASTElement node2)
-        {
-            if (node1 == null && node2 == null)
-                return true;
-            else if (node1 == null || node2 == null)
-                return false;
-
-            return (node1.m_name_text == node2.m_name_text && node1.GetElementScopeName() == node2.GetElementScopeName());
-        }
-
-        public override int GetHashCode(ASTElement node)
-        {
-            int hCode = 0;
-            return hCode.GetHashCode();
-        }
-    }
 }
-
-

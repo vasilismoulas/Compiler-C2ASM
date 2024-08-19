@@ -8,32 +8,49 @@ namespace C2ASM.Scopes
 {
     public abstract class Scope
     {
-        public string scope { get; protected set; }  // Change to a settable property
+        public string scope { get; set; }
+
+        public override bool Equals(Object node)
+        {
+            String scope1 = this.scope;
+            String scope2 = ((Scope)node).scope;
+
+            if (this == null || node == null)
+                return false;
+            else if (this.scope == ((Scope)node).scope)
+            {
+
+                return true;
+            }
+            else
+                return false;
+            //else if (node1.GetElementScopeName() == node2.GetElementScopeName() && node1.GetElementScope(). == node2.GetElementScopeName())
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode();
+        }
+
     }
 
+    // Scopes are static so the corresponding classes will be "immutable"
     public class GlobalScope : Scope
     {
-        public List<ASTElement>[] m_children { get; set; }
-        public ASTElement[] m_contents { get; set; }
-
         public GlobalScope()
         {
-            this.scope = "global";  // Set the scope directly
-            this.m_children = null;
-            this.m_contents = null; // Initialize m_contents as well if necessary
+            this.scope = "global";
         }
     }
 
-    public class LocalScope : Scope // Ranges from funcitons to compound statements : (e.g.: { ... } )
+    public class LocalScope : Scope
     {
-        public List<ASTElement>[] m_children { get; set; }
-        public ASTElement[] m_contents { get; set; }
+        public ASTElement element { get; }
 
         public LocalScope(string scope)
         {
-            this.scope = scope;
-            this.m_children = null;
+            base.scope = scope;
         }
-        
+
     }
 }
