@@ -3,7 +3,7 @@
     "C2ASM": {
       "commandName": "Project",
       "commandLineArgs": "source_code.txt\r\n",
-      "workingDirectory": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\TestBench"
+      "workingDirectory": "C:\\Users\\vasil\\OneDrive\\Έγγραφα\\test\\Compiler-C2ASM\\C2ASM\\TestBench"
     }
   }
 }
