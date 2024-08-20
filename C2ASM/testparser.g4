@@ -3,24 +3,50 @@
 options { tokenVocab = testlexer; }
 
 /*Parser Rules*/
+        /* Should be changed to (statement)+ */
+        /* Should be changed to (functionbody)? */
+
+ @members{ 
+    public C2ASM.ASTSymbolTable symtab;
+
+    // is there a function anmed 'main' ?
+    public bool main_function = false;
+
+    // Constructor that takes only input and symtab
+    public testparser(ITokenStream input, C2ASM.ASTSymbolTable symtab)
+        : this(input, symtab, Console.Out, Console.Error)
+    {
+    }
+
+    // Constructor that takes input, symtab, and output streams
+    public testparser(ITokenStream input, C2ASM.ASTSymbolTable symtab, TextWriter output, TextWriter errorOutput)
+        : base(input, output, errorOutput)
+    {
+        this.symtab = symtab;
+		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
+    }
+} 
+
+/* @init {this.symtab = symtab;} */
+
 compileUnit : (functionDefinition|globalstatement)+
 			;
 
-globalstatement : functionDeclaration QM                                     #custom_FunctionDeclaration
+globalstatement : functionDeclaration QM
                 ;
 
-functionDeclaration : funprefix formalargs? RP  
+functionDeclaration : funprefix formalargs? RP		
                     ;
 
-functionDefinition :  funprefix formalargs? RP '{' functionbody '}'	 #custom_FunctionDefinition		
-				   ;
+functionDefinition :  funprefix formalargs? RP '{' functionbody? '}'	 #custom_FunctionDefinition		
+				   ;                                                 
 
 funprefix : typespecifier IDENTIFIER LP
           ;
 
-functionbody : (statement)+ 
+functionbody : (statement)+              
 			 ;
-
+			 
 
 statement : expr QM		        #statement_ExpressionStatement
 		  | ifstatement			#statement_IfStatement
@@ -47,15 +73,15 @@ statementList : (statement)+
 datadeclaration: typespecifier IDENTIFIER ('=' datavalue)?
                ;
 
-datavalue : NUMBER  
-		  | CHAR
+datavalue : NUMBER		#datavalue_Number
+		  | CHAR		#datavalue_Char
 		  ;
 
-typespecifier : INT_TYPE	 
-			  | DOUBLE_TYPE  
-			  | FLOAT_TYPE   
-			  | CHAR_TYPE    
-			  | VOID_TYPE    
+typespecifier : INT_TYPE		#typespecifier_IntType
+			  | DOUBLE_TYPE     #typespecifier_DoubleType
+			  | FLOAT_TYPE      #typespecifier_FloatType
+			  | CHAR_TYPE       #typespecifier_CharType
+			  | VOID_TYPE       #typespecifier_VoidType
 			  ;
 
 

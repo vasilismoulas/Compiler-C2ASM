@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using Antlr4.Runtime.Tree;
 
 namespace C2ASM
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -22,7 +23,9 @@ namespace C2ASM
 
             CommonTokenStream cts = new CommonTokenStream(lexer);
 
-            testparser parser = new testparser(cts);
+            ASTSymbolTable symtab = new ASTSymbolTable();
+
+            testparser parser = new testparser(cts, symtab);
 
             IParseTree tree = parser.compileUnit();
 
@@ -30,16 +33,29 @@ namespace C2ASM
 
             visitor.Visit(tree);
 
-            ASTGenerator astGenerator = new ASTGenerator();
+            Console.WriteLine("Syntax Tree: " + tree.ToStringTree(parser)); //print LISP-style tree
+
+            ASTGenerator astGenerator = new ASTGenerator(parser);
             astGenerator.Visit(tree);
 
             ASTPrinter astPrinter = new ASTPrinter("ASyntaxTree.dot");
             astPrinter.Visit(astGenerator.M_Root);
 
+            Console.WriteLine("Symbol Table entries: " + symtab);
 
-            //for (int i = 0;i<cts.GetNumberOfOnChannelTokens();i++) {
-            //Console.WriteLine(parser.);
-            //}
+            Console.WriteLine("end ------- ");
+
+            Console.WriteLine("Symbol Table entries Scope information: " + symtab.getScopeName("NT_FUNPREFIX_2"));
+
+            Console.WriteLine("end ------- ");
+
+            //TypeChecking
+            TypeChecker typechecker = new TypeChecker(parser);
+            typechecker.Visit(astGenerator.M_Root);
+
+            //Code Generation
+
         }
+
     }
 }

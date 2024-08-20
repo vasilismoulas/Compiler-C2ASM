@@ -4,7 +4,7 @@
 
 // Reserved words
 FUNCTION :'function';
-MAIN: 'main';
+//MAIN: 'main';
 RETURN :'return'; 
 IF:'if';
 ELSE:'else';
