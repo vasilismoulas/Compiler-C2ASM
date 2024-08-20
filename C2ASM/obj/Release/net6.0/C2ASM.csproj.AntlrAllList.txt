@@ -1,0 +1,2 @@
+C:/Users/vasil/OneDrive/╕ήή±ά÷ά/test/Compiler-C2ASM/C2ASM/obj/Release/net6.0/testlexer.interp
+C:/Users/vasil/OneDrive/╕ήή±ά÷ά/test/Compiler-C2ASM/C2ASM/obj/Release/net6.0/testparser.interp

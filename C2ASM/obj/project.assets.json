@@ -3792,11 +3792,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vasil\\OneDrive\\Υπολογιστής\\C2ASM\\C2ASM\\C2ASM.csproj",
+      "projectUniqueName": "C:\\Users\\vasil\\OneDrive\\Έγγραφα\\test\\Compiler-C2ASM\\C2ASM\\C2ASM.csproj",
       "projectName": "C2ASM",
-      "projectPath": "C:\\Users\\vasil\\OneDrive\\Υπολογιστής\\C2ASM\\C2ASM\\C2ASM.csproj",
+      "projectPath": "C:\\Users\\vasil\\OneDrive\\Έγγραφα\\test\\Compiler-C2ASM\\C2ASM\\C2ASM.csproj",
       "packagesPath": "C:\\Users\\vasil\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vasil\\OneDrive\\Υπολογιστής\\C2ASM\\C2ASM\\obj\\",
+      "outputPath": "C:\\Users\\vasil\\OneDrive\\Έγγραφα\\test\\Compiler-C2ASM\\C2ASM\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
