@@ -267,7 +267,7 @@ namespace C2ASM
         {
             int i = GetContextIndex(ct);
             Console.WriteLine(m_children);
-            ; return m_children[i][index];
+            return m_children[i][index];
         }
 
         internal ASTElement[] GetContextChildren(contextType ct)

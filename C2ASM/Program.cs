@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-
+using C_ASM;
 
 namespace C2ASM
 {
@@ -53,8 +53,19 @@ namespace C2ASM
             TypeChecker typechecker = new TypeChecker(parser);
             typechecker.Visit(astGenerator.M_Root);
 
-            //Code Generation
 
+            // typecheck global boolean should go here
+            // 5return;
+
+            //Code Generation
+            C2ASMTranslation tr = new C2ASMTranslation();
+            tr.VisitCOMPILEUNIT(astGenerator.M_Root as CASTCompileUnit, new TranslationParameters());
+            tr.M_TranslatedFile.EmmitStdout();
+            StreamWriter trFile = new StreamWriter(Path.GetFileName(args[0] + ".asm"));
+            tr.M_TranslatedFile.EmmitToFile(trFile);
+            trFile.Close();
+            StreamWriter m_streamWriter = new StreamWriter("CodeStructure.dot");
+            tr.M_TranslatedFile.PrintStructure(m_streamWriter);
         }
 
     }

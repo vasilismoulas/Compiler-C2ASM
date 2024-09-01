@@ -1,0 +1,6 @@
+C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/obj/Debug/net6.0/testlexer.cs
+C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/obj/Debug/net6.0/testparser.cs
+C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/obj/Debug/net6.0/testparserBaseListener.cs
+C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/obj/Debug/net6.0/testparserBaseVisitor.cs
+C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/obj/Debug/net6.0/testparserListener.cs
+C:/Users/silve/source/comp-2-repos/Compiler-C2ASM/C2ASM/obj/Debug/net6.0/testparserVisitor.cs

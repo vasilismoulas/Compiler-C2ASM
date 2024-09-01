@@ -1,14 +1,5 @@
+int foo(){
+int a;
+a = 5;
 
-
-int a (int b, char dele){
-	char hh;
-
-	hh = 'h';
-	return;
-}
-
-int c(int d){
-int j;
-char ff;
-	a(d,ff);
 }

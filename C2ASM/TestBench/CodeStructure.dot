@@ -1,0 +1,35 @@
+digraph {
+	subgraph cluster0{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		CB_NA_4;CB_NA_5;
+		label=CC_FILE_PREPROCESSOR;
+	}
+	subgraph cluster1{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		CB_FUNCTIONDEFINITION_1;
+		label=CC_FILE_FUNDEF;
+	}
+"CB_FILE_0"->"CB_NA_4"
+"CB_FILE_0"->"CB_NA_5"
+	subgraph cluster2{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		CB_COMPOUNDSTATEMENT_2;
+		label=CC_FUNCTIONDEFINITION_BODY;
+	}
+	subgraph cluster3{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		CB_NA_3;
+		label=CC_FUNCTIONDEFINITION_HEADER;
+	}
+"CB_FUNCTIONDEFINITION_1"->"CB_NA_3"
+"CB_FUNCTIONDEFINITION_1"->"CB_COMPOUNDSTATEMENT_2"
+"CB_FILE_0"->"CB_FUNCTIONDEFINITION_1"
+}
