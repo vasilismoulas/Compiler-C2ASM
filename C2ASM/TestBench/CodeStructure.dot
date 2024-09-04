@@ -3,26 +3,34 @@ digraph {
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		CB_NA_4;CB_NA_5;
-		label=CC_FILE_PREPROCESSOR;
+		CB_CODEREPOSITORY_10;
+		label=CC_FILE_GLOBALVARS;
 	}
 	subgraph cluster1{
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		CB_FUNCTIONDEFINITION_1;
+		CB_NA_4;CB_NA_5;
+		label=CC_FILE_PREPROCESSOR;
+	}
+	subgraph cluster2{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		CB_FUNCTIONDEFINITION_1;CB_FUNCTIONDEFINITION_6;
 		label=CC_FILE_FUNDEF;
 	}
 "CB_FILE_0"->"CB_NA_4"
 "CB_FILE_0"->"CB_NA_5"
-	subgraph cluster2{
+"CB_FILE_0"->"CB_CODEREPOSITORY_10"
+	subgraph cluster3{
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
 		CB_COMPOUNDSTATEMENT_2;
 		label=CC_FUNCTIONDEFINITION_BODY;
 	}
-	subgraph cluster3{
+	subgraph cluster4{
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
@@ -32,4 +40,32 @@ digraph {
 "CB_FUNCTIONDEFINITION_1"->"CB_NA_3"
 "CB_FUNCTIONDEFINITION_1"->"CB_COMPOUNDSTATEMENT_2"
 "CB_FILE_0"->"CB_FUNCTIONDEFINITION_1"
+	subgraph cluster5{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		CB_CODEREPOSITORY_9;CB_EXPRESSIONSTATEMENT_14;CB_CODEREPOSITORY_53;
+		label=CC_FUNCTIONDEFINITION_BODY;
+	}
+	subgraph cluster6{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		CB_NA_7;CB_NA_8;
+		label=CC_FUNCTIONDEFINITION_HEADER;
+	}
+"CB_FUNCTIONDEFINITION_6"->"CB_NA_7"
+"CB_FUNCTIONDEFINITION_6"->"CB_NA_8"
+"CB_FUNCTIONDEFINITION_6"->"CB_CODEREPOSITORY_9"
+	subgraph cluster7{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		CB_CODEREPOSITORY_18;
+		label=CC_EXPRESSIONSTATEMENT_BODY;
+	}
+"CB_EXPRESSIONSTATEMENT_14"->"CB_CODEREPOSITORY_18"
+"CB_FUNCTIONDEFINITION_6"->"CB_EXPRESSIONSTATEMENT_14"
+"CB_FUNCTIONDEFINITION_6"->"CB_CODEREPOSITORY_53"
+"CB_FILE_0"->"CB_FUNCTIONDEFINITION_6"
 }

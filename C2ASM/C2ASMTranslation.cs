@@ -70,10 +70,16 @@ namespace C_ASM
             param.M_Parent.AddCode(fundef, param.M_ParentContextType);
 
             //3. Assemble the function header
-            CASTIDENTIFIER id = node.GetChild(contextType.CT_FUNCTIONDEFINITION_IDENTIFIER, 0) as CASTIDENTIFIER;
-
+            CASTFunprefix funprefixthing = node.GetChild(contextType.CT_FUNCTIONDEFINITION_FUNPREFIX, 0) as CASTFunprefix;
+            CASTIDENTIFIER id = funprefixthing.GetChild(contextType.CT_FUNPREFIX_IDENTIFIER, 0) as CASTIDENTIFIER;
+            
             fundef.AddCode("float " + id.M_Text + "(", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
-            string last = node.GetFunctionArgs().Last();
+            string last = "";
+            string[] lastString = node.GetFunctionArgs();
+            if(lastString.Length != 0)
+            {
+                last = lastString.Last();
+            }
             foreach (string s in node.GetFunctionArgs())
             {
                 fundef.AddCode("float " + s, CodeContextType.CC_FUNCTIONDEFINITION_HEADER);

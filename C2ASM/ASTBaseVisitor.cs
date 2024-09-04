@@ -29,6 +29,9 @@ namespace C2ASM
 
             foreach (ASTElement item in node.MChildren[node.GetContextIndex(ct)])
             {
+                
+                
+                
                 item.Accept(this, param);
             }
             return default(Result);

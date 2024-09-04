@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using C2ASM.Scopes;
 
 namespace C2ASM
@@ -176,7 +177,9 @@ namespace C2ASM
 
         public string GetFunctionName()
         {
-            CASTIDENTIFIER id = GetChild(contextType.CT_FUNCTIONDEFINITION_IDENTIFIER, 0) as CASTIDENTIFIER;
+            //CASTIDENTIFIER id = GetChild(contextType.CT_FUNCTIONDEFINITION_IDENTIFIER, 0) as CASTIDENTIFIER;
+            CASTFunprefix funprefixthing = GetChild(contextType.CT_FUNCTIONDEFINITION_FUNPREFIX, 0) as CASTFunprefix;
+            CASTIDENTIFIER id = funprefixthing.GetChild(contextType.CT_FUNPREFIX_IDENTIFIER, 1) as CASTIDENTIFIER;
             return id.M_Text;
         }
 
