@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C_ASM
+namespace C2ASM
 {
     public enum CodeBlockType
     {

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using C2ASM;
 
 
 namespace C_ASM
@@ -117,16 +118,16 @@ namespace C_ASM
         public override CodeContainer AssemblyCodeContainer()
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
-            rep.AddCode("{");
-            rep.EnterScope();
-            rep.AddCode("//  ***** Local declarations *****");
-            rep.AddNewLine();
-            rep.AddCode(AssemblyContext(CodeContextType.CC_COMPOUNDSTATEMENT_DECLARATIONS));
-            rep.AddCode("//  ***** Code Body *****");
-            rep.AddNewLine();
-            rep.AddCode(AssemblyContext(CodeContextType.CC_COMPOUNDSTATEMENT_BODY));
-            rep.LeaveScope();
-            rep.AddCode("}");
+            //rep.AddCode("{");
+            //rep.EnterScope();
+            //rep.AddCode("//  ***** Local declarations *****");
+            //rep.AddNewLine();
+            //rep.AddCode(AssemblyContext(CodeContextType.CC_COMPOUNDSTATEMENT_DECLARATIONS));
+            //rep.AddCode("//  ***** Code Body *****");
+            //rep.AddNewLine();
+            //rep.AddCode(AssemblyContext(CodeContextType.CC_COMPOUNDSTATEMENT_BODY));
+            //rep.LeaveScope();
+            //rep.AddCode("}");
             return rep;
         }
 
@@ -249,7 +250,7 @@ namespace C_ASM
         public CMainFunctionDefinition(CComboContainer parent) : base(parent)
         {
             CCompoundStatement cmpst = new CCompoundStatement(this);
-            string mainheader = "void main(int argc, char* argv[])";
+            string mainheader = "";
             AddCode(mainheader, CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
             AddCode(cmpst, CodeContextType.CC_FUNCTIONDEFINITION_BODY);
         }

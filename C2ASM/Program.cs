@@ -55,7 +55,7 @@ namespace C2ASM
 
 
             // typecheck global boolean should go here
-            // 5return;
+            // return;
 
             //Code Generation
             C2ASMTranslation tr = new C2ASMTranslation();

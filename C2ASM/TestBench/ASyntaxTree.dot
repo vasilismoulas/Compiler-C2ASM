@@ -49,7 +49,7 @@ digraph {
 		node [style=filled,color=white];
 		style=filled;
 		color=lightgrey;
-		"NT_DATADECLARATION_7";"NT_EXPRESSION_CHAR_11";"NT_EXPRESSION_ASSIGN_15";
+		"NT_DATADECLARATION_7";"NT_EXPRESSION_CHAR_11";"NT_EXPRESSION_ASSIGN_15";"NT_EXPRESSION_CHAR_18";"NT_EXPRESSION_ASSIGN_24";
 		label=CT_FUNCTIONBODY_STATEMENT;
 	}
 	subgraph cluster7{
@@ -119,6 +119,80 @@ digraph {
 "NT_EXPRESSION_ASSIGN_15"->"NT_EXPRESSION_IDENTIFIER_16_(a)"
 "NT_EXPRESSION_ASSIGN_15"->"NT_EXPRESSION_NUMBER_17_(5)"
 "NT_FUNCTIONBODY_6"->"NT_EXPRESSION_ASSIGN_15"
+	subgraph cluster15{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_ASSIGN_19";
+		label=CT_STATEMENT_EXPRESSION;
+	}
+	subgraph cluster16{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_20_(a)";
+		label=CT_EXPRESSION_ASSIGN_LVALUE;
+	}
+	subgraph cluster17{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_ADDITION_21";
+		label=CT_EXPRESSION_ASSIGN_EXPRESSION;
+	}
+"NT_EXPRESSION_ASSIGN_19"->"NT_EXPRESSION_IDENTIFIER_20_(a)"
+	subgraph cluster18{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_22_(a)";
+		label=CT_EXPRESSION_ADDITION_LEFT;
+	}
+	subgraph cluster19{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_NUMBER_23_(5)";
+		label=CT_EXPRESSION_ADDITION_RIGHT;
+	}
+"NT_EXPRESSION_ADDITION_21"->"NT_EXPRESSION_IDENTIFIER_22_(a)"
+"NT_EXPRESSION_ADDITION_21"->"NT_EXPRESSION_NUMBER_23_(5)"
+"NT_EXPRESSION_ASSIGN_19"->"NT_EXPRESSION_ADDITION_21"
+"NT_EXPRESSION_CHAR_18"->"NT_EXPRESSION_ASSIGN_19"
+"NT_FUNCTIONBODY_6"->"NT_EXPRESSION_CHAR_18"
+	subgraph cluster20{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_25_(a)";
+		label=CT_EXPRESSION_ASSIGN_LVALUE;
+	}
+	subgraph cluster21{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_ADDITION_26";
+		label=CT_EXPRESSION_ASSIGN_EXPRESSION;
+	}
+"NT_EXPRESSION_ASSIGN_24"->"NT_EXPRESSION_IDENTIFIER_25_(a)"
+	subgraph cluster22{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_IDENTIFIER_27_(a)";
+		label=CT_EXPRESSION_ADDITION_LEFT;
+	}
+	subgraph cluster23{
+		node [style=filled,color=white];
+		style=filled;
+		color=lightgrey;
+		"NT_EXPRESSION_NUMBER_28_(5)";
+		label=CT_EXPRESSION_ADDITION_RIGHT;
+	}
+"NT_EXPRESSION_ADDITION_26"->"NT_EXPRESSION_IDENTIFIER_27_(a)"
+"NT_EXPRESSION_ADDITION_26"->"NT_EXPRESSION_NUMBER_28_(5)"
+"NT_EXPRESSION_ASSIGN_24"->"NT_EXPRESSION_ADDITION_26"
+"NT_FUNCTIONBODY_6"->"NT_EXPRESSION_ASSIGN_24"
 "NT_FUNCTIOΝDEFINITION_1"->"NT_FUNCTIONBODY_6"
 "NT_COMPILEUNIT_0"->"NT_FUNCTIOΝDEFINITION_1"
 }

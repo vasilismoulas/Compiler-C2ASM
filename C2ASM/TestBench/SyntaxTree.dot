@@ -12,4 +12,9 @@ digraph G{
 "FUNCTIONBODY_6"->"Assign_11";
 "Assign_11"->"IDENTIFIER_12_a";
 "Assign_11"->"NUMBER_13_5";
+"FUNCTIONBODY_6"->"Assign_14";
+"Assign_14"->"IDENTIFIER_15_a";
+"Assign_14"->"Addition_16";
+"Addition_16"->"IDENTIFIER_17_a";
+"Addition_16"->"NUMBER_18_5";
 }

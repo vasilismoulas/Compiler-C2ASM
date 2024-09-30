@@ -1,11 +1,12 @@
-﻿using System;
+﻿//using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using C_ASM;
 using C2ASM;
 
-namespace C_ASM
+namespace C2ASM
 {
     public class TranslationParameters
     {
@@ -33,7 +34,7 @@ namespace C_ASM
         {
             this.m_parent = m_parent;
             this.m_containerFunction = m_containerFunction;
-            this.m_parentContextType=m_parentContextType;
+            this.m_parentContextType = m_parentContextType;
         }
 
         public CEmmitableCodeContainer M_Parent
@@ -63,7 +64,6 @@ namespace C_ASM
         public override CEmmitableCodeContainer VisitFunctionDefinition(CASTFunctionDefinition node, TranslationParameters param)
         {
 
-            //1. Create Output File
             CCFunctionDefinition fundef = new CCFunctionDefinition(param.M_Parent);
 
             //2. Add Function Definition to the File in the appropriate context
@@ -72,31 +72,102 @@ namespace C_ASM
             //3. Assemble the function header
             CASTFunprefix funprefixthing = node.GetChild(contextType.CT_FUNCTIONDEFINITION_FUNPREFIX, 0) as CASTFunprefix;
             CASTIDENTIFIER id = funprefixthing.GetChild(contextType.CT_FUNPREFIX_IDENTIFIER, 0) as CASTIDENTIFIER;
-            
-            fundef.AddCode("float " + id.M_Text + "(", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
-            string last = "";
-            string[] lastString = node.GetFunctionArgs();
-            if(lastString.Length != 0)
-            {
-                last = lastString.Last();
-            }
-            foreach (string s in node.GetFunctionArgs())
-            {
-                fundef.AddCode("float " + s, CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
-                if (!s.Equals(last))
-                {
-                    fundef.AddCode(", ", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
-                }
-                fundef.AddVariableToLocalSymbolTable(s);
-            }
-            fundef.AddCode(")", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            //CASTFormalArgs functionArguments = node.GetChild(contextType.CT_FUNCTIONDEFINITION_FARGUMENTS, 0) as CASTFormalArgs;
+            //CASTFunctionBody functionBody = node.GetChild(contextType.CT_FUNCTIONDEFINITION_BODY, 0) as CASTFunctionBody;
+            fundef.EnterScope();
 
-            VisitContext(node, contextType.CT_FUNCTIONDEFINITION_BODY, new TranslationParameters()
+            fundef.AddCode(id.M_Text + " PROC" + "\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            fundef.AddCode( "\tpush ebp"    + "\n"
+                            + "mov ebp,esp" + "\n"
+                            + "push eax"    + "\n"
+                            + "push ebx"    + "\n"
+                            + "push ecx"    + "\n"
+                            + "push edx"    + "\n"
+                            + "push esi"    + "\n"
+                            + "push edi"    + "\n" + "\n"
+                            , CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+
+            // add argument variables
+            fundef.AddCode("\n",CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            fundef.AddCode("\t;Arguments\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+
+            // add inside code visitor
+            fundef.AddCode("\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            fundef.AddCode("\t;Function body\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+
+
+            Visit(node.GetChild(contextType.CT_FUNCTIONDEFINITION_BODY, 0), new TranslationParameters()
             {
-                M_Parent = fundef,
                 M_ContainerFunction = fundef,
-                M_ParentContextType = CodeContextType.CC_FUNCTIONDEFINITION_BODY
+                M_ParentContextType = CodeContextType.CC_FUNCTIONDEFINITION_BODY,
+                M_Parent = fundef
             });
+
+            //fundef.AddCode(Visit(node.GetChild(contextType.CT_FUNCTIONDEFINITION_BODY, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = fundef,
+            //    M_ParentContextType = CodeContextType.CC_FUNCTIONDEFINITION_BODY,
+            //    M_Parent = fundef
+            //}), CodeContextType.CC_FUNCTIONDEFINITION_BODY);
+
+            //rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_ASSIGN_EXPRESSION, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_Parent = null,
+            //    M_ParentContextType = CodeContextType.CC_NA
+            //}).AssemblyCodeContainer());
+
+
+
+            //CEmmitableCodeContainer bodyContainer = Visit(body, new TranslationParameters()
+            //{
+            //    M_ContainerFunction = fundef,
+            //    M_Parent = fundef,
+            //    M_ParentContextType = param.M_ParentContextType
+            //});
+
+            //VisitContext(node, contextType.CT_FUNCTION,
+            //    new TranslationParameters()
+            //    {
+            //        M_Parent = m_translatedFile,
+            //        M_ParentContextType = CodeContextType.CC_FILE_FUNDEF
+            //    });
+
+
+
+
+            fundef.AddCode("\n" + id.M_Text+"END:"     + "\n"
+                            + "pop edi"         + "\n"
+                            + "pop esi"         + "\n"
+                            + "pop eax"         + "\n"
+                            + "pop edx"         + "\n"
+                            + "pop ecx"         + "\n"
+                            + "pop ebx"         + "\n"
+                            + "mov esp,ebp"     + "\n"
+                            + "pop ebp"         + "\n"
+                            + "ret"             + "\n", CodeContextType.CC_FUNCTIONDEFINITION_BODY);
+            fundef.LeaveScope();
+            fundef.AddCode(id.M_Text + "ENDP" + "\n", CodeContextType.CC_FUNCTIONDEFINITION_BODY);
+
+            //fundef.AddCode("float " + id.M_Text + "(", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            //string last = "";
+            //string[] lastString = node.GetFunctionArgs();
+            //if (lastString.Length != 0)
+            //{
+            //    last = lastString.Last();
+            //}
+            //foreach (string s in node.GetFunctionArgs())
+            //{
+            //    fundef.AddCode("float " + s, CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            //    if (!s.Equals(last))
+            //    {
+            //        fundef.AddCode(", ", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            //    }
+            //    fundef.AddVariableToLocalSymbolTable(s);
+            //}
+            //fundef.AddCode(")", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+
+
 
             return fundef;
         }
@@ -108,24 +179,27 @@ namespace C_ASM
             m_translatedFile = new CCFile(true);
             mainf = m_translatedFile.MainDefinition;
 
-            m_translatedFile.AddCode("#include <stdio.h>\n", CodeContextType.CC_FILE_PREPROCESSOR);
-            m_translatedFile.AddCode("#include <stdlib.h>\n", CodeContextType.CC_FILE_PREPROCESSOR);
+            m_translatedFile.AddCode(".model small \n", CodeContextType.CC_FILE_PREPROCESSOR);
+            m_translatedFile.AddCode(".stack 100h \n", CodeContextType.CC_FILE_PREPROCESSOR);
+            m_translatedFile.AddCode(".data \n", CodeContextType.CC_FILE_PREPROCESSOR);
+            m_translatedFile.AddCode(".code \n", CodeContextType.CC_FILE_PREPROCESSOR);
 
-            VisitContext(node, contextType.CT_COMPILEUNIT_GLOBALSTATEMENT,
-                new TranslationParameters()
-                {
-                    M_Parent = mainf.GetChild(CodeContextType.CC_FUNCTIONDEFINITION_BODY),
-                    M_ContainerFunction = mainf,
-                    M_ParentContextType = CodeContextType.CC_COMPOUNDSTATEMENT_BODY
-                });
+            //// 2. Visit CT_COMPILEUNIT_GLOBALSTATEMENT (according to our grammar rules, it refers only to function declarations)
+            //VisitContext(node, contextType.CT_COMPILEUNIT_GLOBALSTATEMENT,
+            //    new TranslationParameters()
+            //    {
+            //        M_Parent = mainf.GetChild(CodeContextType.CC_FUNCTIONDEFINITION_BODY),
+            //        M_ContainerFunction = mainf,
+            //        M_ParentContextType = CodeContextType.CC_COMPOUNDSTATEMENT_BODY
+            //    });
 
             // 3. Visit CT_COMPILEUNIT_FUNCTIONDEFINITIONS
             VisitContext(node, contextType.CT_COMPILEUNIT_FUNCTIONDEFINITION,
                 new TranslationParameters()
-            {
-                M_Parent = m_translatedFile,
-                M_ParentContextType = CodeContextType.CC_FILE_FUNDEF
-            });
+                {
+                    M_Parent = m_translatedFile,
+                    M_ParentContextType = CodeContextType.CC_FILE_FUNDEF
+                });
 
             //3. Visit CT
             return m_translatedFile;
@@ -136,17 +210,43 @@ namespace C_ASM
             CCFunctionDefinition fun = param.M_ContainerFunction as CCFunctionDefinition;
 
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            CASTIDENTIFIER id = node.GetChild(contextType.CT_EXPRESSION_ASSIGN_LVALUE, 0) as CASTIDENTIFIER;
-            fun.DeclareVariable(id.M_Text, false);
-            rep.AddCode(id.M_Text);
-            rep.AddCode("=");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_ASSIGN_EXPRESSION, 0), new TranslationParameters()
+
+            ASTElement assignLeftPart = node.GetChild(contextType.CT_EXPRESSION_ASSIGN_LVALUE, 0);
+            ASTElement assignRightPart = node.GetChild(contextType.CT_EXPRESSION_ASSIGN_EXPRESSION, 0);
+
+            //ASTElement assignLeftPart = node.GetChildrenList()[0][0];
+            //ASTElement assignRightPart = node.GetChildrenList()[1][0];
+
+            if (assignRightPart.GetType().Equals(typeof(CASTIDENTIFIER)) || assignRightPart.GetType().Equals(typeof(CASTNUMBER)))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                rep.AddCode(assignLeftPart.m_name_text + assignRightPart.m_name_text + "\n");
+            } else
+            {
+                //1. Visit
+                rep.AddCode(Visit(assignRightPart, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_Parent = null,
+                    M_ParentContextType = CodeContextType.CC_NA
+                }).AssemblyCodeContainer());
+
+                //2. Then add eax
+                rep.AddCode("mov " + assignLeftPart.m_name_text + ",eax\n");
+            }
+
+
+
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+            //CASTIDENTIFIER id = node.GetChild(contextType.CT_EXPRESSION_ASSIGN_LVALUE, 0) as CASTIDENTIFIER;
+            //fun.DeclareVariable(id.M_Text, false);
+            //rep.AddCode(id.M_Text);
+            //rep.AddCode("=");
+            //rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_ASSIGN_EXPRESSION, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_Parent = null,
+            //    M_ParentContextType = CodeContextType.CC_NA
+            //}).AssemblyCodeContainer());
             return rep;
         }
 
@@ -159,35 +259,35 @@ namespace C_ASM
             param.M_Parent?.AddCode(rep, param.M_ParentContextType);
 
             CASTIDENTIFIER id = node.GetChild(contextType.CT_EXPRESSION_FCALLNAME, 0) as CASTIDENTIFIER;
-            string funheader = "float " + id.M_Text + "(";
-            for (int i = 0; i < node.MChildren[1].Count; i++)
-            {
-                if (i > 0)
-                {
-                    funheader += ",";
-                }
-                funheader += "float x" + i;
-            }
-            funheader += ")";
-            m_translatedFile.DeclareFunction(id.M_Text, funheader);
+            //string funheader = "float " + id.M_Text + "(";
+            //for (int i = 0; i < node.MChildren[1].Count; i++)
+            //{
+            //    if (i > 0)
+            //    {
+            //        funheader += ",";
+            //    }
+            //    funheader += "float x" + i;
+            //}
+            //funheader += ")";
+            //m_translatedFile.DeclareFunction(id.M_Text, funheader);
 
-            rep.AddCode(id.M_Text);
-            rep.AddCode("(");
-            for (int i = 0; i < node.MChildren[1].Count; i++)
-            {
-                if (i > 0)
-                {
-                    rep.AddCode(",");
-                }
-                rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_FCALLARGS, i), new TranslationParameters()
-                {
-                    M_ContainerFunction = param.M_ContainerFunction,
-                    M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
-                }).AssemblyCodeContainer());
-            }
+            //rep.AddCode(id.M_Text);
+            //rep.AddCode("(");
+            //for (int i = 0; i < node.MChildren[1].Count; i++)
+            //{
+            //    if (i > 0)
+            //    {
+            //        rep.AddCode(",");
+            //    }
+            //    rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_FCALLARGS, i), new TranslationParameters()
+            //    {
+            //        M_ContainerFunction = param.M_ContainerFunction,
+            //        M_Parent = null,
+            //        M_ParentContextType = CodeContextType.CC_NA
+            //    }).AssemblyCodeContainer());
+            //}
 
-            rep.AddCode(")");
+            //rep.AddCode(")");
             return rep;
         }
 
@@ -196,19 +296,65 @@ namespace C_ASM
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
             param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_ADDITION_LEFT, 0), new TranslationParameters()
+            rep.AddCode("\n");
+            rep.AddCode("push ebx" + "\n" +
+                        "push ecx" + "\n\n");
+
+            //if first value not identifier or value, expand assignment of first value to ebx
+            ASTElement additionLeftPart = node.GetChild(contextType.CT_EXPRESSION_ADDITION_LEFT, 0);
+
+            if (additionLeftPart.GetType().Equals(typeof(CASTIDENTIFIER)) || additionLeftPart.GetType().Equals(typeof(CASTNUMBER)))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode("+");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_ADDITION_RIGHT, 0), new TranslationParameters()
+                rep.AddCode("mov eax," + additionLeftPart.m_name_text + "\n");
+            } else
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                //1. Visit
+                rep.AddCode(Visit(additionLeftPart, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_Parent = null,
+                    M_ParentContextType = CodeContextType.CC_NA
+                }).AssemblyCodeContainer());
+
+                //2. Then add eax
+                rep.AddCode("mov ebx,eax\n");
+            }
+
+            //if second value not identifier or value, expand assignment of second value to ecx
+            ASTElement additionRightPart = node.GetChild(contextType.CT_EXPRESSION_ADDITION_LEFT, 0);
+            if (additionRightPart.GetType().Equals(typeof(CASTIDENTIFIER)) || additionRightPart.GetType().Equals(typeof(CASTNUMBER)))
+            {
+                rep.AddCode("mov eax," + additionRightPart.m_name_text + "\n");
+            } else
+            {
+                //1. Visit
+                rep.AddCode(Visit(additionRightPart, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_Parent = null,
+                    M_ParentContextType = CodeContextType.CC_NA
+                }).AssemblyCodeContainer());
+
+                //2. Then add eax
+                rep.AddCode("mov ebx,eax\n");
+            }
+
+
+            rep.AddCode("\n" + "mov eax,ebx" + 
+                        "\n" + "add eax,ecx" + 
+                        "\n" + "pop ebx" +
+                        "\n" + "pop ecx");
+
+
+            // Junk code
+            //ASTElement ele2 = node.GetChildrenList()[1][0];
+            //rep.AddCode("+");
+            //rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_ADDITION_RIGHT, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_Parent = null,
+            //    M_ParentContextType = CodeContextType.CC_NA
+            //}).AssemblyCodeContainer());
             return rep;
         }
 
@@ -551,13 +697,13 @@ namespace C_ASM
         {
 
             CCompoundStatement cmpst = new CCompoundStatement(param.M_Parent);
-            param.M_Parent?.AddCode(cmpst, param.M_ParentContextType);
-            VisitContext(node, contextType.CT_STATEMENT_COMPOUNDSTATEMENT, new TranslationParameters()
-            {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = cmpst,
-                M_ParentContextType = CodeContextType.CC_COMPOUNDSTATEMENT_BODY
-            });
+            //param.M_Parent?.AddCode(cmpst, param.M_ParentContextType);
+            //VisitContext(node, contextType.CT_STATEMENT_COMPOUNDSTATEMENT, new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_Parent = cmpst,
+            //    M_ParentContextType = CodeContextType.CC_COMPOUNDSTATEMENT_BODY
+            //});
 
             return cmpst;
         }
@@ -566,13 +712,13 @@ namespace C_ASM
             TranslationParameters param = default(TranslationParameters))
         {
             CExpressionStatement rep = new CExpressionStatement(param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            Visit(node.GetChild(contextType.CT_STATEMENT_EXPRESSION, 0), new TranslationParameters()
-            {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = rep,
-                M_ParentContextType = CodeContextType.CC_EXPRESSIONSTATEMENT_BODY
-            });
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+            //Visit(node.GetChild(contextType.CT_STATEMENT_EXPRESSION, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_Parent = rep,
+            //    M_ParentContextType = CodeContextType.CC_EXPRESSIONSTATEMENT_BODY
+            //});
             return rep;
         }
 
@@ -605,17 +751,17 @@ namespace C_ASM
             TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_ContainerFunction.DeclareVariable(node.M_Text, true);
-            rep.AddCode(node.M_Text);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+            //param.M_ContainerFunction.DeclareVariable(node.M_Text, true);
+            //rep.AddCode(node.M_Text);
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
             return rep;
         }
 
         public override CEmmitableCodeContainer VisitNUMBER(CASTNUMBER node, TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            rep.AddCode(node.M_Text);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+            //rep.AddCode(node.M_Text);
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
             return rep;
         }
     }

@@ -1,12 +1,32 @@
-#include <stdio.h>
-#include <stdlib.h>
-float a;
-void main(int argc, char* argv[]){
-	//  ***** Local declarations *****
-	//  ***** Code Body *****
+.model small 
+.stack 100h 
+.data 
+.code 
+foo PROC
 	
-}
-float foo()afloat a;
-printf("res=%f\n",a=5);
-a=5
+	push ebp
+	mov ebp,esp
+	push eax
+	push ebx
+	push ecx
+	push edx
+	push esi
+	push edi
+	
+	;Arguments
+	
+	;Function body
+	
+fooEND:
+	pop edi
+	pop esi
+	pop eax
+	pop edx
+	pop ecx
+	pop ebx
+	mov esp,ebp
+	pop ebp
+	ret
+	
+fooENDP
 
