@@ -2,6 +2,7 @@
 .stack 100h 
 .data 
 .code 
+float a;
 foo PROC
 	
 	push ebp
@@ -29,4 +30,5 @@ fooEND:
 	ret
 	
 fooENDP
+a
 

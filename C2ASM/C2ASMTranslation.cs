@@ -61,6 +61,40 @@ namespace C2ASM
 
         public CCFile M_TranslatedFile => m_translatedFile;
 
+
+        public override CEmmitableCodeContainer VisitCOMPILEUNIT(CASTCompileUnit node, TranslationParameters param)
+        {
+            //CCFunctionDefinition mainf;
+            //1. Create Output File
+            m_translatedFile = new CCFile(true);
+            //mainf = m_translatedFile.MainDefinition;
+
+            m_translatedFile.AddCode(".model small \n", CodeContextType.CC_FILE_PREPROCESSOR);
+            m_translatedFile.AddCode(".stack 100h \n", CodeContextType.CC_FILE_PREPROCESSOR);
+            m_translatedFile.AddCode(".data \n", CodeContextType.CC_FILE_PREPROCESSOR);
+            m_translatedFile.AddCode(".code \n", CodeContextType.CC_FILE_PREPROCESSOR);
+
+            //// 2. Visit CT_COMPILEUNIT_GLOBALSTATEMENT (according to our grammar rules, it refers only to function declarations)
+            //VisitContext(node, contextType.CT_COMPILEUNIT_GLOBALSTATEMENT,
+            //    new TranslationParameters()
+            //    {
+            //        M_Parent = mainf.GetChild(CodeContextType.CC_FUNCTIONDEFINITION_BODY),
+            //        M_ContainerFunction = mainf,
+            //        M_ParentContextType = CodeContextType.CC_COMPOUNDSTATEMENT_BODY
+            //    });
+
+            // 3. Visit CT_COMPILEUNIT_FUNCTIONDEFINITIONS
+            VisitContext(node, contextType.CT_COMPILEUNIT_FUNCTIONDEFINITION,
+                new TranslationParameters()
+                {
+                    M_Parent = m_translatedFile,
+                    M_ParentContextType = CodeContextType.CC_FILE_FUNDEF
+                });
+
+            //3. Visit CT
+            return m_translatedFile;
+        }
+
         public override CEmmitableCodeContainer VisitFunctionDefinition(CASTFunctionDefinition node, TranslationParameters param)
         {
 
@@ -96,12 +130,37 @@ namespace C2ASM
             fundef.AddCode("\t;Function body\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
 
 
-            Visit(node.GetChild(contextType.CT_FUNCTIONDEFINITION_BODY, 0), new TranslationParameters()
+            ASTElement child = node.GetChild(contextType.CT_FUNCTIONDEFINITION_BODY, 0);
+            CEmmitableCodeContainer repo = Visit(child, new TranslationParameters()
             {
                 M_ContainerFunction = fundef,
                 M_ParentContextType = CodeContextType.CC_FUNCTIONDEFINITION_BODY,
                 M_Parent = fundef
             });
+
+            //CEmmitableCodeContainer repo = VisitContext(node, contextType.CT_FUNCTIONDEFINITION_BODY,
+            //new TranslationParameters()
+            //{
+            //    M_Parent = m_translatedFile,
+            //    M_ParentContextType = CodeContextType.CC_FILE_FUNDEF,
+            //    M_ContainerFunction = fundef
+            //});
+
+
+
+            fundef.AddCode(repo, CodeContextType.CC_FUNCTIONDEFINITION_BODY);
+
+
+
+            //param.M_Parent?.AddCode(fundef, param.M_ParentContextType);
+
+
+            //fundef.AddCode(VisitContext(node, contextType.CT_FUNCTIONDEFINITION_BODY,
+            //    new TranslationParameters()
+            //    {
+            //        M_Parent = param.M_Parent,
+            //        M_ParentContextType = CodeContextType.CC_FILE_FUNDEF
+            //    }), CodeContextType.CC_FUNCTIONDEFINITION_BODY);
 
             //fundef.AddCode(Visit(node.GetChild(contextType.CT_FUNCTIONDEFINITION_BODY, 0), new TranslationParameters()
             //{
@@ -172,38 +231,7 @@ namespace C2ASM
             return fundef;
         }
 
-        public override CEmmitableCodeContainer VisitCOMPILEUNIT(CASTCompileUnit node, TranslationParameters param)
-        {
-            CCFunctionDefinition mainf;
-            //1. Create Output File
-            m_translatedFile = new CCFile(true);
-            mainf = m_translatedFile.MainDefinition;
-
-            m_translatedFile.AddCode(".model small \n", CodeContextType.CC_FILE_PREPROCESSOR);
-            m_translatedFile.AddCode(".stack 100h \n", CodeContextType.CC_FILE_PREPROCESSOR);
-            m_translatedFile.AddCode(".data \n", CodeContextType.CC_FILE_PREPROCESSOR);
-            m_translatedFile.AddCode(".code \n", CodeContextType.CC_FILE_PREPROCESSOR);
-
-            //// 2. Visit CT_COMPILEUNIT_GLOBALSTATEMENT (according to our grammar rules, it refers only to function declarations)
-            //VisitContext(node, contextType.CT_COMPILEUNIT_GLOBALSTATEMENT,
-            //    new TranslationParameters()
-            //    {
-            //        M_Parent = mainf.GetChild(CodeContextType.CC_FUNCTIONDEFINITION_BODY),
-            //        M_ContainerFunction = mainf,
-            //        M_ParentContextType = CodeContextType.CC_COMPOUNDSTATEMENT_BODY
-            //    });
-
-            // 3. Visit CT_COMPILEUNIT_FUNCTIONDEFINITIONS
-            VisitContext(node, contextType.CT_COMPILEUNIT_FUNCTIONDEFINITION,
-                new TranslationParameters()
-                {
-                    M_Parent = m_translatedFile,
-                    M_ParentContextType = CodeContextType.CC_FILE_FUNDEF
-                });
-
-            //3. Visit CT
-            return m_translatedFile;
-        }
+        
 
         public override CEmmitableCodeContainer VisitASSIGN(CASTExpressionAssign node, TranslationParameters param = default(TranslationParameters))
         {
@@ -751,17 +779,17 @@ namespace C2ASM
             TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            //param.M_ContainerFunction.DeclareVariable(node.M_Text, true);
-            //rep.AddCode(node.M_Text);
-            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+            param.M_ContainerFunction.DeclareVariable(node.M_Text, true);
+            rep.AddCode(node.M_Text);
+            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
             return rep;
         }
 
         public override CEmmitableCodeContainer VisitNUMBER(CASTNUMBER node, TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            //rep.AddCode(node.M_Text);
-            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+            rep.AddCode(node.M_Text);
+            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
             return rep;
         }
     }

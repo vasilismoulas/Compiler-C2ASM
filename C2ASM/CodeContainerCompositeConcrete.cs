@@ -119,14 +119,14 @@ namespace C_ASM
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
             //rep.AddCode("{");
-            //rep.EnterScope();
+            rep.EnterScope();
             //rep.AddCode("//  ***** Local declarations *****");
-            //rep.AddNewLine();
-            //rep.AddCode(AssemblyContext(CodeContextType.CC_COMPOUNDSTATEMENT_DECLARATIONS));
+            rep.AddNewLine();
+            rep.AddCode(AssemblyContext(CodeContextType.CC_COMPOUNDSTATEMENT_DECLARATIONS));
             //rep.AddCode("//  ***** Code Body *****");
-            //rep.AddNewLine();
-            //rep.AddCode(AssemblyContext(CodeContextType.CC_COMPOUNDSTATEMENT_BODY));
-            //rep.LeaveScope();
+            rep.AddNewLine();
+            rep.AddCode(AssemblyContext(CodeContextType.CC_COMPOUNDSTATEMENT_BODY));
+            rep.LeaveScope();
             //rep.AddCode("}");
             return rep;
         }
@@ -297,11 +297,11 @@ namespace C_ASM
         public CCFile(bool withStartUpFunction) : base(CodeBlockType.CB_FILE, null, 3)
         {
 
-            if (withStartUpFunction)
-            {
-                m_mainDefinition = new CMainFunctionDefinition(this);
-                AddCode(m_mainDefinition, CodeContextType.CC_FILE_FUNDEF);
-            }
+            //if (withStartUpFunction)
+            //{
+            //    m_mainDefinition = new CMainFunctionDefinition(this);
+            //    AddCode(m_mainDefinition, CodeContextType.CC_FILE_FUNDEF);
+            //}
         }
 
         public override CodeContainer AssemblyCodeContainer()
