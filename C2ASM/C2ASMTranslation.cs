@@ -333,7 +333,7 @@ namespace C2ASM
 
             if (additionLeftPart.GetType().Equals(typeof(CASTIDENTIFIER)) || additionLeftPart.GetType().Equals(typeof(CASTNUMBER)))
             {
-                rep.AddCode("mov eax," + additionLeftPart.m_name_text + "\n");
+                rep.AddCode("mov ebx," + additionLeftPart.m_name_text + "\n");
             } else
             {
                 //1. Visit
@@ -352,7 +352,7 @@ namespace C2ASM
             ASTElement additionRightPart = node.GetChild(contextType.CT_EXPRESSION_ADDITION_LEFT, 0);
             if (additionRightPart.GetType().Equals(typeof(CASTIDENTIFIER)) || additionRightPart.GetType().Equals(typeof(CASTNUMBER)))
             {
-                rep.AddCode("mov eax," + additionRightPart.m_name_text + "\n");
+                rep.AddCode("mov ecx," + additionRightPart.m_name_text + "\n");
             } else
             {
                 //1. Visit
@@ -364,7 +364,7 @@ namespace C2ASM
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
-                rep.AddCode("mov ebx,eax\n");
+                rep.AddCode("mov ecx,eax\n");
             }
 
 
@@ -386,24 +386,114 @@ namespace C2ASM
             return rep;
         }
 
+        public override CEmmitableCodeContainer VisitSubtraction(CASTExpressionSubtraction node,
+            TranslationParameters param = default(TranslationParameters))
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
+            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+            rep.AddCode("\n");
+            rep.AddCode("push ebx" + "\n" +
+                        "push ecx" + "\n\n");
+
+            //if first value not identifier or value, expand assignment of first value to ebx
+            ASTElement subtractionLeftPart = node.GetChild(contextType.CT_EXPRESSION_SUBTRACTION_LEFT, 0);
+
+            if (subtractionLeftPart.GetType().Equals(typeof(CASTIDENTIFIER)) || subtractionLeftPart.GetType().Equals(typeof(CASTNUMBER)))
+            {
+                rep.AddCode("mov ebx," + subtractionLeftPart.m_name_text + "\n");
+            } else
+            {
+                //1. Visit
+                rep.AddCode(Visit(subtractionLeftPart, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_Parent = null,
+                    M_ParentContextType = CodeContextType.CC_NA
+                }).AssemblyCodeContainer());
+
+                //2. Then add eax
+                rep.AddCode("mov ebx,eax\n");
+            }
+            //if second value not identifier or value, expand assignment of second value to ecx
+            ASTElement subtractionRightPart = node.GetChild(contextType.CT_EXPRESSION_SUBTRACTION_RIGHT, 0);
+            if (subtractionRightPart.GetType().Equals(typeof(CASTIDENTIFIER)) || subtractionRightPart.GetType().Equals(typeof(CASTNUMBER)))
+            {
+                rep.AddCode("mov ecx," + subtractionRightPart.m_name_text + "\n");
+            } else
+            {
+                //1. Visit
+                rep.AddCode(Visit(subtractionRightPart, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_Parent = null,
+                    M_ParentContextType = CodeContextType.CC_NA
+                }).AssemblyCodeContainer());
+
+                //2. Then add eax
+                rep.AddCode("mov ecx,eax\n");
+            }
+
+
+            rep.AddCode("\n" + "mov eax,ebx" +
+                        "\n" + "mul eax,ecx" +
+                        "\n" + "pop ebx" +
+                        "\n" + "pop ecx");
+            return rep;
+        }
+
         public override CEmmitableCodeContainer VisitMultiplication(CASTExpressionMultiplication node,
             TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
             param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_MULTIPLICATION_LEFT, 0), new TranslationParameters()
+            rep.AddCode("\n");
+            rep.AddCode("push ebx" + "\n" +
+                        "push ecx" + "\n\n");
+
+            //if first value not identifier or value, expand assignment of first value to ebx
+            ASTElement multiplicationLeftPart = node.GetChild(contextType.CT_EXPRESSION_MULTIPLICATION_LEFT, 0);
+
+            if (multiplicationLeftPart.GetType().Equals(typeof(CASTIDENTIFIER)) || multiplicationLeftPart.GetType().Equals(typeof(CASTNUMBER)))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode("*");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_MULTIPLICATION_RIGHT, 0), new TranslationParameters()
+                rep.AddCode("mov ebx," + multiplicationLeftPart.m_name_text + "\n");
+            } else
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                //1. Visit
+                rep.AddCode(Visit(multiplicationLeftPart, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_Parent = null,
+                    M_ParentContextType = CodeContextType.CC_NA
+                }).AssemblyCodeContainer());
+
+                //2. Then add eax
+                rep.AddCode("mov ebx,eax\n");
+            }
+
+            //if second value not identifier or value, expand assignment of second value to ecx
+            ASTElement multiplicationRightPart = node.GetChild(contextType.CT_EXPRESSION_MULTIPLICATION_RIGHT, 0);
+            if (multiplicationRightPart.GetType().Equals(typeof(CASTIDENTIFIER)) || multiplicationRightPart.GetType().Equals(typeof(CASTNUMBER)))
+            {
+                rep.AddCode("mov ecx," + multiplicationRightPart.m_name_text + "\n");
+            } else
+            {
+                //1. Visit
+                rep.AddCode(Visit(multiplicationRightPart, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_Parent = null,
+                    M_ParentContextType = CodeContextType.CC_NA
+                }).AssemblyCodeContainer());
+
+                //2. Then add eax
+                rep.AddCode("mov ecx,eax\n");
+            }
+
+
+            rep.AddCode("\n" + "mov eax,ebx" +
+                        "\n" + "mul eax,ecx" +
+                        "\n" + "pop ebx" +
+                        "\n" + "pop ecx");
             return rep;
         }
 
@@ -412,40 +502,54 @@ namespace C2ASM
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
             param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_DIVISION_LEFT, 0), new TranslationParameters()
-            {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode("/");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_DIVISION_RIGHT, 0), new TranslationParameters()
-            {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            return rep;
-        }
+            rep.AddCode("\n");
+            rep.AddCode("push ebx" + "\n" +
+                        "push ecx" + "\n\n");
 
-        public override CEmmitableCodeContainer VisitSubtraction(CASTExpressionSubtraction node,
-            TranslationParameters param = default(TranslationParameters))
-        {
-            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_SUBTRACTION_LEFT, 0), new TranslationParameters()
+            //if first value not identifier or value, expand assignment of first value to ebx
+            ASTElement divisionLeftPart = node.GetChild(contextType.CT_EXPRESSION_DIVISION_LEFT, 0);
+
+            if (divisionLeftPart.GetType().Equals(typeof(CASTIDENTIFIER)) || divisionLeftPart.GetType().Equals(typeof(CASTNUMBER)))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode("-");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_SUBTRACTION_RIGHT, 0), new TranslationParameters()
+                rep.AddCode("mov ebx," + divisionLeftPart.m_name_text + "\n");
+            } else
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                //1. Visit
+                rep.AddCode(Visit(divisionLeftPart, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_Parent = null,
+                    M_ParentContextType = CodeContextType.CC_NA
+                }).AssemblyCodeContainer());
+
+                //2. Then add eax
+                rep.AddCode("mov ebx,eax\n");
+            }
+
+            //if second value not identifier or value, expand assignment of second value to ecx
+            ASTElement divisionRightPart = node.GetChild(contextType.CT_EXPRESSION_DIVISION_RIGHT, 0);
+            if (divisionRightPart.GetType().Equals(typeof(CASTIDENTIFIER)) || divisionRightPart.GetType().Equals(typeof(CASTNUMBER)))
+            {
+                rep.AddCode("mov ecx," + divisionRightPart.m_name_text + "\n");
+            } else
+            {
+                //1. Visit
+                rep.AddCode(Visit(divisionRightPart, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_Parent = null,
+                    M_ParentContextType = CodeContextType.CC_NA
+                }).AssemblyCodeContainer());
+
+                //2. Then add eax
+                rep.AddCode("mov ecx,eax\n");
+            }
+
+
+            rep.AddCode("\n" + "mov eax,ebx" +
+                        "\n" + "div eax,ecx" +
+                        "\n" + "pop ebx" +
+                        "\n" + "pop ecx");
             return rep;
         }
 
@@ -454,46 +558,46 @@ namespace C2ASM
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
             param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode("(");
+            //rep.AddCode("(");
             rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_PARENTHESIS, 0), new TranslationParameters()
             {
                 M_ContainerFunction = param.M_ContainerFunction,
                 M_Parent = null,
                 M_ParentContextType = CodeContextType.CC_NA
             }).AssemblyCodeContainer());
-            rep.AddCode(")");
+            //rep.AddCode(")");
             return rep;
         }
 
-        public override CEmmitableCodeContainer VisitPLUS(CASTExpressionPlus node,
-            TranslationParameters param = default(TranslationParameters))
-        {
-            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode("+");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_PLUS, 0), new TranslationParameters()
-            {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            return rep;
-        }
+        //public override CEmmitableCodeContainer VisitPLUS(CASTExpressionPlus node,
+        //    TranslationParameters param = default(TranslationParameters))
+        //{
+        //    CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
+        //    param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+        //    rep.AddCode("+");
+        //    rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_PLUS, 0), new TranslationParameters()
+        //    {
+        //        M_ContainerFunction = param.M_ContainerFunction,
+        //        M_Parent = null,
+        //        M_ParentContextType = CodeContextType.CC_NA
+        //    }).AssemblyCodeContainer());
+        //    return rep;
+        //}
 
-        public override CEmmitableCodeContainer VisitMINUS(CASTExpressionMinus node,
-            TranslationParameters param = default(TranslationParameters))
-        {
-            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode("-");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_MINUS, 0), new TranslationParameters()
-            {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            return rep;
-        }
+        //public override CEmmitableCodeContainer VisitMINUS(CASTExpressionMinus node,
+        //    TranslationParameters param = default(TranslationParameters))
+        //{
+        //    CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
+        //    param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+        //    rep.AddCode("-");
+        //    rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_MINUS, 0), new TranslationParameters()
+        //    {
+        //        M_ContainerFunction = param.M_ContainerFunction,
+        //        M_Parent = null,
+        //        M_ParentContextType = CodeContextType.CC_NA
+        //    }).AssemblyCodeContainer());
+        //    return rep;
+        //}
 
         public override CEmmitableCodeContainer VisitNOT(CASTExpressionNot node, TranslationParameters param = default(TranslationParameters))
         {
