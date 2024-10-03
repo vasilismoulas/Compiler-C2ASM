@@ -1,6 +1,7 @@
 ﻿//using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using C_ASM;
@@ -24,17 +25,32 @@ namespace C2ASM
         // at a specific context
         private CodeContextType m_parentContextType = CodeContextType.CC_NA;
 
+        // below are extra stuff silver included to make this betty work
+
+        // Provides access to the while loop element that hosts the current element.
+        private CASTWhileStatement m_loopParent = null;
+        // Provides access to the if conditional element that hosts the current element.
+        private CASTIfStatement m_conditionalParent = null;
+        // Provides information about whether a conditional comparison will be translated 
+        // for if conditional or while loop use.
+        private String m_conditionalCase = "";
+
+
+
 
         public TranslationParameters()
         {
 
         }
 
-        public TranslationParameters(CEmmitableCodeContainer m_parent, CCFunctionDefinition m_containerFunction, CodeContextType m_parentContextType)
+        public TranslationParameters(CEmmitableCodeContainer m_parent, CCFunctionDefinition m_containerFunction, CodeContextType m_parentContextType, CASTWhileStatement m_loopParent, CASTIfStatement m_conditionalParent, String m_conditionalCase)
         {
             this.m_parent = m_parent;
             this.m_containerFunction = m_containerFunction;
             this.m_parentContextType = m_parentContextType;
+            this.m_loopParent = m_loopParent;
+            this.m_conditionalParent = m_conditionalParent;
+            this.m_conditionalCase = m_conditionalCase;
         }
 
         public CEmmitableCodeContainer M_Parent
@@ -52,6 +68,21 @@ namespace C2ASM
         {
             get => m_containerFunction;
             set => m_containerFunction = value;
+        }
+        public CASTWhileStatement M_LoopParent
+        {
+            get => m_loopParent;
+            set => m_loopParent = value;
+        }
+        public CASTIfStatement M_ConditionalParent
+        {
+            get => m_conditionalParent;
+            set => m_conditionalParent = value;
+        }
+        public String M_ConditionalCase
+        {
+            get => m_conditionalCase;
+            set => m_conditionalCase = value;
         }
     }
 
@@ -255,7 +286,10 @@ namespace C2ASM
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
+                    M_ParentContextType = CodeContextType.CC_NA,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalParent = param.M_ConditionalParent,
+                    M_ConditionalCase = param.M_ConditionalCase
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
@@ -341,7 +375,10 @@ namespace C2ASM
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
+                    M_ParentContextType = CodeContextType.CC_NA,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalParent = param.M_ConditionalParent,
+                    M_ConditionalCase = param.M_ConditionalCase
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
@@ -360,7 +397,10 @@ namespace C2ASM
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
+                    M_ParentContextType = CodeContextType.CC_NA,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalParent = param.M_ConditionalParent,
+                    M_ConditionalCase = param.M_ConditionalCase
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
@@ -408,7 +448,10 @@ namespace C2ASM
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
+                    M_ParentContextType = CodeContextType.CC_NA,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalParent = param.M_ConditionalParent,
+                    M_ConditionalCase = param.M_ConditionalCase
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
@@ -426,7 +469,10 @@ namespace C2ASM
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
+                    M_ParentContextType = CodeContextType.CC_NA,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalParent = param.M_ConditionalParent,
+                    M_ConditionalCase = param.M_ConditionalCase
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
@@ -463,7 +509,10 @@ namespace C2ASM
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
+                    M_ParentContextType = CodeContextType.CC_NA,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalParent = param.M_ConditionalParent,
+                    M_ConditionalCase = param.M_ConditionalCase
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
@@ -482,7 +531,10 @@ namespace C2ASM
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
+                    M_ParentContextType = CodeContextType.CC_NA,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalParent = param.M_ConditionalParent,
+                    M_ConditionalCase = param.M_ConditionalCase
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
@@ -519,7 +571,10 @@ namespace C2ASM
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
+                    M_ParentContextType = CodeContextType.CC_NA,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalParent = param.M_ConditionalParent,
+                    M_ConditionalCase = param.M_ConditionalCase
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
@@ -538,7 +593,10 @@ namespace C2ASM
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
-                    M_ParentContextType = CodeContextType.CC_NA
+                    M_ParentContextType = CodeContextType.CC_NA,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalParent = param.M_ConditionalParent,
+                    M_ConditionalCase = param.M_ConditionalCase
                 }).AssemblyCodeContainer());
 
                 //2. Then add eax
@@ -563,7 +621,10 @@ namespace C2ASM
             {
                 M_ContainerFunction = param.M_ContainerFunction,
                 M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
+                M_ParentContextType = CodeContextType.CC_NA,
+                M_LoopParent = param.M_LoopParent,
+                M_ConditionalParent = param.M_ConditionalParent,
+                M_ConditionalCase = param.M_ConditionalCase
             }).AssemblyCodeContainer());
             //rep.AddCode(")");
             return rep;
@@ -656,80 +717,92 @@ namespace C2ASM
         public override CEmmitableCodeContainer VisitGT(CASTExpressionGt node, TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_GT_LEFT, 0), new TranslationParameters()
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+
+            rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
+
+            String labelString = "";
+            if (param.M_ConditionalCase.Equals("if"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode(">");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_GT_RIGHT, 0), new TranslationParameters()
+                labelString = param.M_ConditionalParent.MSerial.ToString();
+            }
+            else if (param.M_ConditionalCase.Equals("while"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                labelString = param.M_LoopParent.MSerial.ToString();
+            }
+            rep.AddCode("jb " + labelString);
+
+
+            //rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_GT_LEFT, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_Parent = null,
+            //    M_ParentContextType = CodeContextType.CC_NA
+            //}).AssemblyCodeContainer());
+            //rep.AddCode(">");
+            //rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_GT_RIGHT, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_Parent = null,
+            //    M_ParentContextType = CodeContextType.CC_NA
+            //}).AssemblyCodeContainer());
             return rep;
         }
 
         public override CEmmitableCodeContainer VisitGTE(CASTExpressionGte node, TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_GTE_LEFT, 0), new TranslationParameters()
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+
+            rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
+
+            String labelString = "";
+            if (param.M_ConditionalCase.Equals("if"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode(">=");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_GTE_RIGHT, 0), new TranslationParameters()
+                labelString = param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("while"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                labelString = param.M_LoopParent.MSerial.ToString();
+            }
+            rep.AddCode("jbe " + labelString);
             return rep;
         }
 
         public override CEmmitableCodeContainer VisitLT(CASTExpressionLt node, TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_LT_LEFT, 0), new TranslationParameters()
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+
+            rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
+
+            String labelString = "";
+            if (param.M_ConditionalCase.Equals("if"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode("<");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_LT_RIGHT, 0), new TranslationParameters()
+                labelString = param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("while"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                labelString = param.M_LoopParent.MSerial.ToString();
+            }
+            rep.AddCode("jl " + labelString);
             return rep;
         }
 
         public override CEmmitableCodeContainer VisitLTE(CASTExpressionLte node, TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_LTE_LEFT, 0), new TranslationParameters()
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+
+            rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
+
+            String labelString = "";
+            if (param.M_ConditionalCase.Equals("if"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode("<=");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_LTE_RIGHT, 0), new TranslationParameters()
+                labelString = param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("while"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                labelString = param.M_LoopParent.MSerial.ToString();
+            }
+            rep.AddCode("jle " + labelString);
             return rep;
         }
 
@@ -737,20 +810,19 @@ namespace C2ASM
             TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_EQUAL_LEFT, 0), new TranslationParameters()
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+
+            rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
+
+            String labelString = "";
+            if (param.M_ConditionalCase.Equals("if"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode("==");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_EQUAL_RIGHT, 0), new TranslationParameters()
+                labelString = param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("while"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                labelString = param.M_LoopParent.MSerial.ToString();
+            }
+            rep.AddCode("je " + labelString);
             return rep;
         }
 
@@ -758,20 +830,19 @@ namespace C2ASM
             TranslationParameters param = default(TranslationParameters))
         {
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_NEQUAL_LEFT, 0), new TranslationParameters()
+            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+
+            rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
+
+            String labelString = "";
+            if (param.M_ConditionalCase.Equals("if"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
-            rep.AddCode("!=");
-            rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_NEQUAL_RIGHT, 0), new TranslationParameters()
+                labelString = param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("while"))
             {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = null,
-                M_ParentContextType = CodeContextType.CC_NA
-            }).AssemblyCodeContainer());
+                labelString = param.M_LoopParent.MSerial.ToString();
+            }
+            rep.AddCode("jne " + labelString);
             return rep;
         }
 
