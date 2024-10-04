@@ -149,18 +149,18 @@ namespace C2ASM
             fundef.EnterScope();
 
             fundef.AddCode(node.GetFunctionName() + " PROC" + "\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
-            fundef.AddCode( "\tpush ebp"    + "\n"
+            fundef.AddCode("\tpush ebp" + "\n"
                             + "mov ebp,esp" + "\n"
-                            + "push eax"    + "\n"
-                            + "push ebx"    + "\n"
-                            + "push ecx"    + "\n"
-                            + "push edx"    + "\n"
-                            + "push esi"    + "\n"
-                            + "push edi"    + "\n" + "\n"
+                            + "push eax" + "\n"
+                            + "push ebx" + "\n"
+                            + "push ecx" + "\n"
+                            + "push edx" + "\n"
+                            + "push esi" + "\n"
+                            + "push edi" + "\n" + "\n"
                             , CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
 
             // add argument variables
-            fundef.AddCode("\n",CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            fundef.AddCode("\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
             fundef.AddCode("\t;Arguments\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
 
             // add inside code visitor
@@ -234,16 +234,16 @@ namespace C2ASM
 
 
 
-            fundef.AddCode("\n" + node.GetFunctionName() + "END:"     + "\n"
-                            + "pop edi"         + "\n"
-                            + "pop esi"         + "\n"
-                            + "pop eax"         + "\n"
-                            + "pop edx"         + "\n"
-                            + "pop ecx"         + "\n"
-                            + "pop ebx"         + "\n"
-                            + "mov esp,ebp"     + "\n"
-                            + "pop ebp"         + "\n"
-                            + "ret"             + "\n", CodeContextType.CC_FUNCTIONDEFINITION_BODY);
+            fundef.AddCode("\n" + node.GetFunctionName() + "END:" + "\n"
+                            + "pop edi" + "\n"
+                            + "pop esi" + "\n"
+                            + "pop eax" + "\n"
+                            + "pop edx" + "\n"
+                            + "pop ecx" + "\n"
+                            + "pop ebx" + "\n"
+                            + "mov esp,ebp" + "\n"
+                            + "pop ebp" + "\n"
+                            + "ret" + "\n", CodeContextType.CC_FUNCTIONDEFINITION_BODY);
             fundef.LeaveScope();
             fundef.AddCode(node.GetFunctionName() + "ENDP" + "\n", CodeContextType.CC_FUNCTIONDEFINITION_BODY);
 
@@ -270,7 +270,12 @@ namespace C2ASM
             return fundef;
         }
 
-        
+        public override CEmmitableCodeContainer VisitFunctionDeclaration(CASTFunctionDeclaration node, TranslationParameters param) 
+        { 
+            CCFunctionDefinition rep = new CCFunctionDefinition(param.M_Parent);
+            rep.AddCode(node.GetDeclarationName() + " PROTO\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            return rep;
+        }
 
         public override CEmmitableCodeContainer VisitASSIGN(CASTExpressionAssign node, TranslationParameters param = default(TranslationParameters))
         {
