@@ -27,6 +27,8 @@ namespace C2ASM
 
         // below are extra stuff silver included to make this betty work
 
+        // Provides access to the function definition element that hosts the current element.
+        private CASTFunctionDefinition m_functionParent = null;
         // Provides access to the while loop element that hosts the current element.
         private CASTWhileStatement m_loopParent = null;
         // Provides access to the if conditional element that hosts the current element.
@@ -68,6 +70,11 @@ namespace C2ASM
         {
             get => m_containerFunction;
             set => m_containerFunction = value;
+        }
+        public CASTFunctionDefinition M_FunctionParent
+        {
+            get => m_functionParent;
+            set => m_functionParent = value;
         }
         public CASTWhileStatement M_LoopParent
         {
@@ -134,14 +141,14 @@ namespace C2ASM
             //2. Add Function Definition to the File in the appropriate context
             param.M_Parent.AddCode(fundef, param.M_ParentContextType);
 
-            //3. Assemble the function header
-            CASTFunprefix funprefixthing = node.GetChild(contextType.CT_FUNCTIONDEFINITION_FUNPREFIX, 0) as CASTFunprefix;
-            CASTIDENTIFIER id = funprefixthing.GetChild(contextType.CT_FUNPREFIX_IDENTIFIER, 0) as CASTIDENTIFIER;
+            //3. Assemble the function header //no need for that
+            // CASTFunprefix funprefixthing = node.GetChild(contextType.CT_FUNCTIONDEFINITION_FUNPREFIX, 0) as CASTFunprefix;
+            // CASTIDENTIFIER id = funprefixthing.GetChild(contextType.CT_FUNPREFIX_IDENTIFIER, 0) as CASTIDENTIFIER;
             //CASTFormalArgs functionArguments = node.GetChild(contextType.CT_FUNCTIONDEFINITION_FARGUMENTS, 0) as CASTFormalArgs;
             //CASTFunctionBody functionBody = node.GetChild(contextType.CT_FUNCTIONDEFINITION_BODY, 0) as CASTFunctionBody;
             fundef.EnterScope();
 
-            fundef.AddCode(id.M_Text + " PROC" + "\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            fundef.AddCode(node.GetFunctionName() + " PROC" + "\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
             fundef.AddCode( "\tpush ebp"    + "\n"
                             + "mov ebp,esp" + "\n"
                             + "push eax"    + "\n"
@@ -165,6 +172,7 @@ namespace C2ASM
             CEmmitableCodeContainer repo = Visit(child, new TranslationParameters()
             {
                 M_ContainerFunction = fundef,
+                M_FunctionParent = node,
                 M_ParentContextType = CodeContextType.CC_FUNCTIONDEFINITION_BODY,
                 M_Parent = fundef
             });
@@ -226,7 +234,7 @@ namespace C2ASM
 
 
 
-            fundef.AddCode("\n" + id.M_Text+"END:"     + "\n"
+            fundef.AddCode("\n" + node.GetFunctionName() + "END:"     + "\n"
                             + "pop edi"         + "\n"
                             + "pop esi"         + "\n"
                             + "pop eax"         + "\n"
@@ -237,7 +245,7 @@ namespace C2ASM
                             + "pop ebp"         + "\n"
                             + "ret"             + "\n", CodeContextType.CC_FUNCTIONDEFINITION_BODY);
             fundef.LeaveScope();
-            fundef.AddCode(id.M_Text + "ENDP" + "\n", CodeContextType.CC_FUNCTIONDEFINITION_BODY);
+            fundef.AddCode(node.GetFunctionName() + "ENDP" + "\n", CodeContextType.CC_FUNCTIONDEFINITION_BODY);
 
             //fundef.AddCode("float " + id.M_Text + "(", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
             //string last = "";
@@ -287,6 +295,7 @@ namespace C2ASM
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
                     M_ParentContextType = CodeContextType.CC_NA,
+                    M_FunctionParent = param.M_FunctionParent,
                     M_LoopParent = param.M_LoopParent,
                     M_ConditionalParent = param.M_ConditionalParent,
                     M_ConditionalCase = param.M_ConditionalCase
@@ -376,6 +385,7 @@ namespace C2ASM
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
                     M_ParentContextType = CodeContextType.CC_NA,
+                    M_FunctionParent = param.M_FunctionParent,
                     M_LoopParent = param.M_LoopParent,
                     M_ConditionalParent = param.M_ConditionalParent,
                     M_ConditionalCase = param.M_ConditionalCase
@@ -398,6 +408,7 @@ namespace C2ASM
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
                     M_ParentContextType = CodeContextType.CC_NA,
+                    M_FunctionParent = param.M_FunctionParent,
                     M_LoopParent = param.M_LoopParent,
                     M_ConditionalParent = param.M_ConditionalParent,
                     M_ConditionalCase = param.M_ConditionalCase
@@ -449,6 +460,7 @@ namespace C2ASM
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
                     M_ParentContextType = CodeContextType.CC_NA,
+                    M_FunctionParent = param.M_FunctionParent,
                     M_LoopParent = param.M_LoopParent,
                     M_ConditionalParent = param.M_ConditionalParent,
                     M_ConditionalCase = param.M_ConditionalCase
@@ -470,6 +482,7 @@ namespace C2ASM
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
                     M_ParentContextType = CodeContextType.CC_NA,
+                    M_FunctionParent = param.M_FunctionParent,
                     M_LoopParent = param.M_LoopParent,
                     M_ConditionalParent = param.M_ConditionalParent,
                     M_ConditionalCase = param.M_ConditionalCase
@@ -510,6 +523,7 @@ namespace C2ASM
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
                     M_ParentContextType = CodeContextType.CC_NA,
+                    M_FunctionParent = param.M_FunctionParent,
                     M_LoopParent = param.M_LoopParent,
                     M_ConditionalParent = param.M_ConditionalParent,
                     M_ConditionalCase = param.M_ConditionalCase
@@ -532,6 +546,7 @@ namespace C2ASM
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
                     M_ParentContextType = CodeContextType.CC_NA,
+                    M_FunctionParent = param.M_FunctionParent,
                     M_LoopParent = param.M_LoopParent,
                     M_ConditionalParent = param.M_ConditionalParent,
                     M_ConditionalCase = param.M_ConditionalCase
@@ -572,6 +587,7 @@ namespace C2ASM
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
                     M_ParentContextType = CodeContextType.CC_NA,
+                    M_FunctionParent = param.M_FunctionParent,
                     M_LoopParent = param.M_LoopParent,
                     M_ConditionalParent = param.M_ConditionalParent,
                     M_ConditionalCase = param.M_ConditionalCase
@@ -594,6 +610,7 @@ namespace C2ASM
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_Parent = null,
                     M_ParentContextType = CodeContextType.CC_NA,
+                    M_FunctionParent = param.M_FunctionParent,
                     M_LoopParent = param.M_LoopParent,
                     M_ConditionalParent = param.M_ConditionalParent,
                     M_ConditionalCase = param.M_ConditionalCase
@@ -622,6 +639,7 @@ namespace C2ASM
                 M_ContainerFunction = param.M_ContainerFunction,
                 M_Parent = null,
                 M_ParentContextType = CodeContextType.CC_NA,
+                M_FunctionParent = param.M_FunctionParent,
                 M_LoopParent = param.M_LoopParent,
                 M_ConditionalParent = param.M_ConditionalParent,
                 M_ConditionalCase = param.M_ConditionalCase
@@ -857,6 +875,7 @@ namespace C2ASM
                 M_ContainerFunction = param.M_ContainerFunction,
                 M_ParentContextType = CodeContextType.CC_WHILESTATEMENT_CONDITION,
                 M_Parent = rep,
+                M_FunctionParent = param.M_FunctionParent,
                 M_LoopParent = node,
                 M_ConditionalCase = "while"
             });
@@ -869,6 +888,7 @@ namespace C2ASM
             {
                 M_ContainerFunction = param.M_ContainerFunction,
                 M_ParentContextType = CodeContextType.CC_WHILESTATEMENT_BODY,
+                M_FunctionParent = param.M_FunctionParent,
                 M_LoopParent = node,
                 M_ConditionalCase = param.M_ConditionalCase,
                 M_Parent = rep
@@ -927,13 +947,17 @@ namespace C2ASM
         {
 
             CCompoundStatement cmpst = new CCompoundStatement(param.M_Parent);
-            //param.M_Parent?.AddCode(cmpst, param.M_ParentContextType);
-            //VisitContext(node, contextType.CT_STATEMENT_COMPOUNDSTATEMENT, new TranslationParameters()
-            //{
-            //    M_ContainerFunction = param.M_ContainerFunction,
-            //    M_Parent = cmpst,
-            //    M_ParentContextType = CodeContextType.CC_COMPOUNDSTATEMENT_BODY
-            //});
+            param.M_Parent?.AddCode(cmpst, param.M_ParentContextType);
+            VisitContext(node, contextType.CT_STATEMENT_COMPOUNDSTATEMENT, new TranslationParameters()
+            {
+                M_ContainerFunction = param.M_ContainerFunction,
+                M_Parent = cmpst,
+                M_FunctionParent = param.M_FunctionParent,
+                M_LoopParent = param.M_LoopParent,
+                M_ConditionalParent = param.M_ConditionalParent,    
+                M_ConditionalCase = param.M_ConditionalCase, 
+                M_ParentContextType = CodeContextType.CC_COMPOUNDSTATEMENT_BODY
+            });
 
             return cmpst;
         }
@@ -942,13 +966,17 @@ namespace C2ASM
             TranslationParameters param = default(TranslationParameters))
         {
             CExpressionStatement rep = new CExpressionStatement(param.M_Parent);
-            //param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            //Visit(node.GetChild(contextType.CT_STATEMENT_EXPRESSION, 0), new TranslationParameters()
-            //{
-            //    M_ContainerFunction = param.M_ContainerFunction,
-            //    M_Parent = rep,
-            //    M_ParentContextType = CodeContextType.CC_EXPRESSIONSTATEMENT_BODY
-            //});
+            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+            Visit(node.GetChild(contextType.CT_STATEMENT_EXPRESSION, 0), new TranslationParameters()
+            {
+                M_ContainerFunction = param.M_ContainerFunction,
+                M_Parent = rep,
+                M_FunctionParent = param.M_FunctionParent,
+                M_LoopParent = param.M_LoopParent,
+                M_ConditionalParent = param.M_ConditionalParent,
+                M_ConditionalCase = param.M_ConditionalCase,
+                M_ParentContextType = CodeContextType.CC_EXPRESSIONSTATEMENT_BODY
+            });
             return rep;
         }
 
@@ -957,12 +985,23 @@ namespace C2ASM
         {
             CReturnStatement rep = new CReturnStatement(param.M_Parent);
             param.M_Parent?.AddCode(rep, param.M_ParentContextType);
-            Visit(node.GetChild(contextType.CT_STATEMENT_RETURN, 0), new TranslationParameters()
-            {
-                M_ContainerFunction = param.M_ContainerFunction,
-                M_Parent = rep,
-                M_ParentContextType = CodeContextType.CC_RETURNSTATEMENT_BODY
-            });
+            ASTElement returnValue = node.GetChild(contextType.CT_STATEMENT_RETURN, 0);
+            if (returnValue != null) {
+
+            rep.AddCode("mov eax," + returnValue.M_Text + "\n", 
+                CodeContextType.CC_RETURNSTATEMENT_BODY);
+            }
+            //rep.AddCode("ret\n", CodeContextType.CC_RETURNSTATEMENT_BODY); that here is wrong, dont do it
+
+            
+            rep.AddCode("jmp " + param.M_FunctionParent.GetFunctionName() + "END", CodeContextType.CC_RETURNSTATEMENT_BODY);
+
+            //Visit(node.GetChild(contextType.CT_STATEMENT_RETURN, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_Parent = rep,
+            //    M_ParentContextType = CodeContextType.CC_RETURNSTATEMENT_BODY
+            //});
             return rep;
         }
 
