@@ -724,11 +724,10 @@ namespace C2ASM
             String labelString = "";
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = param.M_ConditionalParent.MSerial.ToString();
-            }
-            else if (param.M_ConditionalCase.Equals("while"))
+                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("while"))
             {
-                labelString = param.M_LoopParent.MSerial.ToString();
+                labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
             rep.AddCode("jb " + labelString);
 
@@ -759,10 +758,10 @@ namespace C2ASM
             String labelString = "";
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = param.M_ConditionalParent.MSerial.ToString();
+                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
             } else if (param.M_ConditionalCase.Equals("while"))
             {
-                labelString = param.M_LoopParent.MSerial.ToString();
+                labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
             rep.AddCode("jbe " + labelString);
             return rep;
@@ -778,10 +777,10 @@ namespace C2ASM
             String labelString = "";
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = param.M_ConditionalParent.MSerial.ToString();
+                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
             } else if (param.M_ConditionalCase.Equals("while"))
             {
-                labelString = param.M_LoopParent.MSerial.ToString();
+                labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
             rep.AddCode("jl " + labelString);
             return rep;
@@ -797,10 +796,10 @@ namespace C2ASM
             String labelString = "";
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = param.M_ConditionalParent.MSerial.ToString();
+                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
             } else if (param.M_ConditionalCase.Equals("while"))
             {
-                labelString = param.M_LoopParent.MSerial.ToString();
+                labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
             rep.AddCode("jle " + labelString);
             return rep;
@@ -817,10 +816,10 @@ namespace C2ASM
             String labelString = "";
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = param.M_ConditionalParent.MSerial.ToString();
+                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
             } else if (param.M_ConditionalCase.Equals("while"))
             {
-                labelString = param.M_LoopParent.MSerial.ToString();
+                labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
             rep.AddCode("je " + labelString);
             return rep;
@@ -837,10 +836,10 @@ namespace C2ASM
             String labelString = "";
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = param.M_ConditionalParent.MSerial.ToString();
+                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
             } else if (param.M_ConditionalCase.Equals("while"))
             {
-                labelString = param.M_LoopParent.MSerial.ToString();
+                labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
             rep.AddCode("jne " + labelString);
             return rep;
@@ -849,21 +848,49 @@ namespace C2ASM
         public override CEmmitableCodeContainer VisitWHILESTATEMENT(CASTWhileStatement node,
             TranslationParameters param = default(TranslationParameters))
         {
-            CWhileStatement rep1 = new CWhileStatement(param.M_Parent);
-            param.M_Parent?.AddCode(rep1, param.M_ParentContextType);
+            CWhileStatement rep = new CWhileStatement(param.M_Parent);
+            rep.AddCode("WHILESTATEMENT" + node.MSerial.ToString() + ": ", CodeContextType.CC_WHILESTATEMENT_BODY);
+
+            //visit condition
             Visit(node.GetChild(contextType.CT_WHILESTATEMENT_CONDITION, 0), new TranslationParameters()
             {
                 M_ContainerFunction = param.M_ContainerFunction,
                 M_ParentContextType = CodeContextType.CC_WHILESTATEMENT_CONDITION,
-                M_Parent = rep1
+                M_Parent = rep,
+                M_LoopParent = node,
+                M_ConditionalCase = "while"
             });
+
+            rep.AddCode("jmp OUTWHILESTATEMENT" + node.MSerial.ToString(), CodeContextType.CC_WHILESTATEMENT_BODY);
+            rep.AddCode("INSIDEWHILESTATEMENT" + node.MSerial.ToString() + ": ", CodeContextType.CC_WHILESTATEMENT_BODY);
+
+            // visit body code
             Visit(node.GetChild(contextType.CT_WHILESTATEMENT_BODY, 0), new TranslationParameters()
             {
                 M_ContainerFunction = param.M_ContainerFunction,
                 M_ParentContextType = CodeContextType.CC_WHILESTATEMENT_BODY,
-                M_Parent = rep1
+                M_LoopParent = node,
+                M_ConditionalCase = param.M_ConditionalCase,
+                M_Parent = rep
             });
-            return rep1;
+
+            rep.AddCode("jmp WHILESTATEMENT" + node.MSerial.ToString(), CodeContextType.CC_WHILESTATEMENT_BODY);
+            rep.AddCode("OUTSIDEWHILESTATEMENT" + node.MSerial.ToString() + ": ", CodeContextType.CC_WHILESTATEMENT_BODY);
+
+            //param.M_Parent?.AddCode(rep1, param.M_ParentContextType);
+            //Visit(node.GetChild(contextType.CT_WHILESTATEMENT_CONDITION, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_ParentContextType = CodeContextType.CC_WHILESTATEMENT_CONDITION,
+            //    M_Parent = rep1
+            //});
+            //Visit(node.GetChild(contextType.CT_WHILESTATEMENT_BODY, 0), new TranslationParameters()
+            //{
+            //    M_ContainerFunction = param.M_ContainerFunction,
+            //    M_ParentContextType = CodeContextType.CC_WHILESTATEMENT_BODY,
+            //    M_Parent = rep1
+            //});
+            return rep;
         }
 
         public override CEmmitableCodeContainer VisitIFSTATEMENT(CASTIfStatement node,
