@@ -1010,8 +1010,7 @@ namespace C2ASM
         {
 
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
-            rep.AddCode("break;");
-            rep.AddNewLine();
+            rep.AddCode("jmp " + param.M_LoopParent.MSerial.ToString() + "END", CodeContextType.CC_RETURNSTATEMENT_BODY);
             param.M_Parent?.AddCode(rep, param.M_ParentContextType);
             return rep;
         }

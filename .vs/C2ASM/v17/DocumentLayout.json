@@ -95,8 +95,7 @@
               "ViewState": "AQIAADMAAAAAAAAAAAApwD0AAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-03T10:06:53.399Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -143,8 +142,7 @@
               "RelativeToolTip": "C2ASM\\ASTElementConcrete.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-29T10:08:30.24Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-29T10:08:30.24Z"
             },
             {
               "$type": "Document",
@@ -156,8 +154,7 @@
               "RelativeToolTip": "C2ASM\\ASTBaseVisitor.cs",
               "ViewState": "AQIAABUAAAAAAAAAAAASwCIAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-01T10:05:24.055Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-01T10:05:24.055Z"
             },
             {
               "$type": "Document",
@@ -169,8 +166,7 @@
               "RelativeToolTip": "C2ASM\\CodeContainerCompositeConcrete.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAIAAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T18:07:56.772Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-25T18:07:56.772Z"
             },
             {
               "$type": "Document",
@@ -180,7 +176,7 @@
               "RelativeDocumentMoniker": "C2ASM\\C2ASMTranslation.cs",
               "ToolTip": "C:\\Users\\silve\\source\\comp-2-repos\\Compiler-C2ASM\\C2ASM\\C2ASMTranslation.cs",
               "RelativeToolTip": "C2ASM\\C2ASMTranslation.cs",
-              "ViewState": "AQIAANcDAAAAAAAAAAAAwN0DAAAAAAAA",
+              "ViewState": "AQIAAOkDAAAAAAAAAAAAwPcDAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T17:13:15.966Z",
               "EditorCaption": ""
@@ -218,8 +214,7 @@
               "RelativeToolTip": "C2ASM\\ASTSymbolTable.cs",
               "ViewState": "AQIAAB4AAAAAAAAAAAAYwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-01T10:05:24.02Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-01T10:05:24.02Z"
             },
             {
               "$type": "Document",
