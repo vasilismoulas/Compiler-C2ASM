@@ -277,6 +277,45 @@ namespace C2ASM
             return rep;
         }
 
+        public override CEmmitableCodeContainer VisitDataDeclaration(CASTDatadeclaration node, TranslationParameters param)
+        {
+            CCFunctionDefinition rep = new CCFunctionDefinition(param.M_Parent);
+
+            Type type = node.GetContextChildren(contextType.CT_DATADECLARATION_TYPESPECIFIER)[0].GetChildrenList()[0].GetType();
+            ASTElement identifier = node.GetContextChildren(contextType.CT_DATADECLARATION_IDENTIFIER)[0];
+            ASTElement datavalue = node.GetContextChildren(contextType.CT_DATADECLARATION_DATAVALUE)[0];
+
+            String typeString = "", identifierString = "", datavalueString = "";
+
+            // we need to find the type first
+            if (type.Equals(typeof(CASTCHAR_TYPE)) || type.Equals(typeof(CASTVOID_TYPE)))
+            {
+                typeString = "SBYTE";
+            }
+            else if (type.Equals(typeof(CASTINT_TYPE)))
+            {
+                typeString = "SWORD";
+            }
+            else if (type.Equals(typeof(CASTDOUBLE_TYPE)) || type.Equals(typeof(CASTFLOAT_TYPE)))
+            {
+                typeString = "SDWORD";
+            }
+
+
+            identifierString = identifier.m_name_text;
+
+            if(datavalue == null)
+            {
+                typeString = "?";
+            } else
+            {
+                typeString = datavalue.m_name_text;
+            }
+
+            rep.AddCode(datavalueString + " " + identifierString + " " + datavalue + "\n", CodeContextType.CC_FUNCTIONDEFINITION_HEADER);
+            return rep;
+        }
+
         public override CEmmitableCodeContainer VisitASSIGN(CASTExpressionAssign node, TranslationParameters param = default(TranslationParameters))
         {
             CCFunctionDefinition fun = param.M_ContainerFunction as CCFunctionDefinition;
