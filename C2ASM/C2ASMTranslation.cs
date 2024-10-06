@@ -1000,30 +1000,56 @@ namespace C2ASM
         public override CEmmitableCodeContainer VisitIFSTATEMENT(CASTIfStatement node,
             TranslationParameters param = default(TranslationParameters))
         {
-            CIfStatement rep1 = new CIfStatement(param.M_Parent);
-            param.M_Parent?.AddCode(rep1, param.M_ParentContextType);
+            CIfStatement rep = new CIfStatement(param.M_Parent);
+            param.M_Parent?.AddCode(rep, param.M_ParentContextType);
+
             Visit(node.GetChild(contextType.CT_IFSTATEMENT_CONDITION, 0), new TranslationParameters()
             {
                 M_ContainerFunction = param.M_ContainerFunction,
                 M_ParentContextType = CodeContextType.CC_IFSTATEMENT_CONDITION,
-                M_Parent = rep1
+                M_FunctionParent = param.M_FunctionParent,
+                M_ConditionalParent = node,
+                M_LoopParent = param.M_LoopParent,
+                M_ConditionalCase = "if",
+                M_Parent = rep
             });
+
+            rep.AddCode("jmp ELSESTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+            rep.AddCode("INSIDEIFSTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
             Visit(node.GetChild(contextType.CT_IFSTATEMENT_IFCLAUSE, 0), new TranslationParameters()
             {
                 M_ContainerFunction = param.M_ContainerFunction,
                 M_ParentContextType = CodeContextType.CC_IFSTATEMENT_IFBODY,
-                M_Parent = rep1
+                M_FunctionParent = param.M_FunctionParent,
+                M_ConditionalParent = node,
+                M_LoopParent = param.M_LoopParent,
+                M_ConditionalCase = "if",
+                M_Parent = rep
             });
+            rep.AddCode("jmp OUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+
+            rep.AddCode("ELSESTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+
+
             if (node.GetContextChildren(contextType.CT_IFSTATEMENT_ELSECLAUSE).Length != 0)
             {
                 Visit(node.GetChild(contextType.CT_IFSTATEMENT_ELSECLAUSE, 0), new TranslationParameters()
                 {
                     M_ContainerFunction = param.M_ContainerFunction,
                     M_ParentContextType = CodeContextType.CC_IFSTATEMENT_ELSEBODY,
-                    M_Parent = rep1
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "if",
+                    M_Parent = rep
                 });
             }
-            return rep1;
+
+            rep.AddCode("OUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+            return rep;
         }
 
         public override CEmmitableCodeContainer VisitCOMPOUNDSTATEMENT(CASTCompoundStatement node,
