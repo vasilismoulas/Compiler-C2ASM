@@ -58,7 +58,7 @@ namespace C2ASM
             // return;
 
             //Code Generation
-            C2ASMTranslation tr = new C2ASMTranslation();
+            C2ASMTranslation tr = new C2ASMTranslation(parser);
             tr.VisitCOMPILEUNIT(astGenerator.M_Root as CASTCompileUnit, new TranslationParameters());
             tr.M_TranslatedFile.EmmitStdout();
             StreamWriter trFile = new StreamWriter(Path.GetFileName(args[0] + ".asm"));

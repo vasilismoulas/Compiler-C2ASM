@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using Antlr4.Runtime;
 using C_ASM;
 using C2ASM;
+using Xunit.Sdk;
 
 namespace C2ASM
 {
@@ -98,6 +101,15 @@ namespace C2ASM
         private CCFile m_translatedFile;
 
         public CCFile M_TranslatedFile => m_translatedFile;
+
+        private testparser m_testparser;
+
+        public testparser M_Testparser => m_testparser;
+
+        public C2ASMTranslation(testparser parser)
+        {
+            m_testparser = parser;
+        }
 
 
         public override CEmmitableCodeContainer VisitCOMPILEUNIT(CASTCompileUnit node, TranslationParameters param)
@@ -277,7 +289,7 @@ namespace C2ASM
             return rep;
         }
 
-        public override CEmmitableCodeContainer VisitDataDeclaration(CASTDatadeclaration node, TranslationParameters param)
+        public CEmmitableCodeContainer VisitDataDeclaration(CASTDatadeclaration node, TranslationParameters param)
         {
             CCFunctionDefinition rep = new CCFunctionDefinition(param.M_Parent);
 
@@ -369,11 +381,39 @@ namespace C2ASM
             TranslationParameters param = default(TranslationParameters))
         {
             CCFunctionDefinition fun = param.M_ContainerFunction as CCFunctionDefinition;
-
             CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, param.M_Parent);
             param.M_Parent?.AddCode(rep, param.M_ParentContextType);
 
-            CASTIDENTIFIER id = node.GetChild(contextType.CT_EXPRESSION_FCALLNAME, 0) as CASTIDENTIFIER;
+            int argumentTotalSize = 0;
+
+            // How do we get the correct functionDefinition ??
+            // Maybe by using the symbol table from the test parser.
+            CASTFunctionDefinition fundef = (CASTFunctionDefinition) m_testparser.symtab.resolve(node.m_name_text);
+
+            // Get arguments
+            CASTFormalArgs formalArgumentList = (CASTFormalArgs) fundef.GetChild(contextType.CT_FUNCTIONDECLARATION_FARGUMENTS, 0);
+
+            // Push every argument
+            for(int i = 0; i < formalArgumentList.GetChildrenList().Length; i++)
+            {
+                // Getting formal argument
+                CASTDatadeclaration argument = (CASTDatadeclaration) formalArgumentList.GetChildrenList()[i].First();
+
+                // Getting argument identifier
+                String argumentIdentifier = argument.GetChildrenList()[1].First().m_name_text;
+                // Pushing formal argument
+                rep.AddCode("push " + argumentIdentifier + "\n");
+            }
+
+            // call function
+            rep.AddCode("call " + fundef.GetFunctionName() + "\n");
+
+            // revert esp back to its original value (F CALL)
+            argumentTotalSize *= 4;
+            rep.AddCode("add esp," + argumentTotalSize + "\n");
+
+
+            //CASTIDENTIFIER id = node.GetChild(contextType.CT_EXPRESSION_FCALLNAME, 0) as CASTIDENTIFIER;
             //string funheader = "float " + id.M_Text + "(";
             //for (int i = 0; i < node.MChildren[1].Count; i++)
             //{
