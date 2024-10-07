@@ -269,6 +269,24 @@ namespace C2ASM
             return m_children[i][index];
         }
 
+        internal bool ChildExists(contextType ct, int index)
+        {
+            int i = GetContextIndex(ct);
+
+            try
+            {
+                ASTElement child = m_children[i][index];
+            } catch (IndexOutOfRangeException) //when (e is ArgumentOutOfRangeException)
+            {
+                return false;
+            } catch (ArgumentOutOfRangeException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         internal ASTElement[] GetContextChildren(contextType ct)
         {
             int i = GetContextIndex(ct);

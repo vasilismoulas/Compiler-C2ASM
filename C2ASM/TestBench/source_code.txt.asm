@@ -1,8 +1,7 @@
-.model small 
+.model medium 
 .stack 100h 
 .data 
 .code 
-float a;
 foo PROC
 	
 	push ebp
@@ -14,9 +13,9 @@ foo PROC
 	push esi
 	push edi
 	
-	;Arguments
+	;Arguments:
 	
-	;Function body
+	;Function body:
 	
 fooEND:
 	pop edi
@@ -30,5 +29,4 @@ fooEND:
 	ret
 	
 fooENDP
-a
 

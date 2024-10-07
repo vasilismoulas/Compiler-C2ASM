@@ -354,4 +354,316 @@ namespace C_ASM
             }
         }
     }
+
+     public class CTypespecifierInt : CComboContainer
+    {
+        public CTypespecifierInt(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_RETURNSTATEMENT, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode("return ");
+            rep.AddCode(AssemblyContext(CodeContextType.CC_RETURNSTATEMENT_BODY));
+            rep.AddCode(";");
+            rep.AddNewLine();
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_TYPESPECIFIER_INT_TYPE); // The contextType(of C laun.) will be replaced by the corresponding 
+                                                                                // code context of AssemblyX86 laun. in "CodeContainerComposite.cs"
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
+
+
+    public class CTypespecifierDouble : CComboContainer
+    {
+        public CTypespecifierDouble(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_RETURNSTATEMENT, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode("return ");
+            rep.AddCode(AssemblyContext(CodeContextType.CC_RETURNSTATEMENT_BODY));
+            rep.AddCode(";");
+            rep.AddNewLine();
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_TYPESPECIFIER_DOUBLE_TYPE);
+
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
+
+    public class CTypespecifierFloat : CComboContainer
+    {
+        public CTypespecifierFloat(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_RETURNSTATEMENT, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode("return ");
+            rep.AddCode(AssemblyContext(CodeContextType.CC_RETURNSTATEMENT_BODY));
+            rep.AddCode(";");
+            rep.AddNewLine();
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_TYPESPECIFIER_FLOAT_TYPE);
+
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
+
+
+    public class CTypespecifierChar : CComboContainer
+    {
+        public CTypespecifierChar(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_RETURNSTATEMENT, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode("return ");
+            rep.AddCode(AssemblyContext(CodeContextType.CC_RETURNSTATEMENT_BODY));
+            rep.AddCode(";");
+            rep.AddNewLine();
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_TYPESPECIFIER_CHAR_TYPE);
+
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
+
+    public class CTypespecifierVoid : CComboContainer
+    {
+        public CTypespecifierVoid(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_RETURNSTATEMENT, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode("return ");
+            rep.AddCode(AssemblyContext(CodeContextType.CC_RETURNSTATEMENT_BODY));
+            rep.AddCode(";");
+            rep.AddNewLine();
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_TYPESPECIFIER_VOID_TYPE);
+
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
+
+    public class CFormalargs : CComboContainer
+    {
+        public CFormalargs(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_RETURNSTATEMENT, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode("return ");
+            rep.AddCode(AssemblyContext(CodeContextType.CC_RETURNSTATEMENT_BODY));
+            rep.AddCode(";");
+            rep.AddNewLine();
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_RETURNSTATEMENT_BODY);
+
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
+
+    public class CDatadeclaration : CComboContainer
+    {
+        public CDatadeclaration(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_RETURNSTATEMENT, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode("return ");
+            rep.AddCode(AssemblyContext(CodeContextType.CC_RETURNSTATEMENT_BODY));
+            rep.AddCode(";");
+            rep.AddNewLine();
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_DATADECLARATION_TYPESPECIFIER);
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_DATADECLARATION_IDENTIFIER);
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_DATADECLARATION_DATAVALUE);
+
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
+
+    public class CDatavalueNumber : CComboContainer
+    {
+        public CDatavalueNumber(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_RETURNSTATEMENT, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode("return ");
+            rep.AddCode(AssemblyContext(CodeContextType.CC_RETURNSTATEMENT_BODY));
+            rep.AddCode(";");
+            rep.AddNewLine();
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+        
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_DATAVALUE_NUMBER);
+            
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
+
+    public class CDatavalueChar : CComboContainer
+    {
+        public CDatavalueChar(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_RETURNSTATEMENT, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode("return ");
+            rep.AddCode(AssemblyContext(CodeContextType.CC_RETURNSTATEMENT_BODY));
+            rep.AddCode(";");
+            rep.AddNewLine();
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_DATAVALUE_CHAR);
+
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
+
+    public class CCFunctionbody : CComboContainer
+    {
+        public CCFunctionbody(CEmmitableCodeContainer parent) : base(CodeBlockType.CB_FUNCTIONDEFINITION_BODY, parent, 1)
+        {
+        }
+
+        public override CodeContainer AssemblyCodeContainer()
+        {
+            CodeContainer rep = new CodeContainer(CodeBlockType.CB_CODEREPOSITORY, M_Parent);
+            rep.AddCode(AssemblyContext(CodeContextType.CC_FUNCTIONDEFINITION_BODY));
+            return rep;
+        }
+
+        public override void PrintStructure(StreamWriter m_ostream)
+        {
+            ExtractSubgraphs(m_ostream, CodeContextType.CC_FUNCTIONDEFINITION_BODY);
+
+            foreach (List<CEmmitableCodeContainer> cEmmitableCodeContainers in m_repository)
+            {
+                foreach (CEmmitableCodeContainer codeContainer in cEmmitableCodeContainers)
+                {
+                    codeContainer.PrintStructure(m_ostream);
+                }
+            }
+            m_ostream.WriteLine("\"{0}\"->\"{1}\"", M_Parent.M_NodeName, M_NodeName);
+        }
+    }
 }
