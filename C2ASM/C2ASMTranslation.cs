@@ -762,14 +762,31 @@ namespace C2ASM
             rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
 
             String labelString = "";
+            String operandString = "jb ";
+
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
-            } else if (param.M_ConditionalCase.Equals("while"))
+                labelString = "INSIDEIFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+            } 
+            else if (param.M_ConditionalCase.Equals("if left and") || param.M_ConditionalCase.Equals("if left or"))
+            {
+                labelString = "LEFTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } 
+            else if (param.M_ConditionalCase.Equals("if left or") || param.M_ConditionalCase.Equals("if right or"))
+            {
+                labelString = "RIGHTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } 
+            else if (param.M_ConditionalCase.Equals("if not"))
+            {
+                labelString = "INSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+                operandString = "jle";
+            } 
+            else if (param.M_ConditionalCase.Equals("while"))
             {
                 labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
-            rep.AddCode("jb " + labelString);
+
+            rep.AddCode(operandString + " " + labelString);
 
 
             //rep.AddCode(Visit(node.GetChild(contextType.CT_EXPRESSION_GT_LEFT, 0), new TranslationParameters()
@@ -796,14 +813,27 @@ namespace C2ASM
             rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
 
             String labelString = "";
+            String operandString = "jbe";
+
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+                labelString = "INSIDEIFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left and") || param.M_ConditionalCase.Equals("if left or"))
+            {
+                labelString = "LEFTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left or") || param.M_ConditionalCase.Equals("if right or"))
+            {
+                labelString = "RIGHTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if not"))
+            {
+                labelString = "INSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+                operandString = "jl";
             } else if (param.M_ConditionalCase.Equals("while"))
             {
                 labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
-            rep.AddCode("jbe " + labelString);
+
+            rep.AddCode(operandString + " " + labelString);
             return rep;
         }
 
@@ -815,14 +845,27 @@ namespace C2ASM
             rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
 
             String labelString = "";
+            String operandString = "jl";
+
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+                labelString = "INSIDEIFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left and") || param.M_ConditionalCase.Equals("if left or"))
+            {
+                labelString = "LEFTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left or") || param.M_ConditionalCase.Equals("if right or"))
+            {
+                labelString = "RIGHTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if not"))
+            {
+                labelString = "INSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+                operandString = "jbe";
             } else if (param.M_ConditionalCase.Equals("while"))
             {
                 labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
-            rep.AddCode("jl " + labelString);
+
+            rep.AddCode(operandString + " " + labelString);
             return rep;
         }
 
@@ -834,14 +877,27 @@ namespace C2ASM
             rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
 
             String labelString = "";
+            String operandString = "jle";
+
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+                labelString = "INSIDEIFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left and") || param.M_ConditionalCase.Equals("if left or"))
+            {
+                labelString = "LEFTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left or") || param.M_ConditionalCase.Equals("if right or"))
+            {
+                labelString = "RIGHTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if not"))
+            {
+                labelString = "INSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+                operandString = "jb";
             } else if (param.M_ConditionalCase.Equals("while"))
             {
                 labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
-            rep.AddCode("jle " + labelString);
+
+            rep.AddCode(operandString + " " + labelString);
             return rep;
         }
 
@@ -854,14 +910,27 @@ namespace C2ASM
             rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
 
             String labelString = "";
+            String operandString = "je";
+
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+                labelString = "INSIDEIFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left and") || param.M_ConditionalCase.Equals("if left or"))
+            {
+                labelString = "LEFTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left or") || param.M_ConditionalCase.Equals("if right or"))
+            {
+                labelString = "RIGHTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if not"))
+            {
+                labelString = "INSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+                operandString = "jne";
             } else if (param.M_ConditionalCase.Equals("while"))
             {
                 labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
-            rep.AddCode("je " + labelString);
+
+            rep.AddCode(operandString + " " + labelString);
             return rep;
         }
 
@@ -874,14 +943,27 @@ namespace C2ASM
             rep.AddCode("cmp " + node.GetChildrenList()[0] + "," + node.GetChildrenList()[2]);
 
             String labelString = "";
+            String operandString = "jne";
+
             if (param.M_ConditionalCase.Equals("if"))
             {
-                labelString = "IFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+                labelString = "INSIDEIFSTATEMENT" + param.M_ConditionalParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left and") || param.M_ConditionalCase.Equals("if left or"))
+            {
+                labelString = "LEFTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if left or") || param.M_ConditionalCase.Equals("if right or"))
+            {
+                labelString = "RIGHTINSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+            } else if (param.M_ConditionalCase.Equals("if not"))
+            {
+                labelString = "INSIDEIFSTATEMENT" + param.M_LoopParent.MSerial.ToString();
+                operandString = "je";
             } else if (param.M_ConditionalCase.Equals("while"))
             {
                 labelString = "WHILESTATEMENT" + param.M_LoopParent.MSerial.ToString();
             }
-            rep.AddCode("jne " + labelString);
+
+            rep.AddCode(operandString + " " + labelString);
             return rep;
         }
 
@@ -946,14 +1028,201 @@ namespace C2ASM
                 ASTElement leftConditional = node.GetChild(contextType.CT_IFSTATEMENT_CONDITION, 0).GetChildrenList()[0].First();
                 ASTElement rightConditional = node.GetChild(contextType.CT_IFSTATEMENT_CONDITION, 0).GetChildrenList()[1].First();
 
+                Visit(leftConditional, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_ParentContextType = CodeContextType.CC_IFSTATEMENT_CONDITION,
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "if left and",
+                    M_Parent = rep
+                });
+
+                rep.AddCode("jmp LEFTELSESTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+                rep.AddCode("LEFTINSIDEIFSTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+                // visiting right if
+
+                Visit(rightConditional, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_ParentContextType = CodeContextType.CC_IFSTATEMENT_CONDITION,
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "if right and",
+                    M_Parent = rep
+                });
+
+                rep.AddCode("jmp RIGHTOUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+                rep.AddCode("RIGHTINSIDEIFSTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+                Visit(node.GetChild(contextType.CT_IFSTATEMENT_IFCLAUSE, 0), new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_ParentContextType = CodeContextType.CC_IFSTATEMENT_IFBODY,
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "if",
+                    M_Parent = rep
+                });
+                rep.AddCode("RIGHTOUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+                // vitising right if ^^^
+                rep.AddCode("jmp LEFTOUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+
+                rep.AddCode("LEFTELSESTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+
+
+                if (node.GetContextChildren(contextType.CT_IFSTATEMENT_ELSECLAUSE).Length != 0)
+                {
+                    Visit(node.GetChild(contextType.CT_IFSTATEMENT_ELSECLAUSE, 0), new TranslationParameters()
+                    {
+                        M_ContainerFunction = param.M_ContainerFunction,
+                        M_ParentContextType = CodeContextType.CC_IFSTATEMENT_ELSEBODY,
+                        M_FunctionParent = param.M_FunctionParent,
+                        M_ConditionalParent = node,
+                        M_LoopParent = param.M_LoopParent,
+                        M_ConditionalCase = "if",
+                        M_Parent = rep
+                    });
+                }
+
+                rep.AddCode("LEFTOUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
             } else if(conditionType.Equals(typeof(CASTExpressionOr)))
             {
                 ASTElement leftConditional = node.GetChild(contextType.CT_IFSTATEMENT_CONDITION, 0).GetChildrenList()[0].First();
                 ASTElement rightConditional = node.GetChild(contextType.CT_IFSTATEMENT_CONDITION, 0).GetChildrenList()[1].First();
-            }
-            else if (conditionType.Equals(typeof(CASTExpressionNot)))
-            {
 
+                Visit(leftConditional, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_ParentContextType = CodeContextType.CC_IFSTATEMENT_CONDITION,
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "if left or",
+                    M_Parent = rep
+                });
+
+                rep.AddCode("jmp LEFTELSESTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+                rep.AddCode("LEFTINSIDEIFSTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+                Visit(node.GetChild(contextType.CT_IFSTATEMENT_IFCLAUSE, 0), new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_ParentContextType = CodeContextType.CC_IFSTATEMENT_IFBODY,
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "if",
+                    M_Parent = rep
+                });
+                rep.AddCode("jmp LEFTOUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+
+                rep.AddCode("LEFTELSESTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+
+                // right OR conditional 
+
+                Visit(rightConditional, new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_ParentContextType = CodeContextType.CC_IFSTATEMENT_CONDITION,
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "if right or",
+                    M_Parent = rep
+                });
+
+                rep.AddCode("jmp RIGHTELSESTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+                rep.AddCode("RIGHTINSIDEIFSTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+                Visit(node.GetChild(contextType.CT_IFSTATEMENT_IFCLAUSE, 0), new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_ParentContextType = CodeContextType.CC_IFSTATEMENT_IFBODY,
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "if",
+                    M_Parent = rep
+                });
+                rep.AddCode("jmp RIGHTOUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+
+                rep.AddCode("RIGHTELSESTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+
+                // right OR conditional ^^^
+
+                if (node.GetContextChildren(contextType.CT_IFSTATEMENT_ELSECLAUSE).Length != 0)
+                {
+                    Visit(node.GetChild(contextType.CT_IFSTATEMENT_ELSECLAUSE, 0), new TranslationParameters()
+                    {
+                        M_ContainerFunction = param.M_ContainerFunction,
+                        M_ParentContextType = CodeContextType.CC_IFSTATEMENT_ELSEBODY,
+                        M_FunctionParent = param.M_FunctionParent,
+                        M_ConditionalParent = node,
+                        M_LoopParent = param.M_LoopParent,
+                        M_ConditionalCase = "if",
+                        M_Parent = rep
+                    });
+                }
+
+                rep.AddCode("LEFTOUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+            } else if (conditionType.Equals(typeof(CASTExpressionNot)))
+            {
+                Visit(node.GetChild(contextType.CT_IFSTATEMENT_CONDITION, 0), new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_ParentContextType = CodeContextType.CC_IFSTATEMENT_CONDITION,
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "not if",
+                    M_Parent = rep
+                });
+
+                rep.AddCode("jmp ELSESTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+                rep.AddCode("INSIDEIFSTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+                Visit(node.GetChild(contextType.CT_IFSTATEMENT_IFCLAUSE, 0), new TranslationParameters()
+                {
+                    M_ContainerFunction = param.M_ContainerFunction,
+                    M_ParentContextType = CodeContextType.CC_IFSTATEMENT_IFBODY,
+                    M_FunctionParent = param.M_FunctionParent,
+                    M_ConditionalParent = node,
+                    M_LoopParent = param.M_LoopParent,
+                    M_ConditionalCase = "if",
+                    M_Parent = rep
+                });
+                rep.AddCode("jmp OUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
+
+
+                rep.AddCode("ELSESTATEMENT" + node.MSerial + ":\n", CodeContextType.CC_IFSTATEMENT_CONDITION);
+
+
+                if (node.GetContextChildren(contextType.CT_IFSTATEMENT_ELSECLAUSE).Length != 0)
+                {
+                    Visit(node.GetChild(contextType.CT_IFSTATEMENT_ELSECLAUSE, 0), new TranslationParameters()
+                    {
+                        M_ContainerFunction = param.M_ContainerFunction,
+                        M_ParentContextType = CodeContextType.CC_IFSTATEMENT_ELSEBODY,
+                        M_FunctionParent = param.M_FunctionParent,
+                        M_ConditionalParent = node,
+                        M_LoopParent = param.M_LoopParent,
+                        M_ConditionalCase = "if",
+                        M_Parent = rep
+                    });
+                }
+
+                rep.AddCode("OUTSIDEIFSTATEMENT" + node.MSerial + "\n", CodeContextType.CC_IFSTATEMENT_IFBODY);
             } else{
                 Visit(node.GetChild(contextType.CT_IFSTATEMENT_CONDITION, 0), new TranslationParameters()
                 {
