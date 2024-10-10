@@ -9,13 +9,13 @@
    * [Program.cs](#programcs)
      * [Main function](#Main-funciton)
 
-   * CodeContainerCompositeConcrete.cs
-     * test
-   * CodeContainerComposite.cs
-     * test
+   * [CodeContainerCompositeConcrete.cs](#codecontainercompositeconcrete.cs)
+    
+   * [CodeContainerComposite.cs](#codecontainercomposite.cs)
+     
 
-   * C2ASMTranslation.cs
-     * test
+   * [C2ASMTranslation.cs]()
+     * [C2ASMTranslation class]()
 
    * [ASTSymbolTable.cs]()
      * [ASTSymbolTable class]()
@@ -73,7 +73,7 @@ Compiler that converts C (a subset of C's grammar rules) code into AssemblyX86 (
 
 
 <div style="text-align: center;">
-  <img src="./phases1.png" alt="Alt text" width="200"/>
+  <img src="C:\Users\vasil\OneDrive\Έγγραφα\C2ASM-README\phases1.png" alt="Alt text" width="200"/>
 </div>
 
 <br>
@@ -123,10 +123,10 @@ Implements ANTLR's generated visitor(testparserBaseVisitor<int>) and overrides t
   Blueprint of ASTTree's kinds of nodes(ASTComposite & ASTTerminal).
 
 * #### ASTComposite class
-  Blueprint of ASTTree's non-terminal nodes
+  Blueprint of ASTTree's non-terminal nodes.
 
 * #### ASTTerminal class
-  Blueprint method of ASTTree's terminal nodes
+  Blueprint method of ASTTree's terminal nodes.
 
 <br>
 
@@ -203,11 +203,22 @@ Preprocesses the enumeration labels of each tree node.
 <br>
 
 ### ASTSymbolTable.cs
-
+Contains the symbol table of ASTTree.
 
 #### ASTSymbolTable class
+ASTSymbolTable is a data structure that maps names (variables, functions etc...) to attributes (unique identifier of each node) of ASTTree.
 
+<br>
 
+### CodeContainerComposite.cs
+Contains abstract classes/blueprints of assemblyX86 tree non-terminal & terminal nodes.
+<div style="border-top: 3px dotted #bbb">
+<br>
+
+### CodeContainerCompositeConcrete.cs
+Contains concrete classes implementing the CComboContainer & CodeContainer abstract classes.
+
+<div style="border-top: 3px dotted #bbb">
 <br>
 
 ## Installation instructions
