@@ -3,7 +3,7 @@
 
 1. [Abstract](#abstract)
 
-2. [Archtecture](#architecture)
+2. [Architecture](#architecture)
 
 3. [File overall operation description](#file-overall-operation-description)
    * [Program.cs](#programcs)
