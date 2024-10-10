@@ -1,5 +1,4 @@
-# Compiler-C2ASM
- # Documentation
+# Documentation
 ## Table of Contents
 
 1. [Abstract](#abstract)
@@ -74,7 +73,7 @@ Compiler that converts C (a subset of C's grammar rules) code into AssemblyX86 (
 
 
 <div style="text-align: center;">
-  <img src="phases1.png" alt="Alt text" width="200"/>
+  <img src="./phases1.png" alt="Alt text" width="200"/>
 </div>
 
 <br>
